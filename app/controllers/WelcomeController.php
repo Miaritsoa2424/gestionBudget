@@ -12,8 +12,8 @@ class WelcomeController {
 	}
 
 	public function home() {
-        $solde = Flight::Transaction()->getSoldeUser($_SESSION['idUser']);
-        $data = ['page' => 'accueil','solde' => $solde];
+        $texte = "Bienvenue sur notre site de gestion de budget";
+        $data = ['page' => 'accueil','text' => $texte];
         Flight::render('template', $data);
     }
 
