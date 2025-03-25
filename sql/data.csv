@@ -1,11 +1,11 @@
-idValeur;nomRubrique;idType;previsionOuRealisation;montant;date;validation
-1;Salaire personnel;2;1;5000000;2025-03-01;1
-2;Achat fournitures;3;0;1500000;2025-03-05;0
-3;Entretien bâtiment;4;1;2500000;2025-03-10;1
-4;Recette location;5;0;1200000;2025-03-12;1
-5;Subvention Etat;6;1;10000000;2025-03-15;1
-6;Dépenses électricité;2;0;800000;2025-03-18;0
-7;Achat matériel;3;1;3500000;2025-03-22;1
-8;Remboursement prêt;4;0;2000000;2025-03-25;1
-9;Vente produits;5;1;5000000;2025-03-28;0
-10;Dépenses internet;6;0;600000;2025-03-30;1
+idValeur;nomRubrique;nomType;nomDept;previsionOuRealisation;montant;date;validation
+1;Salaire personnel;Paiement mensuel;Finance;Prevision;5000000;2025-03-01;1
+2;Achat fournitures;Achat PC;Informatique;Realisation;1500000;2025-03-05;0
+3;Entretien bâtiment;Achat PC;Finance;Prevision;2500000;2025-03-10;1
+4;Recette location;Vente de logiciels;Ressources Humaines;Realisation;1200000;2025-03-12;1
+5;Subvention Etat;Actions en bourse;Finance;Prevision;10000000;2025-03-15;1
+6;Depenses electricite;Achat PC;Informatique;Realisation;800000;2025-03-18;0
+7;Achat materiel;Achat PC;Informatique;Prevision;3500000;2025-03-22;1
+8;Remboursement prêt;Actions en bourse;Finance;Realisation;2000000;2025-03-25;1
+9;Vente produits;Vente de logiciels;Informatique;Prevision;5000000;2025-03-28;0
+10;Depenses internet;Achat PC;Informatique;Realisation;600000;2025-03-30;1

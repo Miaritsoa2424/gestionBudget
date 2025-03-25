@@ -1,0 +1,47 @@
+@charset "UTF-8";
+.csvForm {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  width: 28vw;
+  display: none;
+  /* Centrage de l'élément */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Légère élévation */
+  transition: transform 0.2s ease-in-out;
+}
+.csvForm fieldset {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: none;
+}
+.csvForm input, .csvForm select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.csvForm button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+.csvForm button:hover {
+  background-color: #0056b3;
+}
+.csvForm #closePopUpCsv {
+  background-color: #5b5f64;
+}/*# sourceMappingURL=formCsv.css.map */
