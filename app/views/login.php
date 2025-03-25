@@ -14,16 +14,22 @@
 <body>
 
     <div class="login">
-        <form action="employe/doLogin" method="POST">
+        <form action="doLogin" method="POST">
             <fieldset>
                 <h1>Connexion</h1>
                 <label for="nom">Nom de departement : </label>
-                <input type="text" name="nom" id="nom" placeholder="Ex: Finance">
+                <input type="text" name="nomDept" id="nom" placeholder="Ex: Finance">
 
                 <label for="mdp">Mot de passe : </label>
                 <input type="password" name="mdp" id="mdp" placeholder="************************">
 
                 <button type="submit">Se connecter</button>
+                <?php
+                    if (isset($erreur)) { ?>
+                        <div class="error">
+                            <?= $erreur; ?>
+                        </div>
+                    <?php } ?>
             </fieldset>
         </form>
     </div>
