@@ -10,7 +10,6 @@ use app\controllers\PdfController;
 use flight\Engine;
 use flight\net\Router;
 use app\controllers\DepartementController;
-use app\controllers\ValeurController;
 
 /** 
  * @var Router $router 
