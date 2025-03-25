@@ -36,8 +36,6 @@ END; //
 
 DELIMITER ;
 
-SELECT calculBenefice('2025-04-30', 1) AS beneficeDept1;
-
 -- getSoldeActuelle pour un departement
 DELIMITER //
 
@@ -62,8 +60,6 @@ BEGIN
 END //
 
 DELIMITER ;
-
-SELECT getSoldeActuelle('2025-04-30', 1) AS soldeActuelDept1;
 
 
 -- getBenefice pour un departement entre deux dates
@@ -110,48 +106,6 @@ BEGIN
 
     -- Retourner le solde final
     RETURN soldeActuel;
-END //
-
-DELIMITER ;
-
-SELECT getSolde('2025-04-01', '2025-04-30', 1) AS soldeDept1;
-
-
--- get donnee pour budget
-
-DELIMITER //
-
-CREATE FUNCTION getData(dateDebut DATE, dateFin DATE, idDept INT)
-RETURNS TABLE
-BEGIN
-    RETURN
-    ( 
-        SELECT 
-            CASE 
-                WHEN c.recetteOuDepense = 0 THEN 'Recette'
-                WHEN c.recetteOuDepense = 1 THEN 'Dépense'
-            END AS rubrique,
-            -- Somme des prévisions pour les recettes et dépenses
-            SUM(CASE WHEN v.previsionOuRealisation = 0 AND c.recetteOuDepense = 0 THEN v.montant ELSE 0 END) AS montantPrevisionRecette,
-            SUM(CASE WHEN v.previsionOuRealisation = 0 AND c.recetteOuDepense = 1 THEN v.montant ELSE 0 END) AS montantPrevisionDepense,
-            -- Somme des réalisations pour les recettes et dépenses
-            SUM(CASE WHEN v.previsionOuRealisation = 1 AND c.recetteOuDepense = 0 THEN v.montant ELSE 0 END) AS montantRealisationRecette,
-            SUM(CASE WHEN v.previsionOuRealisation = 1 AND c.recetteOuDepense = 1 THEN v.montant ELSE 0 END) AS montantRealisationDepense,
-            -- Calcul de l'écart pour les recettes et dépenses
-            SUM(CASE WHEN v.previsionOuRealisation = 0 AND c.recetteOuDepense = 0 THEN v.montant ELSE 0 END) - 
-            SUM(CASE WHEN v.previsionOuRealisation = 1 AND c.recetteOuDepense = 0 THEN v.montant ELSE 0 END) AS ecartRecette,
-            SUM(CASE WHEN v.previsionOuRealisation = 0 AND c.recetteOuDepense = 1 THEN v.montant ELSE 0 END) - 
-            SUM(CASE WHEN v.previsionOuRealisation = 1 AND c.recetteOuDepense = 1 THEN v.montant ELSE 0 END) AS ecartDepense
-        FROM 
-            Valeur v
-            JOIN Type t ON v.idType = t.idType
-            JOIN Categorie c ON t.idCategorie = c.idCategorie
-        WHERE 
-            v.idDept = idDept
-            AND v.date BETWEEN dateDebut AND dateFin
-        GROUP BY 
-            c.recetteOuDepense
-    );
 END //
 
 DELIMITER ;
