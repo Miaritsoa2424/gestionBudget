@@ -19,7 +19,7 @@ $router->get('/', [$Welcome_Controller, 'home']);
 
 $router->group('/departement', function (Router $router) {
     $departementController = new DepartementController();
-    $router->get('/login', [$departementController, 'getFormulaireLogin']);
+    $router->get('/', [$departementController, 'getFormulaireLogin']);
     $router->post('/doLogin', [$departementController, 'doLogin']);
 });
 
