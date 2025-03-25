@@ -16,6 +16,7 @@
 
 .budgetSection {
   height: 65vh;
+  z-index: 1000;
 }
 .budgetSection table {
   border-collapse: collapse;
