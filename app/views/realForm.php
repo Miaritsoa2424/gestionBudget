@@ -1,12 +1,12 @@
 <div class="realForm" id="realForm">
-        <form action="doLogin" method="POST">
+        <form action="<?= Flight::get('flight.base_url') ?>/valeur/saveRealisation" method="POST">
             <fieldset>
                 <h1>Ajout de realisation</h1>
 
                 <label for="budget">Type</label>
-                    <select name="" id="">
-                        <option value="">Achat de materiel de bureau</option>
-                        <option value="">Vente de sable</option>
+                    <select name="type" id="budget">
+                        <option value="1">Achat de materiel de bureau</option>
+                        <option value="2">Vente de sable</option>
                     </select>
 
                 <input type="hidden" name="prevReal" value="1">
