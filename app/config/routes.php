@@ -2,7 +2,9 @@
 <?php
 
 use app\controllers\FormController;
+use app\controllers\ValidationController;
 use app\controllers\WelcomeController;
+use app\controllers\BudgetController;
 
 use flight\Engine;
 use flight\net\Router;
@@ -25,6 +27,12 @@ $router->group('/departement', function (Router $router) {
 
 $FormController = new FormController();
 $router->get('/login',[$FormController,'login']);
+
+$validationController = new ValidationController();
+$router->get('/validation',[$validationController,'getListValidation']);
+
+$BudgetController = new BudgetController();
+$router->get('/budget',[$BudgetController,'getBudget']);
 
 
 
