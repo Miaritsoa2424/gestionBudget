@@ -8,7 +8,7 @@
         <label for="dateFin">Fin :</label>
         <input type="date" name="dateFin">
 
-        
+
         <select class="periode-select">
             <option value="">Departements</option>
             <option value="">Finance</option>
@@ -24,73 +24,112 @@
             <option value="">Trimestrielle</option>
             <option value="">Semestrielle</option>
         </select>
-        <button type="submit">Valider</button>
+        <button class="valider" type="submit">Valider</button>
         <button class="pdf-btn"><i class="fas fa-file-pdf"></i> Exporter en PDF</button>
     </div>
 </div>
 <section class="budgetSection">
+    <div class="enTeteTable">
+        <button class="prev"><i class="fas fa-plus-circle"></i> Ajout Prévision</button>
+        <!-- Pagination Controls -->
+        <div id="paginationControls">
+            <h2>Janvier 2025 - Mars 2025</h2>
+            <div class="direction">
+                <button id="prevPage" onclick="changePage(-1)"> <i class="fas fa-arrow-left"></i><span>Précédent</span></button>
+                <span id="pageNumber">Page 1</span>
+                <button id="nextPage" onclick="changePage(1)"><span>Suivant</span><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+        <button class="real"><i class="fas fa-check-circle"></i> Ajout Réalisation</button>
+    </div>
 
-    <?php for ($i=0; $i < 3; $i++) { ?>
-        <h2>10/01/2025</h2>
-        <table>
-        <tr>
-            <th rowspan="2">Rubrique</th>
-            <th colspan="3">P1</th>
-            <th colspan="3">P2</th>
-            <th colspan="3">P3</th>
-
-        </tr>
-        <tr>
-            <th>Prev</th>
-            <th>Real</th>
-            <th>Écart</th>
-            <th>Prev</th>
-            <th>Real</th>
-            <th>Écart</th>
-            <th>Prev</th>
-            <th>Real</th>
-            <th>Écart</th>
-        </tr>
-
-        <?php
-        $rubriques = [
-            ['nom' => 'Solde debut'],
-            ['nom' => 'Alimentation'],
-            ['nom' => 'Transport'],
-            ['nom' => 'Logement'],
-            ['nom' => 'Solde fin'],
-
-        ];
-
-        foreach ($rubriques as $rubrique) {
-            $prevP1 = 1000;
-            $realP1 = 900;
-            $ecartP1 = $prevP1 - $realP1;
-
-            $prevP2 = 1200;
-            $realP2 = 1100;
-            $ecartP2 = $prevP2 - $realP2;
-            
-            $prevP3 = 1200;
-            $realP3 = 1100;
-            $ecartP3 = $prevP3 - $realP3;
-
-
-            echo "<tr class='numberRow'>
-        <td>{$rubrique['nom']}</td>
-        <td class='cellNumber'>$prevP1</td>
-        <td class='cellNumber' >$realP1</td>
-        <td class='cellNumber' >$ecartP1</td>
-        <td class='cellNumber' >$prevP2</td>
-        <td class='cellNumber' >$realP2</td>
-        <td class='cellNumber' >$ecartP2</td>
-        <td class='cellNumber' >$prevP3</td>
-        <td class='cellNumber' >$realP3</td>
-        <td class='cellNumber' >$ecartP3</td>
-    </tr>";
-        }
+    <!-- Conteneur des tables pour pagination -->
+    <div id="tablesContainer">
+        <?php for ($i = 0; $i < 9; $i++) { // 9 tables au total 
         ?>
-    </table>
-    <?php } ?>
+            <div class="tablePage">
+                <table>
+                    <tr>
+                        <th rowspan="2">Rubrique</th>
+                        <th colspan="3">Janvier 2025(table numero:<?= $i ?>)</th>
+                    </tr>
+                    <tr>
+                        <th>Prevision</th>
+                        <th>Realisation</th>
+                        <th>Écart</th>
+                    </tr>
+                    <tr class="numberRow">
+                        <td>Solde début</td>
+                        <td class="cellNumber">1000</td>
+                        <td class="cellNumber">900</td>
+                        <td class="cellNumber">1000 - 900</td>
+                    </tr>
+                    <tr class="numberRow">
+                        <td>Alimentation</td>
+                        <td class="cellNumber">1000</td>
+                        <td class="cellNumber">900</td>
+                        <td class="cellNumber">1000 - 900</td>
+                    </tr>
+                    <tr class="numberRow">
+                        <td>Transport</td>
+                        <td class="cellNumber">1000</td>
+                        <td class="cellNumber">900</td>
+                        <td class="cellNumber">1000 - 900</td>
+                    </tr>
+                    <tr class="numberRow">
+                        <td>Logement</td>
+                        <td class="cellNumber">1000</td>
+                        <td class="cellNumber">900</td>
+                        <td class="cellNumber">1000 - 900</td>
+                    </tr>
+                    <tr class="numberRow">
+                        <td>Solde fin</td>
+                        <td class="cellNumber">1000</td>
+                        <td class="cellNumber">900</td>
+                        <td class="cellNumber">1000 - 900</td>
+                    </tr>
+                </table>
+            </div>
+        <?php } ?>
+    </div>
+
 
 </section>
+
+<script>
+    let currentPage = 1;
+    const rowsPerPage = 1; // Une table par page
+    const tables = document.querySelectorAll('.tablePage'); // Récupère toutes les tables
+    const totalPages = Math.ceil(tables.length / rowsPerPage); // Calcul du nombre total de pages
+
+    // Affiche la table correspondant à la page actuelle
+    function displayTable(page) {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        // Masquer toutes les tables
+        tables.forEach((table, index) => {
+            if (index >= start && index < end) {
+                table.style.display = 'block';
+            } else {
+                table.style.display = 'none';
+            }
+        });
+
+        // Met à jour le texte de la page
+        document.getElementById('pageNumber').innerText = `Page ${page}`;
+    }
+
+    // Fonction pour changer de page
+    function changePage(direction) {
+        const newPage = currentPage + direction;
+
+        if (newPage >= 1 && newPage <= totalPages) {
+            currentPage = newPage;
+            displayTable(currentPage);
+        }
+    }
+
+    // Initialisation
+    displayTable(currentPage);
+</script>
