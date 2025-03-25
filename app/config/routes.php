@@ -5,6 +5,7 @@ use app\controllers\WelcomeController;
 
 use flight\Engine;
 use flight\net\Router;
+use app\controllers\DepartementController;
 
 /** 
  * @var Router $router 
@@ -14,6 +15,12 @@ use flight\net\Router;
 
 $Welcome_Controller = new WelcomeController();
 $router->get('/', [$Welcome_Controller, 'home']);
+
+$router->group('/departement', function (Router $router) {
+    $departementController = new DepartementController();
+    $router->get('/login', [$departementController, 'getFormulaireLogin']);
+    $router->post('/doLogin', [$departementController, 'doLogin']);
+});
 
 
 
