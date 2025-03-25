@@ -9,11 +9,12 @@
 
         public function doImportCSV() {
             // On récupère le fichier CSV directement à partir de l'input
-            $file = Flight::request()->files->file;
+            $file = Flight::request()->files->filePath;
     
+            // Si un fichier a été trouvé
             if ($file) {
                 // On récupère le chemin temporaire du fichier téléchargé
-                $file_path = $file->tmp_name;
+                $file_path = $file['tmp_name'];
     
                 // Appel à la méthode dans la classe Valeur pour importer les données du fichier CSV
                 $valeurs = Valeur::getListeValeurFromCsv($file_path);

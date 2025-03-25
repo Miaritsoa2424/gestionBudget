@@ -109,16 +109,20 @@ class Valeur {
     }
 
     public static function gestionPrevisionRealisation($previsionOuRealisation) {
-        $previsionOuRealisation = strtolower(trim($previsionOuRealisation));
-        
-        if ($previsionOuRealisation === "prevision" || $previsionOuRealisation === "1") {
-            return 1;
-        } elseif ($previsionOuRealisation === "realisation" || $previsionOuRealisation === "0") {
-            return 0;
-        } else {
-            return null;
-        }
+    // Convertir en minuscule et supprimer les espaces superflus
+    $previsionOuRealisation = strtolower(trim($previsionOuRealisation));
+    // Convertir les caractères accentués en leur équivalent non accentué
+    $previsionOuRealisation = iconv('UTF-8', 'ASCII//TRANSLIT', $previsionOuRealisation);
+
+    if ($previsionOuRealisation === "prevision" || $previsionOuRealisation === "1") {
+        return 1;
+    } elseif ($previsionOuRealisation === "realisation" || $previsionOuRealisation === "0") {
+        return 0;
+    } else {
+        return null;
     }
+}
+
 
     public static function getListeValeurFromCsv($filePath = "") {
         $valeurs = [];
