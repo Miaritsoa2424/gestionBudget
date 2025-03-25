@@ -1,6 +1,7 @@
 
 <?php
 
+use app\controllers\FormController;
 use app\controllers\WelcomeController;
 
 use flight\Engine;
@@ -21,6 +22,9 @@ $router->group('/departement', function (Router $router) {
     $router->get('/login', [$departementController, 'getFormulaireLogin']);
     $router->post('/doLogin', [$departementController, 'doLogin']);
 });
+
+$FormController = new FormController();
+$router->get('/login',[$FormController,'login']);
 
 
 
