@@ -32,10 +32,12 @@ CREATE TABLE Valeur (
     idValeur INT PRIMARY KEY AUTO_INCREMENT,
     nomRubrique VARCHAR(100) NOT NULL,
     idType INT NOT NULL,
+    idDept INT NOT NULL,
     previsionOuRealisation TINYINT(1) NOT NULL CHECK (previsionOuRealisation IN (0, 1)),
     montant DECIMAL(15,2) NOT NULL,
     date DATE NOT NULL,
     validation BOOLEAN NOT NULL,
+    FOREIGN KEY (idDept) REFERENCES Dept(idDept),
     FOREIGN KEY (idType) REFERENCES Type(idType)
 );
 

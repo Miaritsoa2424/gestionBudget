@@ -1,6 +1,8 @@
 <?php
 namespace app\models;
 use Flight;
+
+
 class Valeur {
     private $idValeur;
     private $nomRubrique;
@@ -9,10 +11,11 @@ class Valeur {
     private $montant;
     private $date;
     private $validation;
+    private $idDept;
     private $conn;
 
-// Constructeur qui prend des valeurs pour les attributs
-    public function __construct($idValeur, $nomRubrique, $idType, $previsionOuRealisation, $montant, $date, $validation) {
+    // Constructeur qui prend des valeurs pour les attributs
+    public function __construct($idValeur, $nomRubrique, $idType, $previsionOuRealisation, $montant, $date, $validation, $idDept) {
         $this->setIdValeur($idValeur);
         $this->setNomRubrique($nomRubrique);
         $this->setIdType($idType);
@@ -20,8 +23,10 @@ class Valeur {
         $this->setMontant($montant);
         $this->setDate($date);
         $this->setValidation($validation);
+        $this->setIdDept($idDept);
         $this->conn = Flight::db();  // Connexion à la base de données
     }
+
     // Getters et Setters
     public function getIdValeur() {
         return $this->idValeur;
@@ -79,10 +84,18 @@ class Valeur {
         $this->validation = $validation;
     }
 
+    public function getIdDept() {
+        return $this->idDept;
+    }
+
+    public function setIdDept($idDept) {
+        $this->idDept = $idDept;
+    }
+
     // Méthode pour sauvegarder ou insérer la valeur dans la base de données
     public function insert() {
-        $sql = "INSERT INTO Valeur (nomRubrique, idType, previsionOuRealisation, montant, date, validation) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO Valeur (nomRubrique, idType, previsionOuRealisation, montant, date, validation, idDept) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             $this->getNomRubrique(), 
@@ -90,84 +103,82 @@ class Valeur {
             $this->getPrevisionOuRealisation(), 
             $this->getMontant(), 
             $this->getDate(), 
-            0
+            0,
+            $this->getIdDept()
         ]);
     }
 
     public static function gestionPrevisionRealisation($previsionOuRealisation) {
-        // Convertir la valeur en minuscule pour ignorer la casse
         $previsionOuRealisation = strtolower(trim($previsionOuRealisation));
         
-        // Vérifier si la valeur est numérique ou une chaîne
         if ($previsionOuRealisation === "prevision" || $previsionOuRealisation === "1") {
-            return 1;  // pour "prevision" ou "1"
+            return 1;
         } elseif ($previsionOuRealisation === "realisation" || $previsionOuRealisation === "0") {
-            return 0;  // pour "realisation" ou "0"
+            return 0;
         } else {
-            return null;  // retourne null si la valeur n'est pas valide
+            return null;
         }
     }
-    
+
     public static function getListeValeurFromCsv($filePath = "") {
         $valeurs = [];
         
-        // Ouvrir le fichier CSV en mode lecture
         if (($fileCsv = fopen($filePath, "r")) !== false) {
-            // Lire la première ligne pour obtenir les en-têtes
             $headers = fgetcsv($fileCsv, 1000, ";");
     
-            // Vérifier si les en-têtes sont valides
             if ($headers === false) {
                 echo "Erreur : impossible de lire l'entête du fichier.";
                 fclose($fileCsv);
                 return [];
             }
     
-            // Lire chaque ligne du fichier
             while (($data = fgetcsv($fileCsv, 1000, ";")) !== false) {
-                // Associer les valeurs aux en-têtes pour créer un tableau associatif
                 $row = array_combine($headers, $data);
     
-                // Nettoyer les valeurs pour supprimer les guillemets ou simples cotes
                 foreach ($row as $key => $value) {
-                    // Supprimer les guillemets ou simples cotes entourant les valeurs
-                    $row[$key] = trim($value, "'\""); // Cela enlève les guillemets ou les simples cotes
+                    $row[$key] = trim($value, "'\"");
                 }
     
-                // Utiliser la fonction gestionPrevisionRealisation pour convertir le texte en 1 ou 0
                 $previsionOuRealisationValue = Valeur::gestionPrevisionRealisation($row['previsionOuRealisation'] ?? '');
     
-                // Créer un objet Valeur pour chaque ligne et ajouter à la liste
+                // Conversion nomType → idType
+                if (isset($row['nomType']) && !isset($row['idType'])) {
+                    $type = Type::getTypeByName($row['nomType']);
+                    $row['idType'] = $type ? $type->getIdType() : null;
+                }
+    
+                // Conversion nomDept → idDept
+                if (isset($row['nomDept']) && !isset($row['idDept'])) {
+                    $departement = Departement::getDepartementByName($row['nomDept']);
+                    $row['idDept'] = $departement ? $departement->getIdDept() : null;
+                }
+    
+                // Création de l'objet Valeur avec les ID convertis
                 $valeur = new Valeur(
-                    $row['idValeur'] ?? null, // idValeur
-                    $row['nomRubrique'] ?? null, // nomRubrique
-                    $row['idType'] ?? null, // idType
-                    $previsionOuRealisationValue, // previsionOuRealisation
-                    $row['montant'] ?? null, // montant
-                    $row['date'] ?? null, // date
-                    0  // validation
+                    $row['idValeur'] ?? null,
+                    $row['nomRubrique'] ?? null,
+                    $row['idType'] ?? null,
+                    $previsionOuRealisationValue,
+                    $row['montant'] ?? null,
+                    $row['date'] ?? null,
+                    0,
+                    $row['idDept'] ?? null
                 );
                 $valeurs[] = $valeur;
-
-                // Sauvegarder la valeur dans la base de données
+    
+                // Sauvegarde en base de données
                 $valeur->insert();
             }
     
-            // Fermer le fichier après lecture
             fclose($fileCsv);
         } else {
-            // Si le fichier ne peut pas être ouvert, afficher une erreur
             echo "Erreur : impossible d'ouvrir le fichier.";
         }
     
-        // Afficher les objets pour débogage
-        // foreach ($valeurs as $val) {
-        //     print_r($val);
-        //     echo "<br>";
-        // }
-    
-        // Retourner la liste des objets Valeur
         return $valeurs;
     }
+
+    
+    
 }
 ?>
