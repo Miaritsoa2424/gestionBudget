@@ -36,8 +36,6 @@ END; //
 
 DELIMITER ;
 
-SELECT calculBenefice('2025-04-30', 1) AS beneficeDept1;
-
 -- getSoldeActuelle pour un departement
 DELIMITER //
 
@@ -62,8 +60,6 @@ BEGIN
 END //
 
 DELIMITER ;
-
-SELECT getSoldeActuelle('2025-04-30', 1) AS soldeActuelDept1;
 
 
 -- getBenefice pour un departement entre deux dates
@@ -113,5 +109,3 @@ BEGIN
 END //
 
 DELIMITER ;
-
-SELECT getSolde('2025-04-01', '2025-04-30', 1) AS soldeDept1;
