@@ -2,30 +2,31 @@
     <h1>Fiche Budgétaire
     </h1>
     <div class="controls">
-        <label for="dateDeb">Debut :</label>
-        <input type="date" name="dateDeb">
-        <label for="dateFin">Fin :</label>
-        <input type="date" name="dateFin">
+        <form action="<?= Flight::get('flight.base_url') ?>export" method="post">
+            <label for="dateDeb">Debut :</label>
+            <input type="date" name="dateDeb">
+            <label for="dateFin">Fin :</label>
+            <input type="date" name="dateFin"> 
+                
+            <select class="periode-select">
+                <option value="">Departements</option>
+                <option value="">Finance</option>
+                <option value="">IT</option>
+                <option value="">Securite</option>
+                <option value="">Ressource humaine</option>
+            </select>
 
+            <select class="periode-select">
+                <option value="">Intervalle de temps</option>
+                <option value="">Mensuelle</option>
+                <option value="">Bimestrielle</option>
+                <option value="">Trimestrielle</option>
+                <option value="">Semestrielle</option>
+            </select>
+            <button class="valider" type="submit">Valider</button>
+        </form>
+        <button class="pdf-btn"><i class="fas fa-file-pdf"></i><a href="<?= Flight::get('flight.base_url') ?>export">Exporter en PDF</a></button>
 
-        <select class="periode-select">
-            <option value="">Departements</option>
-            <option value="">Finance</option>
-            <option value="">IT</option>
-            <option value="">Securite</option>
-            <option value="">Ressource humaine</option>
-        </select>
-
-        <select class="periode-select">
-            <option value="">Intervalle de temps</option>
-            <option value="">Mensuelle</option>
-            <option value="">Bimestrielle</option>
-            <option value="">Trimestrielle</option>
-            <option value="">Semestrielle</option>
-        </select>
-        <button class="valider" type="submit">Valider</button>
-        <button class="pdf-btn" id="openPopUpCsv" style="background-color: #1ea162;"><i class="fas fa-file-csv"></i> Import Csv</button>
-        <button class="pdf-btn"><i class="fas fa-file-pdf"></i> Exporter en PDF</button>
     </div>
 </div>
 <section class="budgetSection">
