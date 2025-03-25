@@ -1,4 +1,3 @@
-
 -- Insertion de données de test
 INSERT INTO Dept (nomDept, mdp) VALUES 
 ('Finance', 'mdp123'),
@@ -20,7 +19,7 @@ INSERT INTO Type (idCategorie, nomType) VALUES
 (2, 'Fournitures'),
 (3, 'Produits vendus');
 
-INSERT INTO Valeur (nomRubrique, idType, previsionOuRealisation, montant, date, validation) VALUES 
-('Paiement des salaires', 1, 1, 5000000, '2025-03-01', TRUE),
-('Achat de papier', 2, 0, 150000, '2025-03-05', FALSE),
-('Vente de produits', 3, 1, 7000000, '2025-03-10', TRUE);
+INSERT INTO Valeur (nomRubrique, idType, idDept, previsionOuRealisation, montant, date, validation) VALUES 
+('Paiement des salaires', 1, 1, 1, 5000000, '2025-03-01', 1),
+('Achat de papier', 2, 2, 0, 150000, '2025-03-05', 0),
+('Vente de produits', 3, 3, 1, 7000000, '2025-03-10', 1);
