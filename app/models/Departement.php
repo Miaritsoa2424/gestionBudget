@@ -57,15 +57,49 @@ use PDO;
                 return $departement;
             }
             return null;
-        }   
+        }  
+
+        
+        public static function getDepartementById($id) {
+            $db = Flight::db();
+            $stmt = $db->prepare("SELECT * FROM Dept WHERE idDept = ?");
+            $stmt->execute([$id]);
+            $data = $stmt->fetch();
+    
+            if ($data) {
+                $departement = new Departement($data['idDept'],$data['nomDept']);
+                return $departement;
+            }
+            return null;
+        }  
+        public static function getAllDepartement() {
+            $db = Flight::db();
+            $stmt = $db->prepare("SELECT * FROM Dept");
+            $stmt->execute();
+            $data = $stmt->fetchAll(); // Récupérer tous les résultats
+        
+            $departements = [];
+            foreach ($data as $row) {
+                $departements[] = new Departement($row['idDept'], $row['nomDept']);
+            }
+        
+            return $departements; // Retourne une liste de départements
+        }
         
         public function getSoldeInitial() {
-            $sql = "SELECT solde_initial FROM Dept WHERE idDept = ?";
+            $sql = "SELECT montant FROM soldeInitial WHERE idDept = ?";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([$this->getIdDept()]);
             $solde = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $solde['solde_initial'];
+        
+            // Vérifier si un solde a été trouvé, sinon retourner 0
+            if ($solde) {
+                return $solde['montant'];
+            } else {
+                return 0;  // Valeur par défaut si aucun solde n'est trouvé
+            }
         }
+        
 
         public function getSoldeInitialAtDate() {
             $soldeInitial = $this->getSoldeInitial();

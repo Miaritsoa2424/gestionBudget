@@ -2,26 +2,26 @@
     <h1>Fiche Budgétaire
     </h1>
     <div class="controls">
-        <form action="<?= Flight::get('flight.base_url') ?>export" method="post">
+        <form action="budget" method="post">
             <label for="dateDeb">Debut :</label>
             <input type="date" name="dateDeb">
             <label for="dateFin">Fin :</label>
-            <input type="date" name="dateFin"> 
-                
-            <select class="periode-select">
-                <option value="">Departements</option>
-                <option value="">Finance</option>
-                <option value="">IT</option>
-                <option value="">Securite</option>
-                <option value="">Ressource humaine</option>
+            <input type="date" name="dateFin">
+
+            <select class="periode-select" name="idDept">
+                <?php
+                foreach ($departements as $departement) {
+                    echo '<option value="' . $departement->getIdDept() . '">' . $departement->getNomDept() . '</option>';
+                }
+                ?>
             </select>
 
-            <select class="periode-select">
+            <select class="periode-select" name="intervalle">
                 <option value="">Intervalle de temps</option>
-                <option value="">Mensuelle</option>
-                <option value="">Bimestrielle</option>
-                <option value="">Trimestrielle</option>
-                <option value="">Semestrielle</option>
+                <option value="1">Mensuelle</option>
+                <option value="2">Bimestrielle</option>
+                <option value="3">Trimestrielle</option>
+                <option value="6">Semestrielle</option>
             </select>
             <button class="valider" type="submit">Valider</button>
         </form>
@@ -34,7 +34,11 @@
         <button class="prev" id="openPopUpPrev"><i class="fas fa-plus-circle"></i> Ajout Prévision</button>
         <!-- Pagination Controls -->
         <div id="paginationControls">
-            <h2>Janvier 2025 - Mars 2025</h2>
+            <h2>
+                <?php if (isset($datDeb) && isset($dateFin)) {
+                    echo date('F Y', strtotime($datDeb)) . ' - ' . date('F Y', strtotime($dateFin));
+                }
+                ?></h2>
             <div class="direction">
                 <button id="prevPage" onclick="changePage(-1)"> <i class="fas fa-arrow-left"></i><span>Précédent</span></button>
                 <span id="pageNumber">Page 1</span>
@@ -46,53 +50,48 @@
 
     <!-- Conteneur des tables pour pagination -->
     <div id="tablesContainer">
-        <?php for ($i = 0; $i < 9; $i++) { // 9 tables au total 
+        <?php $soldeFin = 0 ;
+        $soldeDebut = $soldeInitial;?>
+        <?php if (isset($tablesData)) {
+            foreach ($tablesData as $i => $table) { ?>
+                <div class="tablePage">
+                    <table>
+                        <tr>
+                            <th rowspan="2">Rubrique</th>
+                            <th colspan="3"><?= $table['mois'] ?></th>
+                        </tr>
+                        <tr>
+                            <th>Prévision</th>
+                            <th>Réalisation</th>
+                            <th>Écart</th>
+                        </tr>
+                        <?= $table['totalRecettes'] ?>
+                        <tr class="numberRow">
+                            <td>Solde debut</td>
+                            <td colspan="3" class="cellNumber"><?= $soldeDebut ?></td>
+
+                        </tr>
+                        <?php foreach ($table['data'] as $row) { ?>
+                            <tr class="numberRow">
+                                <td><?= $row['rubrique'] ?></td>
+                                <td class="cellNumber"><?= $row['prevision'] ?></td>
+                                <td class="cellNumber"><?= $row['realisation'] ?></td>
+                                <td class="cellNumber"><?= $row['prevision'] - $row['realisation'] ?></td>
+                            </tr>
+                        <?php } ?>
+                        <?php $soldeFin = $soldeDebut + $table['totalRecettes'] - $table['totalDepenses']; ?>
+                        <tr class="numberRow">
+                            <td>Solde fin</td>
+                            <td colspan="3" class="cellNumber"><?= $soldeFin ?></td>
+                        </tr>
+                        <?php $soldeDebut = $soldeFin; ?>
+                    </table>
+                </div>
+        <?php }
+        }
         ?>
-            <div class="tablePage">
-                <table>
-                    <tr>
-                        <th rowspan="2">Rubrique</th>
-                        <th colspan="3">Janvier 2025(table numero:<?= $i ?>)</th>
-                    </tr>
-                    <tr>
-                        <th>Prevision</th>
-                        <th>Realisation</th>
-                        <th>Écart</th>
-                    </tr>
-                    <tr class="numberRow">
-                        <td>Solde début</td>
-                        <td class="cellNumber">1000</td>
-                        <td class="cellNumber">900</td>
-                        <td class="cellNumber">1000 - 900</td>
-                    </tr>
-                    <tr class="numberRow">
-                        <td>Alimentation</td>
-                        <td class="cellNumber">1000</td>
-                        <td class="cellNumber">900</td>
-                        <td class="cellNumber">1000 - 900</td>
-                    </tr>
-                    <tr class="numberRow">
-                        <td>Transport</td>
-                        <td class="cellNumber">1000</td>
-                        <td class="cellNumber">900</td>
-                        <td class="cellNumber">1000 - 900</td>
-                    </tr>
-                    <tr class="numberRow">
-                        <td>Logement</td>
-                        <td class="cellNumber">1000</td>
-                        <td class="cellNumber">900</td>
-                        <td class="cellNumber">1000 - 900</td>
-                    </tr>
-                    <tr class="numberRow">
-                        <td>Solde fin</td>
-                        <td class="cellNumber">1000</td>
-                        <td class="cellNumber">900</td>
-                        <td class="cellNumber">1000 - 900</td>
-                    </tr>
-                </table>
-            </div>
-        <?php } ?>
     </div>
+
 
     <?php include 'prevForm.php'; ?>
     <?php include 'realForm.php'; ?>

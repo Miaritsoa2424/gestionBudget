@@ -40,6 +40,8 @@ $router->group('/validation', function (Router $router) {
 
 $BudgetController = new BudgetController();
 $router->get('/budget',[$BudgetController,'getBudget']);
+$router->post('/budget',[$BudgetController,'getBudget']);
+
 
 
 $PdfController = new PdfController();

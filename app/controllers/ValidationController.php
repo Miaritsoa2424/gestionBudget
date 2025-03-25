@@ -9,8 +9,6 @@ class ValidationController {
 	public function getListValidation() {
 
         $validation = new Validation();
-
-
         $data = [
             'page' => 'validation',
             'validations' => $validation->getAllValidation()
