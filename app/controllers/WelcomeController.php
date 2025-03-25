@@ -11,10 +11,14 @@ class WelcomeController {
 
 	}
 
-	public function home() {
+	public function test() {
         $texte = "Bienvenue sur notre site de gestion de budget";
         $data = ['page' => 'accueil','text' => $texte];
-        Flight::render('template', $data);
+        Flight::render('test', $data);
+    }
+
+    public function home() {
+        Flight::render('template', []);
     }
 
   
