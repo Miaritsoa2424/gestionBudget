@@ -45,6 +45,19 @@ use PDO;
             }
             return null; // Échec de connexion
         }
+
+        public static function getDepartementByName($nom) {
+            $db = Flight::db();
+            $stmt = $db->prepare("SELECT * FROM Departement WHERE nom_dept = ?");
+            $stmt->execute([$nom]);
+            $data = $stmt->fetch();
+    
+            if ($data) {
+                $departement = new Departement($data['id_dept'],$data['nom_dept']);
+                return $departement;
+            }
+            return null;
+        }
         
     }
 ?>
