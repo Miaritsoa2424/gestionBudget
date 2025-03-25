@@ -1,0 +1,133 @@
+.navigationTable {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.navigationTable h1 {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+
+.navigationTable h1 i {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 14px;
+  width: 200px;
+}
+
+.search-input,
+input[type=date],
+.periode-select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 14px;
+}
+
+.sort-select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.pdf-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.pdf-btn i {
+  margin-right: 5px;
+}
+
+.pdf-btn:hover {
+  background-color: #c82333;
+}
+
+.validationList .table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.validationList .table-controls input, .validationList .table-controls button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.validationList .table-controls button {
+  background-color: #007BFF;
+  color: white;
+}
+.validationList .table-container {
+  width: 90%;
+  margin: 20px auto;
+  overflow-x: auto;
+}
+.validationList table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.validationList th,
+.validationList td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+.validationList th {
+  background-color: #333;
+  color: white;
+}
+.validationList .thAction {
+  width: 10%;
+}
+.validationList .action-buttons {
+  display: flex;
+  gap: 5px;
+}
+.validationList .action-buttons button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+.validationList .action-buttons .edit-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+.validationList .action-buttons .delete-btn {
+  background-color: #f44336;
+  color: white;
+}/*# sourceMappingURL=validation.css.map */
