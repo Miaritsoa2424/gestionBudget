@@ -1,11 +1,11 @@
 <div class="prevForm" id="prevForm">
-        <form action="doLogin" method="POST">
+        <form action="<?= Flight::get('flight.base_url') ?>/valeur/savePrevision" method="POST">
             <fieldset>
                 <h1>Ajout de prevision</h1>
                 <label for="budget">Type</label>
-                    <select name="" id="">
-                        <option value="">Achat de materiel de bureau</option>
-                        <option value="">Vente de sable</option>
+                    <select name="type" id="budget">
+                        <option value="1">Achat de materiel de bureau</option>
+                        <option value="2">Vente de sable</option>
                     </select>
 
                 <input type="hidden" name="prevPrev" value="1">
