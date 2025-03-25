@@ -1,6 +1,5 @@
 <div class="navigationTable">
     <h1>Fiche Budgétaire
-        <i class="fas fa-wallet"></i>
     </h1>
     <div class="controls">
         <label for="dateDeb">Debut :</label>
@@ -25,6 +24,7 @@
             <option value="">Semestrielle</option>
         </select>
         <button class="valider" type="submit">Valider</button>
+        <button class="pdf-btn" id="openPopUpCsv" style="background-color: #1ea162;"><i class="fas fa-file-csv"></i> Import Csv</button>
         <button class="pdf-btn"><i class="fas fa-file-pdf"></i> Exporter en PDF</button>
     </div>
 </div>
@@ -95,10 +95,9 @@
 
     <?php include 'prevForm.php'; ?>
     <?php include 'realForm.php'; ?>
-
-
-
+    <?php include 'csvForm.php'; ?>
 
 </section>
 <script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/budget_next.js"></script>
 <script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/pop_up_real_prev.js"></script>
+<script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/pop_up_csv.js"></script>
