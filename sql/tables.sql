@@ -38,3 +38,12 @@ CREATE TABLE Valeur (
     validation BOOLEAN NOT NULL,
     FOREIGN KEY (idType) REFERENCES Type(idType)
 );
+
+CREATE TABLE soldeInitial (
+    idSolde INT PRIMARY KEY AUTO_INCREMENT,
+    idDept INT NOT NULL,
+    montant DECIMAL(15,2) NOT NULL,
+    dateInsertion DATE NOT NULL,
+    FOREIGN KEY (idDept) REFERENCES departement(idDept) ON DELETE CASCADE
+);
+
