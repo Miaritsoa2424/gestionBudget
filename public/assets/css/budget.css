@@ -1,0 +1,16 @@
+.budgetSection table {
+  border-collapse: collapse;
+  width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.budgetSection th, .budgetSection td {
+  border: 1px solid black;
+  padding: 8px;
+}
+.budgetSection th {
+  background-color: #f2f2f2;
+}
+.budgetSection .numberRow .cellNumber {
+  text-align: right;
+}/*# sourceMappingURL=budget.css.map */
