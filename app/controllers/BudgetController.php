@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Departement;
 use app\models\AffichageBudjetPeriode;
+use app\models\Type;
 use Flight;
 
 class BudgetController
@@ -15,6 +16,7 @@ class BudgetController
       $dateFin = Flight::request()->data->dateFin;
       $idDept = Flight::request()->data->idDept;
       $intervalle = Flight::request()->data->intervalle;
+      $types = Type::getAllType();
 
       // Vérifier si toutes les données sont bien remplies
       if (!empty($dateDeb) && !empty($dateFin) && !empty($idDept) && !empty($intervalle)) {
@@ -50,14 +52,14 @@ class BudgetController
          }
 
          // Envoi des données à la vue
-         $data = ['page' => 'budget', 'tablesData' => $tablesData, 'departements' => $departements,'soldeInitial' => $budgetInitial,'datDeb' => $dateDeb,'dateFin' => $dateFin];
+         $data = ['page' => 'budget', 'tablesData' => $tablesData, 'departements' => $departements,'soldeInitial' => $budgetInitial,'datDeb' => $dateDeb,'dateFin' => $dateFin,'types' => $types];
          Flight::render('template', $data);
          return;
       }
 
       // Si les données sont incomplètes, on affiche la page sans tableau
       $departements = Departement::getAllDepartement();
-      $data = ['page' => 'budget', 'departements' => $departements];
+      $data = ['page' => 'budget', 'departements' => $departements,'types' => $types];
       Flight::render('template', $data);
    }
 }

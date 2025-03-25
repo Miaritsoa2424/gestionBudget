@@ -76,7 +76,7 @@
                                 <td><?= $row['rubrique'] ?></td>
                                 <td class="cellNumber"><?= $row['prevision'] ?></td>
                                 <td class="cellNumber"><?= $row['realisation'] ?></td>
-                                <td class="cellNumber"><?= $row['prevision'] - $row['realisation'] ?></td>
+                                <td class="cellNumber"><?= $row['realisation'] - $row['prevision'] ?></td>
                             </tr>
                         <?php } ?>
                         <?php $soldeFin = $soldeDebut + $table['totalRecettes'] - $table['totalDepenses']; ?>

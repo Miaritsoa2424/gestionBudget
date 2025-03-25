@@ -119,6 +119,7 @@ class AffichageBudjetPeriode {
                 JOIN Type ON Valeur.idType = Type.idType 
                 JOIN Categorie ON Type.idCategorie = Categorie.idCategorie
                 WHERE Valeur.idDept = :idDept 
+                  AND Valeur.validation = 1
                   AND YEAR(Valeur.date) = :annee 
                   AND MONTH(Valeur.date) = :mois 
                 GROUP BY Valeur.idType, Type.nomType";
@@ -151,6 +152,7 @@ class AffichageBudjetPeriode {
             JOIN Type ON Valeur.idType = Type.idType 
             JOIN Categorie ON Type.idCategorie = Categorie.idCategorie
             WHERE Valeur.idDept = :idDept 
+                AND Valeur.validation = 1
               AND YEAR(Valeur.date) = :annee 
               AND MONTH(Valeur.date) = :mois";
 
