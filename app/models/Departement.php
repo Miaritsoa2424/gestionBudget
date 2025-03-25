@@ -1,5 +1,5 @@
 <?php
-    namespace app\models;
+namespace app\models;
 
 use Flight;
 use PDO;
@@ -48,16 +48,33 @@ use PDO;
 
         public static function getDepartementByName($nom) {
             $db = Flight::db();
-            $stmt = $db->prepare("SELECT * FROM Departement WHERE nom_dept = ?");
+            $stmt = $db->prepare("SELECT * FROM Dept WHERE nomDept = ?");
             $stmt->execute([$nom]);
             $data = $stmt->fetch();
     
             if ($data) {
-                $departement = new Departement($data['id_dept'],$data['nom_dept']);
+                $departement = new Departement($data['idDept'],$data['nomDept']);
                 return $departement;
             }
             return null;
-        }
+        }   
         
+        public function getSoldeInitial() {
+            $sql = "SELECT solde_initial FROM Dept WHERE idDept = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$this->getIdDept()]);
+            $solde = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $solde['solde_initial'];
+        }
+
+        public function getSoldeInitialAtDate() {
+            $soldeInitial = $this->getSoldeInitial();
+
+
+        }
+
+
+        
+
     }
 ?>
