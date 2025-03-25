@@ -1,10 +1,10 @@
 <div class="csvForm" id="csvForm">
-        <form action="doLogin" method="POST">
+        <form action="importer" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <h1>Importation d'un fichier CSV</h1>
                
                 <label for="montantPrev">Fichier csv : </label>
-                <input type="file" name="montant" id="montantPrev" placeholder="Selectionner un fichier csv">
+                <input type="file" name="filePath" id="montantPrev" placeholder="Selectionner un fichier csv">
 
                 <button type="submit">Importer</button>
                 <button id="closePopUpCsv" type="reset">Quitter</button>
