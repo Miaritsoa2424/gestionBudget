@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/validation.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/budget.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/formPrevReal.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/formCsv.css">
 
     <style>
 

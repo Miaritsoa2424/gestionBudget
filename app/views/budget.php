@@ -95,10 +95,9 @@
 
     <?php include 'prevForm.php'; ?>
     <?php include 'realForm.php'; ?>
-
-
-
+    <?php include 'csvForm.php'; ?>
 
 </section>
 <script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/budget_next.js"></script>
 <script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/pop_up_real_prev.js"></script>
+<script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/pop_up_csv.js"></script>
