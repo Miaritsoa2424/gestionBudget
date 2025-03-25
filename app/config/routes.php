@@ -5,6 +5,7 @@ use app\controllers\FormController;
 use app\controllers\ValidationController;
 use app\controllers\WelcomeController;
 use app\controllers\BudgetController;
+use app\controllers\PdfController;
 
 use flight\Engine;
 use flight\net\Router;
@@ -34,7 +35,8 @@ $router->get('/validation',[$validationController,'getListValidation']);
 $BudgetController = new BudgetController();
 $router->get('/budget',[$BudgetController,'getBudget']);
 
-
+$PdfController = new PdfController();
+$router->post('/export',[$PdfController,'exportPDF']);
 
 
 
