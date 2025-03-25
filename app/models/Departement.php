@@ -57,9 +57,6 @@ use PDO;
                 return $departement;
             }
             return null;
-        }
-
-        public static fn
-        
+        }        
     }
 ?>
