@@ -57,6 +57,24 @@ use PDO;
                 return $departement;
             }
             return null;
-        }        
+        }   
+        
+        public function getSoldeInitial() {
+            $sql = "SELECT solde_initial FROM Departement WHERE id_dept = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$this->getIdDept()]);
+            $solde = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $solde['solde_initial'];
+        }
+
+        public function getSoldeInitialAtDate() {
+            $soldeInitial = $this->getSoldeInitial();
+
+
+        }
+
+
+        
+
     }
 ?>

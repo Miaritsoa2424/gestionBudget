@@ -46,6 +46,6 @@ CREATE TABLE soldeInitial (
     idDept INT NOT NULL,
     montant DECIMAL(15,2) NOT NULL,
     dateInsertion DATE NOT NULL,
-    FOREIGN KEY (idDept) REFERENCES departement(idDept) ON DELETE CASCADE
+    FOREIGN KEY (idDept) REFERENCES Dept(idDept)
 );
 
