@@ -30,7 +30,7 @@
 </div>
 <section class="budgetSection">
     <div class="enTeteTable">
-        <button class="prev"><i class="fas fa-plus-circle"></i> Ajout Prévision</button>
+        <button class="prev" id="openPopUpPrev"><i class="fas fa-plus-circle"></i> Ajout Prévision</button>
         <!-- Pagination Controls -->
         <div id="paginationControls">
             <h2>Janvier 2025 - Mars 2025</h2>
@@ -40,7 +40,7 @@
                 <button id="nextPage" onclick="changePage(1)"><span>Suivant</span><i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
-        <button class="real"><i class="fas fa-check-circle"></i> Ajout Réalisation</button>
+        <button class="real" id="openPopUpReal"><i class="fas fa-check-circle"></i> Ajout Réalisation</button>
     </div>
 
     <!-- Conteneur des tables pour pagination -->
@@ -93,43 +93,12 @@
         <?php } ?>
     </div>
 
+    <?php include 'prevForm.php'; ?>
+    <?php include 'realForm.php'; ?>
+
+
+
 
 </section>
-
-<script>
-    let currentPage = 1;
-    const rowsPerPage = 1; // Une table par page
-    const tables = document.querySelectorAll('.tablePage'); // Récupère toutes les tables
-    const totalPages = Math.ceil(tables.length / rowsPerPage); // Calcul du nombre total de pages
-
-    // Affiche la table correspondant à la page actuelle
-    function displayTable(page) {
-        const start = (page - 1) * rowsPerPage;
-        const end = start + rowsPerPage;
-
-        // Masquer toutes les tables
-        tables.forEach((table, index) => {
-            if (index >= start && index < end) {
-                table.style.display = 'block';
-            } else {
-                table.style.display = 'none';
-            }
-        });
-
-        // Met à jour le texte de la page
-        document.getElementById('pageNumber').innerText = `Page ${page}`;
-    }
-
-    // Fonction pour changer de page
-    function changePage(direction) {
-        const newPage = currentPage + direction;
-
-        if (newPage >= 1 && newPage <= totalPages) {
-            currentPage = newPage;
-            displayTable(currentPage);
-        }
-    }
-
-    // Initialisation
-    displayTable(currentPage);
-</script>
+<script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/budget_next.js"></script>
+<script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/pop_up_real_prev.js"></script>

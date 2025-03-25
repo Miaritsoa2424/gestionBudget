@@ -8,12 +8,14 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    
 }
 .valider:hover{
     background-color: #0b7dda;
 }
 .budgetSection{
     height: 65vh;
+    z-index: 1000;
     table {
         border-collapse: collapse;
         width: 98%;
