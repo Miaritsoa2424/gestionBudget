@@ -1,6 +1,5 @@
 <div class="navigationTable">
     <h1>Fiche Budgétaire
-        <i class="fas fa-wallet"></i>
     </h1>
     <div class="controls">
         <form action="<?= Flight::get('flight.base_url') ?>export" method="post">
@@ -27,6 +26,7 @@
             <button class="valider" type="submit">Valider</button>
         </form>
         <button class="pdf-btn"><i class="fas fa-file-pdf"></i><a href="<?= Flight::get('flight.base_url') ?>export">Exporter en PDF</a></button>
+
     </div>
 </div>
 <section class="budgetSection">
@@ -96,10 +96,9 @@
 
     <?php include 'prevForm.php'; ?>
     <?php include 'realForm.php'; ?>
-
-
-
+    <?php include 'csvForm.php'; ?>
 
 </section>
 <script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/budget_next.js"></script>
 <script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/pop_up_real_prev.js"></script>
+<script src="<?= Flight::get('flight.base_url') ?>/public/assets/js/pop_up_csv.js"></script>

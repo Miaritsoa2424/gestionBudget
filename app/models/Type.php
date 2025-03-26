@@ -1,4 +1,7 @@
 <?php
+namespace app\models;
+use Flight; 
+use PDO;
 class Type {
     private $idType;
     private $idCategorie;

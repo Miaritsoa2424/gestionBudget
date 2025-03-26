@@ -2,6 +2,7 @@
 <?php
 
 use app\controllers\FormController;
+use app\controllers\ValeurController;
 use app\controllers\ValidationController;
 use app\controllers\WelcomeController;
 use app\controllers\BudgetController;
@@ -10,12 +11,13 @@ use app\controllers\PdfController;
 use flight\Engine;
 use flight\net\Router;
 use app\controllers\DepartementController;
+use app\controllers\ValeurController;
 
 /** 
  * @var Router $router 
  * @var Engine $app
  */
-
+$valeurController = new ValeurController();
 
 $Welcome_Controller = new WelcomeController();
 $router->get('/', [$Welcome_Controller, 'home']);
@@ -25,6 +27,8 @@ $router->group('/departement', function (Router $router) {
     $router->get('/', [$departementController, 'getFormulaireLogin']);
     $router->post('/doLogin', [$departementController, 'doLogin']);
 });
+
+$router->post('/importer', [$valeurController, 'doImportCSV']);
 
 $FormController = new FormController();
 $router->get('/login',[$FormController,'login']);
@@ -38,5 +42,8 @@ $router->get('/budget',[$BudgetController,'getBudget']);
 $PdfController = new PdfController();
 $router->post('/export',[$PdfController,'exportPDF']);
 
-
-
+$router->group('/valeur',function (Router $router)  {
+    $valeurController = new ValeurController();
+    $router->post('/savePrevision',[$valeurController,'savePrevision']);
+    $router->post('/saveRealisation',[$valeurController,'saveRealisation']);
+});
