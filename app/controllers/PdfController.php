@@ -10,6 +10,7 @@ class PdfController {
         $db = Flight::db();
         $dateDebut = Flight::request()->data->dateDeb;
         $dateFin = Flight::request()->data->dateFin;
+        $dept = Flight::request()->data->idDept;
 
         // Vérifier si les dates sont valide
         if (!$dateDebut || !$dateFin) {
@@ -50,14 +51,15 @@ class PdfController {
                     SUM(CASE WHEN previsionOuRealisation = 0 THEN montant ELSE 0 END) AS prevision,
                     SUM(CASE WHEN previsionOuRealisation = 1 THEN montant ELSE 0 END) AS realisation
                 FROM Valeur 
-                WHERE YEAR(date) = :year AND MONTH(date) = :month AND validation = 1
+                WHERE YEAR(date) = :year AND MONTH(date) = :month AND validation = 1 AND WHERE idDept = :idDept
                 GROUP BY nomRubrique
                 ORDER BY nomRubrique ASC
             ";
             $stmt = $db->prepare($query);
             $stmt->execute([
                 ':year' => $year,
-                ':month' => $month
+                ':month' => $month,
+                ':idDept' => $dept
             ]);
             $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
