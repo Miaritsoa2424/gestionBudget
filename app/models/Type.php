@@ -41,6 +41,18 @@ class Type {
         $this->nomType = $nomType;
     }
 
+    public static function getAll() {
+        $sql = "SELECT * FROM Type";
+        $conn = Flight::db();
+        $stmt = $conn->query($sql);
+        $types = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $type = new Type($row['idType'], $row['idCategorie'], $row['nomType']);
+            $types[] = $type;
+        }
+        return $types;
+    }
+
     // Méthode pour obtenir un type par son nom
     public static function getTypeByName($nomType) {
         $sql = "SELECT * FROM Type WHERE nomType = ?";
