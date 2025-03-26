@@ -68,8 +68,30 @@
             $idType = Flight::request()->data->type;
             $montant = Flight::request()->data->montant;
             $idDept = $_SESSION['idDept'];
-            $date = date('Y-m-d'); // Date actuelle
+            $date = Flight::request()->data->dateReal; // Date actuelle
             $previsionOuRealisation = 1; // Réalisation (0)
+            $validation = 0; // Validé par défaut
+
+            // Créer un objet Valeur
+            $valeur = new Valeur(0, $nomRubrique, $idType, $previsionOuRealisation, $montant, $date, $validation, $idDept);
+
+            // Sauvegarder dans la base de données
+            if ($valeur->insert()) {
+                Flight::redirect('budget');
+            } else {
+                echo "Erreur lors de l'ajout de la réalisation.";
+            }
+
+        }
+
+        public function savePrevision() {
+            // Récupérer les données du formulaire
+            $nomRubrique = Flight::request()->data->nature;
+            $idType = Flight::request()->data->type;
+            $montant = Flight::request()->data->montant;
+            $idDept = $_SESSION['idDept'];
+            $date = Flight::request()->data->datePrev; // Date actuelle
+            $previsionOuRealisation = 0; // Réalisation (0)
             $validation = 0; // Validé par défaut
 
             // Créer un objet Valeur

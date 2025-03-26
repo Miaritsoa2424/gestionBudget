@@ -18,6 +18,7 @@ use app\controllers\DepartementController;
 $valeurController = new ValeurController();
 // $router->post('/valeur/savePrevision', [$valeurController, 'savePrevision']);
 $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
+$router->post('/savePrevision', [$valeurController, 'savePrevision']);
 
 // $Welcome_Controller = new WelcomeController();
 // $router->get('/', [$Welcome_Controller, 'home']);
