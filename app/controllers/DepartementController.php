@@ -20,6 +20,9 @@ class DepartementController
     public function doLogin()
     {
         $dept = Departement::login(Flight::request()->data->nomDept, Flight::request()->data->mdp);
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         if ($dept) {
             $_SESSION['idDept'] = $dept->getIdDept();
             Flight::render('template');
