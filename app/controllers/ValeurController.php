@@ -20,11 +20,11 @@
                 $valeurs = Valeur::getListeValeurFromCsv($file_path);
     
                 // Redirection ou retour après l'importation
-                Flight::redirect('/valeur/liste');
+                Flight::redirect('/budget');
             } else {
                 // Si le fichier n'a pas été trouvé ou téléchargé, on affiche une erreur
                 Flight::flash('error', 'Aucun fichier téléchargé.');
-                Flight::redirect('/valeur/import');
+                Flight::redirect('/import');
             }
         }
 
