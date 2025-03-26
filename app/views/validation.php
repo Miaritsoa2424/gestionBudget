@@ -25,17 +25,21 @@
             </tr>
         </thead>
         <tbody>
-            <?php for ($i=0; $i < 20; $i++) { ?>
+            <?php foreach ($validations as $validation) { ?>
                 <tr>
-                    <td>Finance</td>
-                    <td>Carburant</td>
-                    <td>2025-03-25</td>
-                    <td>Recette</td>
-                    <td>100 000 MGA</td>
+                    <td><?= htmlspecialchars($validation['nomDept']) ?></td>
+                    <td><?= htmlspecialchars($validation['nomRubrique']) ?></td>
+                    <td><?= htmlspecialchars($validation['date']) ?></td>
+                    <td><?= $validation['recetteOuDepense'] == 0 ? "Recette" : "Dépense" ?></td>
+                    <td><?= number_format($validation['montant'], 2, ',', ' ') ?> MGA</td>
                     <td class="action-buttons">
-                        <button class="edit-btn">Details</button>
-                        <button class="edit-btn">Valider</button>
-                        <button class="delete-btn">Refuser</button>
+                        <a href="#"><button class="edit-btn">Details</button></a>
+                        <a href="<?= Flight::get('flight.base_url') ?>/validation/valider/<?= $validation['idValeur'] ?>">
+                            <button class="edit-btn">Valider</button>
+                        </a>
+                        <a href="<?= Flight::get('flight.base_url') ?>/validation/refuser/<?= $validation['idValeur'] ?>">
+                            <button class="delete-btn">Refuser</button>
+                        </a>
                     </td>
                 </tr>
             <?php } ?>

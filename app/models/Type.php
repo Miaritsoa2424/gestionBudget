@@ -82,5 +82,21 @@ class Type {
         }
         return false;
     }
+    public static function getAllType() {
+        $sql = "SELECT * FROM Type";
+        $conn = Flight::db();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+    
+        // Utiliser fetchAll() pour récupérer les résultats sous forme de tableau associatif
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        if ($rows) {
+            return $rows; // Retourner directement le tableau de résultats
+        }
+    
+        return false;
+    }
+    
 }
 ?>
