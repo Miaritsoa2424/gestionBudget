@@ -53,7 +53,7 @@
 
 
             // Créer un objet Valeur
-            $valeur = new Valeur(null, $nomRubrique, $idType, $previsionOuRealisation, $montant, $date, $validation, null);
+            $valeur = new Valeur(null, $nomRubrique, $idType, $previsionOuRealisation, $montant, $date, $validation, $idDept);
 
             // Sauvegarder dans la base de données
             if ($valeur->insert()) {
@@ -73,9 +73,11 @@
             $date = date('Y-m-d'); // Date actuelle
             $previsionOuRealisation = 1; // Réalisation (0)
             $validation = 1; // Validé par défaut
+            $idDept = Flight::request()->data->idDept;
+
 
             // Créer un objet Valeur
-            $valeur = new Valeur(null, $nomRubrique, $idType, $previsionOuRealisation, $montant, $date, $validation);
+            $valeur = new Valeur(null, $nomRubrique, $idType, $previsionOuRealisation, $montant, $date, $validation,$idDept);
 
             // Sauvegarder dans la base de données
             if ($valeur->insert()) {
