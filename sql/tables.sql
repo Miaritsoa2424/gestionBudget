@@ -1,4 +1,6 @@
+DROP DATABASE IF EXISTS gestion;
 CREATE DATABASE IF NOT EXISTS gestion;
+
 USE gestion;
 -- Création des tables
 CREATE TABLE Dept (
