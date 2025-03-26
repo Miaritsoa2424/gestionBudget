@@ -103,7 +103,7 @@ class Valeur {
             $this->getPrevisionOuRealisation(), 
             $this->getMontant(), 
             $this->getDate(), 
-            0,
+            $this->getValidation(),
             $this->getIdDept()
         ]);
     }
