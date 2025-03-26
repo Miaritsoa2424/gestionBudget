@@ -25,7 +25,8 @@
             </select>
             <button class="valider" type="submit">Valider</button>
         </form>
-        <button class="pdf-btn"><i class="fas fa-file-pdf"></i><a href="<?= Flight::get('flight.base_url') ?>export">Exporter en PDF</a></button>
+        <button class="pdf-btn" id="openPopUpCsv"><i class="fas fa-file-"></i>Importer</button>
+        <button class="pdf-btn"><i class="fas fa-file-pdf"></i><a href="<?= Flight::get('flight.base_url') ?>/export">Exporter en PDF</a></button>
 
     </div>
 </div>
