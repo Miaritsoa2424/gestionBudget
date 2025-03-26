@@ -50,9 +50,9 @@
 
     <!-- Conteneur des tables pour pagination -->
     <div id="tablesContainer">
-        <?php $soldeFin = 0 ;
-        $soldeDebut = $soldeInitial;?>
         <?php if (isset($tablesData)) {
+        $soldeFin = 0 ;
+        $soldeDebut = $soldeInitial;
             foreach ($tablesData as $i => $table) { ?>
                 <div class="tablePage">
                     <table>

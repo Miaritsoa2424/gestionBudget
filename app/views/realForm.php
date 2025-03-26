@@ -1,5 +1,5 @@
 <div class="realForm" id="realForm">
-        <form action="/valeur/saveRealisation" method="POST">
+        <form action="saveRealisation" method="POST">
             <fieldset>
                 <h1>Ajout de realisation</h1>
 

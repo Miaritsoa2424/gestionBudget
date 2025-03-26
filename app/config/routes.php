@@ -16,20 +16,20 @@ use app\controllers\DepartementController;
  * @var Engine $app
  */
 $valeurController = new ValeurController();
+// $router->post('/valeur/savePrevision', [$valeurController, 'savePrevision']);
+$router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
 
-$Welcome_Controller = new WelcomeController();
-$router->get('/', [$Welcome_Controller, 'home']);
+// $Welcome_Controller = new WelcomeController();
+// $router->get('/', [$Welcome_Controller, 'home']);
 
-$router->group('/departement', function (Router $router) {
-    $departementController = new DepartementController();
-    $router->get('/', [$departementController, 'getFormulaireLogin']);
-    $router->post('/doLogin', [$departementController, 'doLogin']);
-});
+$departementController = new DepartementController();
+$router->get('/', [$departementController, 'getFormulaireLogin']);
+$router->post('/doLogin', [$departementController, 'doLogin']);
 
 $router->post('/importer', [$valeurController, 'doImportCSV']);
 
 $FormController = new FormController();
-$router->get('/login',[$FormController,'login']);
+$router->get('/login', [$FormController, 'login']);
 
 $router->group('/validation', function (Router $router) {
     $validationController = new ValidationController();
@@ -39,17 +39,16 @@ $router->group('/validation', function (Router $router) {
 });
 
 $BudgetController = new BudgetController();
-$router->get('/budget',[$BudgetController,'getBudget']);
-$router->post('/budget',[$BudgetController,'getBudget']);
+$router->get('/budget', [$BudgetController, 'getBudget']);
+$router->post('/budget', [$BudgetController, 'getBudget']);
 
 
 
 $PdfController = new PdfController();
-$router->post('/export',[$PdfController,'exportPDF']);
+$router->post('/export', [$PdfController, 'exportPDF']);
 
-$router->group('/valeur',function (Router $router)  {
+$router->group('/valeur', function (Router $router) {
     $valeurController = new ValeurController();
-    $router->post('/savePrevision',[$valeurController,'savePrevision']);
-    $router->post('/saveRealisation',[$valeurController,'saveRealisation']);
+    $router->post('/savePrevision', [$valeurController, 'savePrevision']);
+    $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
 });
-
