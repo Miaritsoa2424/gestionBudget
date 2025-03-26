@@ -32,14 +32,15 @@ CREATE TABLE Valeur (
     idValeur INT PRIMARY KEY AUTO_INCREMENT,
     nomRubrique VARCHAR(100) NOT NULL,
     idType INT NOT NULL,
-    idDept INT NOT NULL, -- Nouvelle colonne ajoutée
-    previsionOuRealisation TINYINT(1) NOT NULL CHECK (previsionOuRealisation IN (0, 1)),
+    idDept INT NOT NULL,
+    previsionOuRealisation TINYINT(1) NOT NULL,
     montant DECIMAL(15,2) NOT NULL,
     date DATE NOT NULL,
     validation TINYINT(1) NOT NULL,
     FOREIGN KEY (idType) REFERENCES Type(idType),
-    FOREIGN KEY (idDept) REFERENCES Dept(idDept) -- Clé étrangère ajoutée
+    FOREIGN KEY (idDept) REFERENCES Dept(idDept)
 );
+
 
 CREATE TABLE soldeInitial (
     idSolde INT PRIMARY KEY AUTO_INCREMENT,
