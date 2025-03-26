@@ -1,5 +1,5 @@
 <div class="prevForm" id="prevForm">
-        <form action="<?= Flight::get('flight.base_url') ?>/valeur/savePrevision" method="POST">
+        <form action="savePrevision" method="POST">
             <fieldset>
                 <h1>Ajout de prevision</h1>
                 <label for="budget">Type</label>
