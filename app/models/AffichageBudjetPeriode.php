@@ -6,10 +6,11 @@ use Flight;
 use PDO;
 
 class AffichageBudjetPeriode {
-    function getSoldeActuelle($pdo, $dateDebut, $idDept) {
+    function getSoldeActuelle($dateDebut, $idDept) {
         try {
+            $conn = Flight::db();
             $sql = "SELECT getSoldeActuelle('$dateDebut', $idDept) AS solde";
-            $stmt = $pdo->query($sql);
+            $stmt = $conn->query($sql);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             
             return $result ? $result['solde'] : 0;
