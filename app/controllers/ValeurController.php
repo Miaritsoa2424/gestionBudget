@@ -49,7 +49,8 @@
             $date = date('Y-m-d'); // Date actuelle
             $previsionOuRealisation = 0; // Prévision (1)
             $validation = 0; // Non validé par défaut
-            
+            $idDept = Flight::request()->data->idDept;
+
 
             // Créer un objet Valeur
             $valeur = new Valeur(null, $nomRubrique, $idType, $previsionOuRealisation, $montant, $date, $validation, null);
