@@ -1,0 +1,14 @@
+Ajout de table produit,client,vente,crm dans la base (ok)
+Ajout de Categorie CRM dans les donnees et ajout de donnees de test (ok)
+
+    -back:
+        -check valeur de CRM du departement 
+            -valeurCRM = getResteCRMValue(idDept,date){sommePrevisionCRM - sommeRealisationCRMValide}
+        -si valeur inferieur a valeurCRM
+            -insertRealisation sans demander de validation
+            -insertVente
+        -si valeur superieur a valeurCRM
+            -insertRealisation demandant une validation
+
+    -front
+        -Creation de formulaire de CRM(departement,crm,Valeur,date)
