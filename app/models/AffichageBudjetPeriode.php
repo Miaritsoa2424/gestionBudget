@@ -4,11 +4,25 @@ namespace app\Models;
 
 use DateTime;
 use Flight;
+use PDO;
 
-class AffichageBudjetPeriode
-{
-    public static function getDebutsDeMois($dateDeb, $dateFin)
-    {
+class AffichageBudjetPeriode {
+    function getSoldeActuelle($dateDebut, $idDept) {
+        try {
+            $conn = Flight::db();
+            $sql = "SELECT getSoldeActuelle('$dateDebut', $idDept) AS solde";
+            $stmt = $conn->query($sql);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            return $result ? $result['solde'] : 0;
+        } catch (\PDOException $e) {
+            echo "Erreur SQL : " . $e->getMessage();
+            return null;
+        }
+    }
+    
+
+    public static function getDebutsDeMois($dateDeb, $dateFin) {
         $dates = [];
 
         // Convertir les dates en objets DateTime
@@ -28,6 +42,8 @@ class AffichageBudjetPeriode
 
         return $dates;
     }
+
+    public function getPrevisionByDate($date, $idDept)  {
     public function getPrevisionByDate($date, $idDept)
     {
         $mois = date('m', strtotime($date));
