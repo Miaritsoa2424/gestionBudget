@@ -1,6 +1,6 @@
 <?php
 
-use app\controllers\FormController;
+use app\controllers\StatController;
 use app\controllers\ValeurController;
 use app\controllers\ValidationController;
 use app\controllers\WelcomeController;
@@ -10,6 +10,7 @@ use app\controllers\PdfController;
 use flight\Engine;
 use flight\net\Router;
 use app\controllers\DepartementController;
+use app\controllers\StatistiqueController;
 
 /** 
  * @var Router $router 
@@ -49,4 +50,14 @@ $router->group('/valeur', function (Router $router) {
     $valeurController = new ValeurController();
     $router->post('/savePrevision', [$valeurController, 'savePrevision']);
     $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
+});
+
+$StatController = new StatistiqueController();
+
+Flight::route('/chart', function() use ($StatController) {
+    $StatController->showDashboard();
+});
+
+Flight::route('/api/ventes-par-mois', function() use ($StatController) {
+    $StatController->getSalesByMonthJson();
 });
