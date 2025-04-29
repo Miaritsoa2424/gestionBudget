@@ -60,35 +60,42 @@ class Crm {
         }
     }
     public static function getResteCRMValue($idDept, $date) {
-        // Somme des prévisions validées
         $conn = Flight::db();
+    
+        // Extraire mois et année de la date donnée
+        $mois = date('m', strtotime($date));
+        $annee = date('Y', strtotime($date));
+    
+        // Somme des prévisions validées du mois
         $stmtPrev = $conn->prepare("
             SELECT COALESCE(SUM(montant), 0) AS sommePrevision 
             FROM Valeur v 
             JOIN Type t ON v.idType = t.idType 
             JOIN Categorie c ON t.idCategorie = c.idCategorie 
             WHERE v.idDept = :idDept 
-            AND v.date = :date 
+            AND MONTH(v.date) = :mois 
+            AND YEAR(v.date) = :annee 
             AND v.previsionOuRealisation = 0 
-            AND v.validation = 1
+            AND v.validation = 1 
             AND c.nomCategorie = 'CRM'
         ");
-        $stmtPrev->execute(['idDept' => $idDept, 'date' => $date]);
+        $stmtPrev->execute(['idDept' => $idDept, 'mois' => $mois, 'annee' => $annee]);
         $sommePrevision = $stmtPrev->fetchColumn();
     
-        // Somme des réalisations validées
+        // Somme des réalisations validées du mois
         $stmtRea = $conn->prepare("
             SELECT COALESCE(SUM(montant), 0) AS sommeRealisation 
             FROM Valeur v 
             JOIN Type t ON v.idType = t.idType 
             JOIN Categorie c ON t.idCategorie = c.idCategorie 
             WHERE v.idDept = :idDept 
-            AND v.date = :date 
+            AND MONTH(v.date) = :mois 
+            AND YEAR(v.date) = :annee 
             AND v.previsionOuRealisation = 1 
             AND v.validation = 1 
             AND c.nomCategorie = 'CRM'
         ");
-        $stmtRea->execute(['idDept' => $idDept, 'date' => $date]);
+        $stmtRea->execute(['idDept' => $idDept, 'mois' => $mois, 'annee' => $annee]);
         $sommeRealisation = $stmtRea->fetchColumn();
     
         return $sommePrevision - $sommeRealisation;

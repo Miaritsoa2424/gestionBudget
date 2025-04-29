@@ -46,36 +46,75 @@ INSERT INTO Type (idCategorie, nomType) VALUES
 (6, 'Maintenance'),       -- Type pour "Entretien"
 (7,'Reaction CRM');  -- Dépense
 
--- Insertion des valeurs (prévisions et réalisations) pour chaque mois et année
--- Département Finance (prévisions et réalisations pour mars 2025)
+-- Département Finance
 INSERT INTO Valeur (nomRubrique, idType, idDept, previsionOuRealisation, montant, date, validation) VALUES 
-('Paiement des salaires', 1, 1, 1, 5000000, '2025-03-01', 1),   -- Réalisation pour "Paiement des salaires"
-('Achat de fournitures', 2, 1, 0, 150000, '2025-03-02', 0),    -- Prévision pour "Achat de fournitures"
-('Investissements en équipements', 5, 1, 0, 2000000, '2025-03-03', 0),  -- Prévision pour "Investissements"
-('Recette de vente de services', 3, 1, 1, 8000000, '2025-03-05', 1);  -- Réalisation pour "Recette de vente de services"
+-- Paiement des salaires
+('Paiement des salaires', 1, 1, 0, 5200000, '2025-03-01', 0),  -- Prévision
+('Paiement des salaires', 1, 1, 1, 5000000, '2025-03-01', 1),  -- Réalisation
 
--- Département Ressources Humaines (prévisions et réalisations pour mars 2025)
-INSERT INTO Valeur (nomRubrique, idType, idDept, previsionOuRealisation, montant, date, validation) VALUES 
-('Salaire employés', 1, 2, 1, 4000000, '2025-03-01', 1),  -- Réalisation pour "Salaire employés"
-('Achat de fournitures de bureau', 2, 2, 0, 100000, '2025-03-04', 0),  -- Prévision pour "Achat de fournitures"
-('Recette de formation', 3, 2, 1, 2000000, '2025-03-08', 1);  -- Réalisation pour "Recette de formation"
+-- Achat de fournitures
+('Achat de fournitures', 2, 1, 0, 150000, '2025-03-02', 0),    -- Prévision
+('Achat de fournitures', 2, 1, 1, 130000, '2025-03-03', 1),    -- Réalisation
 
--- Département Informatique (prévisions et réalisations pour mars 2025)
-INSERT INTO Valeur (nomRubrique, idType, idDept, previsionOuRealisation, montant, date, validation) VALUES 
-('Salaire du personnel informatique', 1, 3, 1, 6000000, '2025-03-01', 1),  -- Réalisation pour "Salaire du personnel"
-('Achat de matériel informatique', 2, 3, 0, 1200000, '2025-03-02', 0),  -- Prévision pour "Achat de matériel"
-('Recette vente de logiciels', 3, 3, 1, 5000000, '2025-03-07', 1);  -- Réalisation pour "Recette vente de logiciels"
+-- Investissements en équipements
+('Investissements en équipements', 5, 1, 0, 2000000, '2025-03-03', 0),  -- Prévision
+('Investissements en équipements', 5, 1, 1, 1800000, '2025-03-10', 1),  -- Réalisation
 
--- Département Marketing (prévisions et réalisations pour mars 2025)
-INSERT INTO Valeur (nomRubrique, idType, idDept, previsionOuRealisation, montant, date, validation) VALUES 
-('Publicité sur réseaux sociaux', 4, 4, 0, 300000, '2025-03-05', 0),  -- Prévision pour "Publicité sur réseaux sociaux"
-('Recette publicité en ligne', 3, 4, 1, 2000000, '2025-03-10', 1);  -- Réalisation pour "Recette publicité en ligne"
+-- Recette de vente de services
+('Recette de vente de services', 3, 1, 0, 8500000, '2025-03-04', 0),  -- Prévision
+('Recette de vente de services', 3, 1, 1, 8000000, '2025-03-05', 1);  -- Réalisation
 
--- Département Logistique (prévisions et réalisations pour mars 2025)
+-- Département Ressources Humaines
 INSERT INTO Valeur (nomRubrique, idType, idDept, previsionOuRealisation, montant, date, validation) VALUES 
-('Investissement en matériel logistique', 5, 5, 0, 1000000, '2025-03-02', 0),  -- Prévision pour "Investissement en matériel logistique"
-('Entretien des équipements', 6, 5, 0, 500000, '2025-03-06', 0),  -- Prévision pour "Entretien des équipements"
-('Recette livraison de produits', 3, 5, 1, 4000000, '2025-03-10', 1);  -- Réalisation pour "Recette livraison de produits"
+-- Salaire employés
+('Salaire employés', 1, 2, 0, 4200000, '2025-03-01', 0),  -- Prévision
+('Salaire employés', 1, 2, 1, 4000000, '2025-03-01', 1),  -- Réalisation
+
+-- Achat de fournitures de bureau
+('Achat de fournitures de bureau', 2, 2, 0, 100000, '2025-03-04', 0),  -- Prévision
+('Achat de fournitures de bureau', 2, 2, 1, 95000, '2025-03-06', 1),   -- Réalisation
+
+-- Recette de formation
+('Recette de formation', 3, 2, 0, 2100000, '2025-03-07', 0),  -- Prévision
+('Recette de formation', 3, 2, 1, 2000000, '2025-03-08', 1);  -- Réalisation
+
+-- Département Informatique
+INSERT INTO Valeur (nomRubrique, idType, idDept, previsionOuRealisation, montant, date, validation) VALUES 
+-- Salaire du personnel informatique
+('Salaire du personnel informatique', 1, 3, 0, 6100000, '2025-03-01', 0),  -- Prévision
+('Salaire du personnel informatique', 1, 3, 1, 6000000, '2025-03-01', 1),  -- Réalisation
+
+-- Achat de matériel informatique
+('Achat de matériel informatique', 2, 3, 0, 1200000, '2025-03-02', 0),  -- Prévision
+('Achat de matériel informatique', 2, 3, 1, 1150000, '2025-03-05', 1),  -- Réalisation
+
+-- Recette vente de logiciels
+('Recette vente de logiciels', 3, 3, 0, 5500000, '2025-03-06', 0),  -- Prévision
+('Recette vente de logiciels', 3, 3, 1, 5000000, '2025-03-07', 1);  -- Réalisation
+
+-- Département Marketing
+INSERT INTO Valeur (nomRubrique, idType, idDept, previsionOuRealisation, montant, date, validation) VALUES 
+-- Publicité sur réseaux sociaux
+('Publicité sur réseaux sociaux', 4, 4, 0, 300000, '2025-03-05', 0),  -- Prévision
+('Publicité sur réseaux sociaux', 4, 4, 1, 280000, '2025-03-08', 1),  -- Réalisation
+
+-- Recette publicité en ligne
+('Recette publicité en ligne', 3, 4, 0, 2100000, '2025-03-09', 0),  -- Prévision
+('Recette publicité en ligne', 3, 4, 1, 2000000, '2025-03-10', 1);  -- Réalisation
+
+-- Département Logistique
+INSERT INTO Valeur (nomRubrique, idType, idDept, previsionOuRealisation, montant, date, validation) VALUES 
+-- Investissement en matériel logistique
+('Investissement en matériel logistique', 5, 5, 0, 1000000, '2025-03-02', 0),  -- Prévision
+('Investissement en matériel logistique', 5, 5, 1, 950000, '2025-03-09', 1),  -- Réalisation
+
+-- Entretien des équipements
+('Entretien des équipements', 6, 5, 0, 500000, '2025-03-06', 0),  -- Prévision
+('Entretien des équipements', 6, 5, 1, 480000, '2025-03-08', 1),  -- Réalisation
+
+-- Recette livraison de produits
+('Recette livraison de produits', 3, 5, 0, 4200000, '2025-03-09', 0),  -- Prévision
+('Recette livraison de produits', 3, 5, 1, 4000000, '2025-03-10', 1);  -- Réalisation
 
 -- Insertion des soldes initiaux pour les départements
 INSERT INTO soldeInitial (idDept, montant, dateInsertion) VALUES
