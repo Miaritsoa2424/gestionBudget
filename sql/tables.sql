@@ -53,3 +53,30 @@ CREATE TABLE soldeInitial (
     dateInsertion DATE NOT NULL,
     FOREIGN KEY (idDept) REFERENCES Dept(idDept) ON DELETE CASCADE
 );
+
+CREATE TABLE produit (
+    idProduit INT PRIMARY KEY AUTO_INCREMENT,
+    nomProduit VARCHAR(100) NOT NULL,
+    prix DECIMAL(15,2) NOT NULL,
+    stock INT NOT NULL CHECK (stock >= 0)
+);
+
+CREATE TABLE client (
+    idClient INT PRIMARY KEY AUTO_INCREMENT,
+    nomClient VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE vente (
+    idVente INT PRIMARY KEY AUTO_INCREMENT,
+    idProduit INT NOT NULL,
+    idClient INT NOT NULL,
+    dateVente DATE NOT NULL,
+    quantite INT NOT NULL CHECK (quantite > 0),
+    FOREIGN KEY (idProduit) REFERENCES produit(idProduit),
+    FOREIGN KEY (idClient) REFERENCES client(idClient)
+);
+
+CREATE TABLE Crm(
+    idCrm INT PRIMARY KEY AUTO_INCREMENT,
+    label VARCHAR(500) NOT NULL
+);
