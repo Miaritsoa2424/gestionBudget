@@ -33,7 +33,8 @@ INSERT INTO Categorie (nomCategorie, recetteOuDepense) VALUES
 ('Ventes', 1),    -- Recette
 ('Publicité', 1), -- Recette
 ('Investissements', 0),  -- Dépense
-('Entretien', 0); -- Dépense
+('Entretien', 0), -- Dépense
+('Reaction CRM', 0);  -- Dépense
 
 -- Insertion de types associés à chaque catégorie
 INSERT INTO Type (idCategorie, nomType) VALUES 
@@ -42,7 +43,8 @@ INSERT INTO Type (idCategorie, nomType) VALUES
 (3, 'Produits vendus'),   -- Type pour "Ventes"
 (4, 'Campagnes pub'),     -- Type pour "Publicité"
 (5, 'Achat matériel'),    -- Type pour "Investissements"
-(6, 'Maintenance');       -- Type pour "Entretien"
+(6, 'Maintenance'),       -- Type pour "Entretien"
+(7,'Reaction CRM');  -- Dépense
 
 -- Insertion des valeurs (prévisions et réalisations) pour chaque mois et année
 -- Département Finance (prévisions et réalisations pour mars 2025)
@@ -81,3 +83,36 @@ INSERT INTO soldeInitial (idDept, montant, dateInsertion) VALUES
 (2, 500000.00, '2025-01-01'),   -- Solde initial pour le département Ressources Humaines
 (3, 1500000.00, '2025-01-01');  -- Solde initial pour le département Informatique
 
+INSERT INTO produit (nomProduit, prix, stock) VALUES
+('Ballon de football', 25000.00, 50),
+('Raquette de tennis', 85000.00, 20),
+('Tapis de yoga', 30000.00, 40),
+('Haltères 10kg', 40000.00, 30),
+('Chaussures de course', 120000.00, 25),
+('Gants de boxe', 45000.00, 15),
+('Casque de vélo', 60000.00, 10),
+('Maillot de sport', 20000.00, 60),
+('Sac de sport', 35000.00, 35),
+('Filet de volley', 50000.00, 12);
+
+INSERT INTO client (nomClient) VALUES
+('Andry Rakoto'),
+('Fanja Rasoanaivo'),
+('Jean-Claude Randria'),
+('Mialy Andriamanana'),
+('Tojo Rabe'),
+('Elena Rasoa'),
+('Niry Rafalimanana'),
+('Patrick Rakotomanga');
+
+INSERT INTO vente (idProduit, idClient, dateVente, quantite) VALUES
+(1, 1, '2025-04-01', 2),
+(3, 2, '2025-04-02', 1),
+(5, 3, '2025-04-05', 1),
+(4, 1, '2025-04-06', 2),
+(2, 4, '2025-04-07', 1),
+(6, 5, '2025-04-08', 1),
+(7, 6, '2025-04-09', 1),
+(8, 2, '2025-04-10', 3),
+(9, 7, '2025-04-11', 2),
+(10, 8, '2025-04-12', 1);
