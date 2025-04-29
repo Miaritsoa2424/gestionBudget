@@ -43,7 +43,6 @@ class AffichageBudjetPeriode {
         return $dates;
     }
 
-    public function getPrevisionByDate($date, $idDept)  {
     public function getPrevisionByDate($date, $idDept)
     {
         $mois = date('m', strtotime($date));
