@@ -103,7 +103,7 @@ class Valeur {
             $this->getPrevisionOuRealisation(), 
             $this->getMontant(), 
             $this->getDate(), 
-            0,
+            $this->getValidation(),
             $this->getIdDept()
         ]);
     }
@@ -129,58 +129,69 @@ class Valeur {
         
         if (($fileCsv = fopen($filePath, "r")) !== false) {
             $headers = fgetcsv($fileCsv, 1000, ";");
-    
+
             if ($headers === false) {
                 echo "Erreur : impossible de lire l'entête du fichier.";
                 fclose($fileCsv);
                 return [];
             }
-    
+
             while (($data = fgetcsv($fileCsv, 1000, ";")) !== false) {
                 $row = array_combine($headers, $data);
-    
+
                 foreach ($row as $key => $value) {
                     $row[$key] = trim($value, "'\"");
                 }
-    
+
                 $previsionOuRealisationValue = Valeur::gestionPrevisionRealisation($row['previsionOuRealisation'] ?? '');
-    
-                // Conversion nomType → idType
-                if (isset($row['nomType']) && !isset($row['idType'])) {
-                    $type = Type::getTypeByName($row['nomType']);
-                    $row['idType'] = $type ? $type->getIdType() : null;
+
+                // 🔍 Conversion nomType → idType
+                $type = Type::getTypeByName($row['nomType'] ?? '');
+                if (!$type) {
+                    echo "⚠️ Erreur : Type inconnu ({$row['nomType']}). Vérifiez la base de données.\n";
+                    continue; // Passer à la ligne suivante
                 }
-    
-                // Conversion nomDept → idDept
-                if (isset($row['nomDept']) && !isset($row['idDept'])) {
-                    $departement = Departement::getDepartementByName($row['nomDept']);
-                    $row['idDept'] = $departement ? $departement->getIdDept() : null;
+                $row['idType'] = $type->getIdType();
+
+                // 🔍 Conversion nomDept → idDept
+                $departement = Departement::getDepartementByName($row['nomDept'] ?? '');
+                if (!$departement) {
+                    echo "⚠️ Erreur : Département inconnu ({$row['nomDept']}). Vérifiez la base de données.\n";
+                    continue; // Passer à la ligne suivante
                 }
-    
-                // Création de l'objet Valeur avec les ID convertis
+                $row['idDept'] = $departement->getIdDept();
+
+                // 🔍 Vérification avant insertion
+                if (empty($row['idType']) || empty($row['idDept'])) {
+                    echo "⛔ Erreur : idType ou idDept manquant pour la ligne : " . json_encode($row) . "\n";
+                    continue;
+                }
+
+                // Création de l'objet Valeur
                 $valeur = new Valeur(
                     $row['idValeur'] ?? null,
                     $row['nomRubrique'] ?? null,
-                    $row['idType'] ?? null,
+                    $row['idType'],
                     $previsionOuRealisationValue,
                     $row['montant'] ?? null,
                     $row['date'] ?? null,
                     0,
-                    $row['idDept'] ?? null
+                    $row['idDept']
                 );
                 $valeurs[] = $valeur;
-    
+
                 // Sauvegarde en base de données
                 $valeur->insert();
             }
-    
+
             fclose($fileCsv);
         } else {
             echo "Erreur : impossible d'ouvrir le fichier.";
         }
-    
+
         return $valeurs;
     }
+
 
     
     

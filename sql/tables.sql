@@ -1,4 +1,6 @@
+DROP DATABASE IF EXISTS gestion;
 CREATE DATABASE IF NOT EXISTS gestion;
+
 USE gestion;
 -- Création des tables
 CREATE TABLE Dept (
@@ -14,6 +16,8 @@ CREATE TABLE Droit (
     FOREIGN KEY (idDeptPere) REFERENCES Dept(idDept),
     FOREIGN KEY (idDeptFils) REFERENCES Dept(idDept)
 );
+
+SELECT de.idDept,de.nomDept FROM Dept as de JOIN Droit as dr on dr.idDeptFils = de.idDept WHERE idDeptPere = 2;
 
 CREATE TABLE Categorie (
     idCategorie INT PRIMARY KEY AUTO_INCREMENT,
@@ -33,19 +37,19 @@ CREATE TABLE Valeur (
     nomRubrique VARCHAR(100) NOT NULL,
     idType INT NOT NULL,
     idDept INT NOT NULL,
-    previsionOuRealisation TINYINT(1) NOT NULL CHECK (previsionOuRealisation IN (0, 1)),
+    previsionOuRealisation TINYINT(1) NOT NULL,
     montant DECIMAL(15,2) NOT NULL,
     date DATE NOT NULL,
-    validation BOOLEAN NOT NULL,
-    FOREIGN KEY (idDept) REFERENCES Dept(idDept),
-    FOREIGN KEY (idType) REFERENCES Type(idType)
+    validation TINYINT(1) NOT NULL,
+    FOREIGN KEY (idType) REFERENCES Type(idType),
+    FOREIGN KEY (idDept) REFERENCES Dept(idDept)
 );
+
 
 CREATE TABLE soldeInitial (
     idSolde INT PRIMARY KEY AUTO_INCREMENT,
     idDept INT NOT NULL,
     montant DECIMAL(15,2) NOT NULL,
     dateInsertion DATE NOT NULL,
-    FOREIGN KEY (idDept) REFERENCES Dept(idDept)
+    FOREIGN KEY (idDept) REFERENCES Dept(idDept) ON DELETE CASCADE
 );
-

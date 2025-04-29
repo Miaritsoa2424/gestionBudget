@@ -3,7 +3,7 @@
         'name' => 'flightphp/skeleton',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '655b86302cce230a3533d01cec8b00edc80008c4',
+        'reference' => '3f884a88d843e7a3e66113fdba4108de2d8426cc',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'flightphp/skeleton' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '655b86302cce230a3533d01cec8b00edc80008c4',
+            'reference' => '3f884a88d843e7a3e66113fdba4108de2d8426cc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -1,17 +1,22 @@
 <div class="prevForm" id="prevForm">
-        <form action="<?= Flight::get('flight.base_url') ?>/valeur/savePrevision" method="POST">
+        <form action="savePrevision" method="POST">
             <fieldset>
                 <h1>Ajout de prevision</h1>
                 <label for="budget">Type</label>
                     <select name="type" id="budget">
-                        <option value="1">Achat de materiel de bureau</option>
-                        <option value="2">Vente de sable</option>
+                        <?php foreach ($types as $type) { ?>
+                            <option value="<?= $type['idType'] ?>"><?= $type['nomType'] ?></option>
+                        <?php } ?>
+
                     </select>
 
                 <input type="hidden" name="prevPrev" value="1">
 
                 <label for="naturePrev">Nature : </label>
                 <input type="text" name="nature" id="naturePrev" placeholder="Ex: Ordinateur Asus Vivobook">
+
+                <label for="datePrev">Date : </label>
+                <input type="date" name="datePrev" id="datePrev">
 
                 <label for="montantPrev">Montant : </label>
                 <input type="text" name="montant" id="montantPrev" placeholder="Ex: 1000000">
