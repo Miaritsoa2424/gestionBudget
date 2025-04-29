@@ -20,17 +20,14 @@ $valeurController = new ValeurController();
 $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
 $router->post('/savePrevision', [$valeurController, 'savePrevision']);
 
-// $Welcome_Controller = new WelcomeController();
-// $router->get('/', [$Welcome_Controller, 'home']);
-
 $departementController = new DepartementController();
 $router->get('/', [$departementController, 'getFormulaireLogin']);
+$router->get('/deco', [$departementController, 'deconnexion']);
+$router->get('/login', [$departementController, 'getFormulaireLogin']);
+
 $router->post('/doLogin', [$departementController, 'doLogin']);
 
 $router->post('/importer', [$valeurController, 'doImportCSV']);
-
-$FormController = new FormController();
-$router->get('/login', [$FormController, 'login']);
 
 $router->group('/validation', function (Router $router) {
     $validationController = new ValidationController();

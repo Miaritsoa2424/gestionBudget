@@ -7,24 +7,30 @@
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin: 10px 0;
+
+    h1 {
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        color: #333;
+        i {
+            margin-right: 10px;
+            color: #007bff;
+        }
+    }
 }
 
-.navigationTable h1 {
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    color: #333;
-}
 
-.navigationTable h1 i {
-    margin-right: 10px;
-    color: #007bff;
-}
 
 .controls {
     display: flex;
     align-items: center;
     gap: 10px;
+    form{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
 }
 
 .search-input {
@@ -64,6 +70,9 @@ input[type="date"],
     cursor: pointer;
     display: flex;
     align-items: center;
+}
+#openPopUpCsv{
+    background-color: #4CAF50;
 }
 
 .pdf-btn i {

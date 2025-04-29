@@ -20,11 +20,16 @@
 
 <body>
     <div class="navbar">
-        <a href="#"><i class="fas fa-home"></i>Accueil</a>
+        <!-- <a href="#"><i class="fas fa-home"></i>Accueil</a> -->
+        <?php
+            if ($_SESSION['idDept'] == 1) { ?>
+                <a href="validation"><i class="fas fa-check-circle"></i>Validation</a>
+            <?php }
+        ?>
         <a href="budget"><i class="fas fa-wallet"></i>Budget</a>
         <a href="#"><i class="fas fa-building"></i>Département</a>
-        <a href="validation"><i class="fas fa-check-circle"></i>Validation</a>
-        <a href="#"><i class="fas fa-info-circle"></i>À propos</a>
+        <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
+        <!-- <a href="#"><i class="fas fa-info-circle"></i>À propos</a> -->
     </div>
 
     <main>

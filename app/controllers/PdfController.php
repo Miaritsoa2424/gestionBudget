@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Departement;
 use setasign\fpdf\fpdf;
 use Flight;
 
@@ -10,6 +11,12 @@ class PdfController {
         $db = Flight::db();
         $dateDebut = Flight::request()->data->dateDeb;
         $dateFin = Flight::request()->data->dateFin;
+        $idDept = Flight::request()->data->idDept;
+
+        if (!Departement::getDroit($_SESSION['idDept'],$idDept)) {
+            // echo Departement::getDroit($_SESSION['idDept'],$idDept);
+            die("Ne peut pas voir le budget");
+        }   
 
         // Vérifier si les dates sont valides
         if (!$dateDebut || !$dateFin) {
@@ -50,14 +57,15 @@ class PdfController {
                     SUM(CASE WHEN previsionOuRealisation = 0 THEN montant ELSE 0 END) AS prevision,
                     SUM(CASE WHEN previsionOuRealisation = 1 THEN montant ELSE 0 END) AS realisation
                 FROM Valeur 
-                WHERE YEAR(date) = :year AND MONTH(date) = :month AND validation = 1
+                WHERE YEAR(date) = :year AND MONTH(date) = :month AND validation = 1 AND idDept = :idDept
                 GROUP BY nomRubrique
                 ORDER BY nomRubrique ASC
             ";
             $stmt = $db->prepare($query);
             $stmt->execute([
                 ':year' => $year,
-                ':month' => $month
+                ':month' => $month,
+                ':idDept' => $idDept
             ]);
             $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 

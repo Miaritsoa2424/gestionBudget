@@ -18,10 +18,15 @@ class BudgetController
       $intervalle = Flight::request()->data->intervalle;
       $types = Type::getAllType();
 
+      if (!isset($_SESSION['idDept'])) {
+         Flight::redirect('/login');
+      }
+
       // Vérifier si toutes les données sont bien remplies
       if (!empty($dateDeb) && !empty($dateFin) && !empty($idDept) && !empty($intervalle)) {
+
          // Récupérer la liste des départements
-         $departements = Departement::getAllDepartement();
+         $departements = Departement::getAllDept($_SESSION['idDept']);
 
          // Générer les débuts de mois entre les dates fournies
          $moisDebuts = AffichageBudjetPeriode::getDebutsDeMois($dateDeb, $dateFin);
@@ -58,7 +63,7 @@ class BudgetController
       }
 
       // Si les données sont incomplètes, on affiche la page sans tableau
-      $departements = Departement::getAllDepartement();
+      $departements = Departement::getAllDept($_SESSION['idDept']);
       $data = ['page' => 'budget', 'departements' => $departements,'types' => $types];
       Flight::render('template', $data);
    }

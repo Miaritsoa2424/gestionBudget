@@ -27,4 +27,11 @@ class DepartementController
             Flight::render('login', ['erreur' => 'Nom d\'utilisateur ou mot de passe incorrect']);
         }
     }
+
+    public function deconnexion(){
+        session_destroy();
+        Flight::clear('idDept');
+        Flight::render('login', []);
+        
+    }
 }

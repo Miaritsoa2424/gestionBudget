@@ -2,6 +2,7 @@
 namespace app\models;
 
 use Flight;
+use Nette\StaticClass;
 use PDO;
     class Departement {
         private $idDept;
@@ -85,6 +86,32 @@ use PDO;
         
             return $departements; // Retourne une liste de départements
         }
+
+        public static function getAllDept($idDept) {
+            $db = Flight::db();
+            $stmt = $db->prepare("SELECT de.idDept,de.nomDept FROM Dept as de JOIN Droit as dr on dr.idDeptFils = de.idDept WHERE idDeptPere = ?");
+            $stmt->execute([$idDept]);
+            $data = $stmt->fetchAll(); // Récupérer tous les résultats
+        
+            $departements = [];
+            foreach ($data as $row) {
+                $departements[] = new Departement($row['idDept'], $row['nomDept']);
+            }
+            return $departements; // Retourne une liste de départements
+        }
+
+        public static function getDroit($idDepartPere, $idDepartFils) {
+            $db = Flight::db();
+            $stmt = $db->prepare("SELECT * FROM Droit WHERE idDeptPere = ? AND idDeptFils = ?");
+            $stmt->execute([$idDepartPere, $idDepartFils]);
+            $data = $stmt->fetch(); 
+
+            if (!empty($data)) {
+                return true;
+            }
+            return false;
+        }
+        
         
         public function getSoldeInitial() {
             $sql = "SELECT montant FROM soldeInitial WHERE idDept = ?";

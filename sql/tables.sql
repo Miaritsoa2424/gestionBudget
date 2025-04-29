@@ -17,6 +17,8 @@ CREATE TABLE Droit (
     FOREIGN KEY (idDeptFils) REFERENCES Dept(idDept)
 );
 
+SELECT de.idDept,de.nomDept FROM Dept as de JOIN Droit as dr on dr.idDeptFils = de.idDept WHERE idDeptPere = 2;
+
 CREATE TABLE Categorie (
     idCategorie INT PRIMARY KEY AUTO_INCREMENT,
     nomCategorie VARCHAR(100) NOT NULL,

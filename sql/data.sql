@@ -12,9 +12,19 @@ INSERT INTO Droit (idDeptPere, idDeptFils) VALUES
 (1, 3),  -- Finance peut accéder à Informatique
 (1, 4),  -- Finance peut accéder à Marketing
 (1, 5),  -- Finance peut accéder à Logistique
-(2, 3),  -- Ressources Humaines peut accéder à Informatique
-(2, 4),  -- Ressources Humaines peut accéder à Marketing
-(3, 5);  -- Informatique peut accéder à Logistique
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5);  -- Finance peut accéder à Logistique
+  -- Finance peut accéder à Logistique
+  -- Finance peut accéder à Logistique
+  -- Finance peut accéder à Logistique
+  -- Finance peut accéder à Logistique
+
+-- (2, 3),  -- Ressources Humaines peut accéder à Informatique
+-- (2, 4),  -- Ressources Humaines peut accéder à Marketing
+-- (3, 5);  -- Informatique peut accéder à Logistique
 
 -- Insertion de catégories (recettes et dépenses)
 INSERT INTO Categorie (nomCategorie, recetteOuDepense) VALUES 
