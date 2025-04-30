@@ -27,18 +27,18 @@ class StatistiqueController {
             
             // Traduction des mois en français
             $frenchMonths = [
-                'January' => 'Janvier',
-                'February' => 'Février',
+                'January' => 'Jan.',
+                'February' => 'Fév.',
                 'March' => 'Mars',
-                'April' => 'Avril',
+                'April' => 'Avr.',
                 'May' => 'Mai',
                 'June' => 'Juin',
-                'July' => 'Juillet',
+                'July' => 'Juil.',
                 'August' => 'Août',
-                'September' => 'Septembre',
-                'October' => 'Octobre',
-                'November' => 'Novembre',
-                'December' => 'Décembre'
+                'September' => 'Sept.',
+                'October' => 'Oct.',
+                'November' => 'Nov.',
+                'December' => 'Déc.'
             ];
             
             $months[] = $frenchMonths[$monthName];
