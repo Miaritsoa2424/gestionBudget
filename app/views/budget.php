@@ -68,7 +68,7 @@
                             <th>Réalisation</th>
                             <th>Écart</th>
                         </tr>
-                        <?= $table['totalRecettes'] ?>
+                        
                         <tr class="numberRow">
                             <td>Solde debut</td>
                             <td colspan="3" class="cellNumber"><?= $soldeDebut ?></td>
