@@ -19,6 +19,8 @@ $valeurController = new ValeurController();
 // $router->post('/valeur/savePrevision', [$valeurController, 'savePrevision']);
 $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
 $router->post('/savePrevision', [$valeurController, 'savePrevision']);
+$router->post('/saveCRM', [$valeurController, 'saveCRM']);
+
 
 $departementController = new DepartementController();
 $router->get('/', [$departementController, 'getFormulaireLogin']);
@@ -50,3 +52,7 @@ $router->group('/valeur', function (Router $router) {
     $router->post('/savePrevision', [$valeurController, 'savePrevision']);
     $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
 });
+
+$formController = new FormController();
+$router->get('/crm', [$formController, 'crm']);
+

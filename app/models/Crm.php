@@ -1,6 +1,7 @@
 <?php
+namespace app\models;
 use Flight;
-use \PDO;
+
 class Crm {
     private $idCrm;
     private $label;
@@ -40,8 +41,22 @@ class Crm {
         }
     }
 
+    public static function getAllCrm() {
+        $conn = Flight::db();
+        $stmt = $conn->query("SELECT * FROM Crm");
+        $crms = [];
+    
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $crms[] = new Crm($row['label'], $row['idCrm']);
+        }
+    
+        return $crms;
+    }
+    
+
     // Chargement d’un enregistrement par ID
-    public static function findById($conn, $idCrm) {
+    public static function findById($idCrm) {
+        $conn = Flight::db();
         $stmt = $conn->prepare("SELECT * FROM Crm WHERE idCrm = :idCrm");
         $stmt->execute(['idCrm' => $idCrm]);
         $row = $stmt->fetch();
