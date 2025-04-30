@@ -34,7 +34,7 @@ INSERT INTO Categorie (nomCategorie, recetteOuDepense) VALUES
 ('Publicité', 1), -- Recette
 ('Investissements', 0),  -- Dépense
 ('Entretien', 0), -- Dépense
-('Reaction CRM', 0);  -- Dépense
+('CRM', 0);  -- Dépense
 
 -- Insertion de types associés à chaque catégorie
 INSERT INTO Type (idCategorie, nomType) VALUES 
@@ -155,3 +155,34 @@ INSERT INTO vente (idProduit, idClient, dateVente, quantite) VALUES
 (8, 2, '2025-04-10', 3),
 (9, 7, '2025-04-11', 2),
 (10, 8, '2025-04-12', 1);
+
+INSERT INTO Crm (label) VALUES
+('Email de bienvenue avec reduction Popup de chat en direct'),
+('Campagne Google Ads Facebook ciblee Partenariat avec des influenceurs'),
+('Sondages questions interactives Codes promo reserves aux followers'),
+('Retargeting sur reseaux sociaux Placement produit en magasin lie a la pub'),
+('Video comparative Essai gratuit echantillon'),
+('Paiement en 3x sans frais Notification push Votre panier expire'),
+('Flyers avec QR code vers offre offline Evenement eclair degustation demo'),
+('Questionnaire post evenement Goodies avec lien vers site'),
+('Email recap avec fiche produit Envoi dechantillon gratuit'),
+('Envoyer un parcours personnalise Preparez vous a levenement Offrir un diagnostic materiel gratuit sur place'),
+('Envoyer une notification geolocalisee avec un code vitrine exclusive Afficher un QR code pour scanner les avis clients'),
+('Lui proposer un contenu expert ex 5 erreurs a eviter avec vos crampons Inviter a un live QA avec un pro'),
+('Envoyer les creneaux de forte affluence a eviter Proposer un rendez vous en magasin avec un expert'),
+('Faire apparaitre une annonce Google avec un guide dachat localise Proposer un essai en partenariat avec un club local'),
+('Envoyer un programme de parrainage avec recompenses ex equipement offert Offrir un duo de places pour un match partenaire'),
+('Debloquer un badge Nouveau membre avec avantage immediat Proposer un jeu concours pour gagner un coaching'),
+('Envoyer des recommandations personnalisees par sport Programmer un rappel pour essai en magasin'),
+('Envoyer un message prive avec une demo exclusive Proposer un essai du produit en boutique avec cadeau'),
+('Activer une alerte Stock faible Envoyer un tutoriel dutilisation du produit'),
+('Envoyer un itineraire personnalise Declencher une offre Passage en magasin ex 15 pourcent'),
+('Proposer des tarifs groupe Offrir un audit gratuit du materiel de lequipe'),
+('Debloquer des avis clients verifies Proposer une reduction immediate sur le produit scanne'),
+('Envoyer un guide sportif saisonnier ex Preparer la saison de volley Donner acces a des ventes privees'),
+('Proposer une version longue avec un expert Inviter a une session de test en reel'),
+('Repondre personnellement avec une offre de remerciement Inviter a tester les nouveautes en avant premiere'),
+('Preparer une surprise en magasin cadeau decoration Offrir un credit valable 1 semaine'),
+('Mettre en place un parcours de decouverte de la marque Programmer un appel de suivi meme sans gain'),
+('Lui envoyer un role Ambassadeur avec missions Organiser des meetups sportifs prives'),
+('Envoyer une fiche produit enrichie video avis Proposer un comparatif en temps reel avec dautres modeles');

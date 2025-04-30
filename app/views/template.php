@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/budget.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/formPrevReal.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/formCsv.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/crmForm.css">
+
 
     <style>
 
@@ -28,8 +30,8 @@
         ?>
         <a href="budget"><i class="fas fa-wallet"></i>Budget</a>
         <a href="#"><i class="fas fa-building"></i>Département</a>
+        <a href="crm"><i class="fas fa-handshake"></i>CRM</a>
         <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
-        <!-- <a href="#"><i class="fas fa-info-circle"></i>À propos</a> -->
     </div>
 
     <main>
