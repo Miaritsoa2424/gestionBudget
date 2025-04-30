@@ -18,7 +18,7 @@ class PdfController {
             die("Ne peut pas voir le budget");
         }   
 
-        // Vérifier si les dates sont valides
+        // Vérifier si les dates sont valide
         if (!$dateDebut || !$dateFin) {
             die("Veuillez spécifier une date de début et une date de fin.");
         }

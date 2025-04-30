@@ -9,6 +9,7 @@ use flight\database\PdoWrapper;
 use flight\debug\database\PdoQueryCapture;
 use Tracy\Debugger;
 use app\models\ProductModel;
+use app\models\Statistique;
 
 /** 
  * @var array $config This comes from the returned array at the bottom of the config.php file
@@ -35,6 +36,6 @@ use app\models\ProductModel;
 
 
 
-// Flight::map('Login', function () {
-//     return new Login(Flight::db());
+// Flight::map('Statistique', function () {
+//     return new Statistique(Flight::db());
 // });
