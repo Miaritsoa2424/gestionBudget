@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Flight;
+
 class Statistique {
     private $db;
 
@@ -119,5 +121,23 @@ class Statistique {
 
         return array_values($allMonths);
     }
+
+    function getChiffreAffaire($year): float {
+        $sql = "
+            SELECT SUM(p.prix * v.quantite) AS chiffre_affaire
+            FROM vente v
+            JOIN produit p ON v.idProduit = p.idProduit
+            WHERE YEAR(v.dateVente) = :year
+        ";
+    
+        $stmt = Flight::db()->prepare($sql);
+        $stmt->execute([
+            'year' => $year
+        ]);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+    
+        return $result['chiffre_affaire'] ?? 0.0;
+    }
+    
 }
 ?>

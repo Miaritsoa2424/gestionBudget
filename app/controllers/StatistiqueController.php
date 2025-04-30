@@ -48,6 +48,7 @@ class StatistiqueController {
         // Récupérer les autres données statistiques
         $bestProducts = $statistiqueModel->getBestProduct();
         $topCustomers = $statistiqueModel->getTopCustomers();
+        $chiffreAffaire = $statistiqueModel->getChiffreAffaire($year);
         
         // Passer les données à la vue
         Flight::render('template', [
@@ -56,7 +57,8 @@ class StatistiqueController {
             'sales' => json_encode($sales),
             'year' => $year,
             'bestProducts' => $bestProducts,
-            'topCustomers' => $topCustomers
+            'topCustomers' => $topCustomers,
+            'chiffreAffaire' => $chiffreAffaire
         ]);
     }
     

@@ -144,17 +144,17 @@ INSERT INTO client (nomClient) VALUES
 ('Niry Rafalimanana'),
 ('Patrick Rakotomanga');
 
-INSERT INTO vente (idProduit, idClient, dateVente, quantite) VALUES
-(1, 1, '2025-04-01', 2),
-(3, 2, '2025-04-02', 1),
-(5, 3, '2025-04-05', 1),
-(4, 1, '2025-04-06', 2),
-(2, 4, '2025-04-07', 1),
-(6, 5, '2025-04-08', 1),
-(7, 6, '2025-04-09', 1),
-(8, 2, '2025-04-10', 3),
-(9, 7, '2025-04-11', 2),
-(10, 8, '2025-04-12', 1);
+-- INSERT INTO vente (idProduit, idClient, dateVente, quantite) VALUES
+-- (1, 1, '2025-04-01', 2),
+-- (3, 2, '2025-04-02', 1),
+-- (5, 3, '2025-04-05', 1),
+-- (4, 1, '2025-04-06', 2),
+-- (2, 4, '2025-04-07', 1),
+-- (6, 5, '2025-04-08', 1),
+-- (7, 6, '2025-04-09', 1),
+-- (8, 2, '2025-04-10', 3),
+-- (9, 7, '2025-04-11', 2),
+-- (10, 8, '2025-04-12', 1);
 
 INSERT INTO Crm (label) VALUES
 ('Email de bienvenue avec reduction Popup de chat en direct'),
