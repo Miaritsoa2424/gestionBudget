@@ -27,7 +27,6 @@
             <input type="date" name="dateCrm" id="dateCrm">
 
             <button type="submit">Ajouter</button>
-            <button id="closePopUpCrm" type="reset">Quitter</button>
 
             <?php
             if (isset($erreur)) { ?>

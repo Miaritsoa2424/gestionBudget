@@ -1,6 +1,7 @@
 <?php
 
 use app\controllers\StatController;
+use app\controllers\FormController;
 use app\controllers\ValeurController;
 use app\controllers\ValidationController;
 use app\controllers\WelcomeController;
@@ -54,13 +55,9 @@ $router->group('/valeur', function (Router $router) {
     $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
 });
 
-$formController = new FormController();
-$router->get('/crm', [$formController, 'crm']);
-
 
 $formController = new FormController();
 $router->get('/crm', [$formController, 'crm']);
-
 
 $StatController = new StatistiqueController();
 
