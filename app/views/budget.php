@@ -52,48 +52,49 @@
     </div>
 
     <!-- Conteneur des tables pour pagination -->
-    <div id="tablesContainer">
-        <?php if (isset($tablesData)) {
-            $soldeFin = 0;
-            $soldeDebut = $soldeInitial;
-            foreach ($tablesData as $i => $table) { ?>
-                <div class="tablePage">
-                    <table>
-                        <tr>
-                            <th rowspan="2">Rubrique</th>
-                            <th colspan="3"><?= $table['mois'] ?></th>
-                        </tr>
-                        <tr>
-                            <th>Prévision</th>
-                            <th>Réalisation</th>
-                            <th>Écart</th>
-                        </tr>
-                        
-                        <tr class="numberRow">
-                            <td>Solde debut</td>
-                            <td colspan="3" class="cellNumber"><?= $soldeDebut ?></td>
+<div id="tablesContainer">
+    <?php if (isset($tablesData)) {
+        $soldeFin = 0;
+        $soldeDebut = $soldeInitial;
+        foreach ($tablesData as $i => $table) { ?>
+            <div class="tablePage">
+                <table>
+                    <tr>
+                        <th rowspan="2">Rubrique</th>
+                        <th colspan="3"><?= $table['mois'] ?></th>
+                    </tr>
+                    <tr>
+                        <th>Prévision</th>
+                        <th>Réalisation</th>
+                        <th>Écart</th>
+                    </tr>
+                    
+                    <tr class="numberRow">
+                        <td>Solde debut</td>
+                        <td colspan="3" class="cellNumber"><?= number_format($soldeDebut, 0, ',', ' ') ?></td>
+                    </tr>
 
-                        </tr>
-                        <?php foreach ($table['data'] as $row) { ?>
-                            <tr class="numberRow">
-                                <td><?= $row['rubrique'] ?></td>
-                                <td class="cellNumber"><?= $row['prevision'] ?></td>
-                                <td class="cellNumber"><?= $row['realisation'] ?></td>
-                                <td class="cellNumber"><?= $row['realisation'] - $row['prevision'] ?></td>
-                            </tr>
-                        <?php } ?>
-                        <?php $soldeFin = $soldeDebut + $table['totalRecettes'] - $table['totalDepenses']; ?>
+                    <?php foreach ($table['data'] as $row) { ?>
                         <tr class="numberRow">
-                            <td>Solde fin</td>
-                            <td colspan="3" class="cellNumber"><?= $soldeFin ?></td>
+                            <td><?= $row['rubrique'] ?></td>
+                            <td class="cellNumber"><?= number_format($row['prevision'], 0, ',', ' ') ?></td>
+                            <td class="cellNumber"><?= number_format($row['realisation'], 0, ',', ' ') ?></td>
+                            <td class="cellNumber"><?= number_format($row['realisation'] - $row['prevision'], 0, ',', ' ') ?></td>
                         </tr>
-                        <?php $soldeDebut = $soldeFin; ?>
-                    </table>
-                </div>
-        <?php }
-        }
-        ?>
-    </div>
+                    <?php } ?>
+
+                    <?php $soldeFin = $soldeDebut + $table['totalRecettes'] - $table['totalDepenses']; ?>
+                    <tr class="numberRow">
+                        <td>Solde fin</td>
+                        <td colspan="3" class="cellNumber"><?= number_format($soldeFin, 0, ',', ' ') ?></td>
+                    </tr>
+                    <?php $soldeDebut = $soldeFin; ?>
+                </table>
+            </div>
+    <?php }
+    }
+    ?>
+</div>
 
 
     <?php include 'prevForm.php'; ?>

@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Departement;
 use app\models\AffichageBudjetPeriode;
 use app\models\Type;
+use app\models\Solde;
 use Flight;
 
 class BudgetController
@@ -33,7 +34,10 @@ class BudgetController
 
          // Initialiser les données des tables
          $tablesData = [];
-         $budgetInitial = Departement::getDepartementById($idDept)->getSoldeInitial();
+         // $budgetInitial = Departement::getDepartementById($idDept)->getSoldeInitial()['montant'];
+         $soldeModel = new Solde();
+         $budgetInitial = $soldeModel->getSolde($_SESSION['idDept'], $dateDeb); // Récupérer le solde initial
+
 
          // Pour chaque mois généré, récupérer les données
          foreach ($moisDebuts as $index => $mois) {
