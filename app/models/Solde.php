@@ -29,35 +29,30 @@ use DateTime;
                 return null;  // Valeur par défaut si aucun solde n'est trouvé
             }
         }
-        public  function getSolde($idDept, $dateAVoir) {
+        public function getSolde($idDept, $dateAVoir) {
             $dateDebut = $this->getSoldeInitial($idDept)['dateInsertion'];
             $soldeInitial = $this->getSoldeInitial($idDept)['montant'];
+        
             // Convertir en objets DateTime
             $start = new DateTime($dateDebut);
-            $end = new DateTime($dateAVoir);
-        
-            // Ajouter un mois à la date de fin pour inclure le dernier mois dans la boucle
-            $end->modify('+1 month');
+            $end = new DateTime($dateAVoir); // Ne pas modifier ici
         
             // Créer l'intervalle d'un mois
             $interval = new DateInterval('P1M');
         
-            // Créer la période
+            // Créer la période (exclusif de la date de fin)
             $period = new DatePeriod($start, $interval, $end);
         
             // Parcourir chaque mois
             foreach ($period as $date) {
-                $valeur = AffichageBudjetPeriode::getRealisationTotalByMonthYear($idDept,$date->format('m'), $date->format('Y'));
+                $valeur = AffichageBudjetPeriode::getRealisationTotalByMonthYear($idDept, $date->format('m'), $date->format('Y'));
                 $recette = $valeur['totalRecettes'];
                 $depense = $valeur['totalDepenses'];
                 $solde = $recette - $depense;
-                $soldeInitial += $solde; // Mettre à jour le solde initial
+                $soldeInitial += $solde;
             }
-            return $soldeInitial; // Retourner le solde final
+        
+            return $soldeInitial;
         }
-        
-
-        
-
-    }
+    }        
 ?>
