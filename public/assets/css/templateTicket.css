@@ -10,7 +10,7 @@
     position: relative;
 }
 
-/* Sidebar */
+/* Sidebar - Ajout de position fixed et gestion de la hauteur */
 .sidebar {
     width: 280px;
     background: rgba(255, 255, 255, 0.1);
@@ -21,7 +21,11 @@
     flex-shrink: 0;
     box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    position: relative;
+    position: fixed; /* Changé de relative à fixed */
+    top: 60px; /* Ajustez selon la hauteur de votre header */
+    left: 0;
+    height: calc(100vh - 60px); /* Hauteur complète moins la hauteur du header */
+    overflow-y: auto; /* Permet le scroll dans la sidebar si nécessaire */
     z-index: 100;
 }
 
@@ -89,17 +93,19 @@
     transform: translateX(3px) scale(0.98);
 }
 
-/* Contenu principal */
+/* Contenu principal - Ajout de margin-left pour compenser la sidebar fixe */
 .content {
     flex-grow: 1;
     padding: 40px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     margin: 20px;
+    margin-left: 320px; /* Largeur sidebar (280px) + margin (40px) */
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow-y: auto;
+    max-height: calc(100vh - 100px); /* Limite la hauteur pour permettre le scroll interne */
 }
 
 .content::before {
@@ -141,6 +147,7 @@
     .content {
         padding: 30px;
         margin: 15px;
+        margin-left: 290px; /* Ajusté pour la nouvelle largeur */
     }
 }
 
@@ -155,6 +162,10 @@
         border-right: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 0;
+        position: relative; /* Redevient relative en mobile */
+        top: auto;
+        left: auto;
+        height: auto;
     }
     
     .sidebar::before {
@@ -173,8 +184,10 @@
     
     .content {
         margin: 0;
+        margin-left: 0; /* Supprime le margin-left en mobile */
         border-radius: 0;
         padding: 25px;
+        max-height: none; /* Supprime la limite de hauteur en mobile */
     }
     
     .content::before {
@@ -189,6 +202,7 @@
     
     .sidebar {
         padding: 15px;
+        top: 50px; /* Ajusté pour mobile si header différent */
     }
     
     .sidebar h3 {

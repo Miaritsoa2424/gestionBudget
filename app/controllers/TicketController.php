@@ -17,7 +17,7 @@ class TicketController {
 
     public function getFormTicket() {
         $data = [
-            'page' => 'ticketForm',
+            'page' => 'templateTicket',
             'pageContent' => 'ticketForm',
             'importances' => Importance::getAll(),
             'etats' => Etat::getAll(),
@@ -58,7 +58,13 @@ class TicketController {
             Flight::redirect('/ticket');
         } else {
             Flight::render('template', [
-                'page' => 'ticketForm',
+                'page' => 'templateTicket',
+                'pageContent' => 'ticketForm',
+                'importances' => Importance::getAll(),
+                'etats' => Etat::getAll(),
+                'demandes' => Demande::getAll(),
+                'departements' => Departement::getAllDepartement(),
+                'typeDemandes' => TypeDemande::getAll(),
                 'erreur' => 'Erreur lors de la création du ticket'
             ]);
         }
