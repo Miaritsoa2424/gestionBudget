@@ -44,7 +44,6 @@
         <a href="ticket"><i class="fas fa-ticket-alt"></i>Tickets</a>
         <a href="crm"><i class="fas fa-handshake"></i>CRM</a>
         <a href="chart"><i class="fas fa-building"></i>Chart</a>
-        <a href="ticketStats"><i class="fas fa-file-alt"></i>Ticket Stats</a>
         <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
     </div>
 

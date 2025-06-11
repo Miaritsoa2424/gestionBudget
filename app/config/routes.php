@@ -92,8 +92,8 @@ $router->group('/ticket', function (Router $router) {
     $router->post('/saveTicket', [$ticketController, 'insertTicket']);
     $router->get('/listeTicket', [$ticketController, 'getListeTicket']);
     $router->get('/ticketStats', [$ticketController, 'ticketStats']);
+    $router->get('/ticketStats/data', [$ticketController, 'getData']);
 });
 
 
-$router->get('/ticketStats/data', [$StatController, 'getData']);
 
