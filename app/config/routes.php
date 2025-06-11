@@ -20,6 +20,8 @@ use app\controllers\TicketController;
  * @var Engine $app
  */
 $valeurController = new ValeurController();
+
+$StatController = new StatistiqueController();
 // $router->post('/valeur/savePrevision', [$valeurController, 'savePrevision']);
 $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
 $router->post('/savePrevision', [$valeurController, 'savePrevision']);
@@ -61,7 +63,6 @@ $router->group('/valeur', function (Router $router) {
 $formController = new FormController();
 $router->get('/crm', [$formController, 'crm']);
 
-$StatController = new StatistiqueController();
 
 Flight::route('/chart', function() use ($StatController) {
     $StatController->showDashboard();
@@ -83,18 +84,14 @@ $router->post('/departement/modifier', function() use ($modifDeptController) {
 $router->get('/departement/supprimer/@id:[0-9]+', function($id) use ($modifDeptController) {
     $modifDeptController->supprimerDepartement($id);
 });
-
-// $router->group('/ticket', function (Router $router) {
     $ticketController = new TicketController();
+
     $router->get('/ticket', [$ticketController, 'getTemplateTicket']);
     $router->get('/insertionTicket', [$ticketController, 'getInsertionTicket']);
     $router->post('/insertionTicket', [$ticketController, 'postInsertionTicket']);
     $router->get('/ticketDept', [$ticketController, 'getAllTicketsByIdDept']);
     $router->get('/listeTicket', [$ticketController, 'getAllTickets']);
     $router->get('/statTicket', [$ticketController, 'getStatistique']);
-// });
 
-// $ticketController = new TicketController();
-// $router->get('/ticketAdmin', [$ticketController, 'getAllTickets']);
-// $router->get('/ticketDept', [$ticketController, 'getAllTicketsByIdDept']);
+});
 

@@ -69,4 +69,7 @@ class StatistiqueController {
         
         Flight::json($salesByMonth);
     }
+
+
+
 }

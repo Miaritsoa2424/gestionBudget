@@ -222,3 +222,12 @@ INSERT INTO Ticket (idDemande, idImportance, idTypeDemande, idEtat, idDept, date
 (2, 2, 2, 3, 2, '2025-04-02', NULL), -- Demande de retour, moyen, retour, en attente, RH
 (3, 4, 3, 2, 3, '2025-04-03', '2025-04-05'), -- Accessoire manquant, critique, pièce manquante, clôturé, Informatique
 (4, 1, 4, 1, 4, '2025-04-04', NULL); -- Besoin d'explication, faible, conseil d'utilisation, en cours, Marketing
+-- Insertion de tickets
+INSERT INTO Ticket (idDemande, idImportance, idTypeDemande, idEtat, idDept, dateDebut, dateFin) VALUES
+(2, 2, 2, 3, 5, '2025-05-02', NULL),   -- Ticket pour demande 2, moyen, retour, en attente, Logistique
+(2, 2, 2, 3, 5, '2025-05-03', NULL),   -- Ticket pour demande 2, moyen, retour, en attente, Logistique
+(1, 3, 1, 1, 3, '2025-04-01', NULL),   -- Ticket pour demande 1, urgent, produit defectueux, en cours, Informatique
+(2, 2, 2, 3, 5, '2025-04-02', NULL),   -- Ticket pour demande 2, moyen, retour, en attente, Logistique
+(3, 4, 3, 1, 4, '2025-04-03', NULL),   -- Ticket pour demande 3, critique, piece manquante, en cours, Marketing
+(4, 1, 4, 2, 1, '2025-04-04', '2025-04-05'); -- Ticket pour demande 4, faible, conseil d'utilisation, cloture, Finance
+
