@@ -210,8 +210,8 @@ INSERT INTO TypeDemande (nom) VALUES
 ('conseil d''utilisation');
 
 -- Insertion des demandes
-INSERT INTO Demande (idClient, valideOuPas, description, sujet) VALUES
-(1, TRUE, 'L''écran de la montre ne s''allume plus', 'Montre defectueuse'),
-(2, FALSE, 'Je veux retourner les chaussures', 'Demande de retour'),
-(3, TRUE, 'Manque une sangle dans le sac de sport', 'Accessoire manquant'),
-(4, TRUE, 'Je ne sais pas comment utiliser les haltères', 'Besoin d''explication');
+INSERT INTO Demande (idClient, valideOuPas, description, sujet, dateDemande) VALUES
+(1, TRUE, 'L''écran de la montre ne s''allume plus', 'Montre defectueuse', '2025-04-01'),
+(2, FALSE, 'Je veux retourner les chaussures', 'Demande de retour', '2025-04-02'),
+(3, TRUE, 'Manque une sangle dans le sac de sport', 'Accessoire manquant', '2025-04-03'),
+(4, TRUE, 'Je ne sais pas comment utiliser les haltères', 'Besoin d''explication', '2025-04-04');
