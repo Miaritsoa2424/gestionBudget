@@ -186,3 +186,32 @@ INSERT INTO Crm (label) VALUES
 ('Mettre en place un parcours de decouverte de la marque Programmer un appel de suivi meme sans gain'),
 ('Lui envoyer un role Ambassadeur avec missions Organiser des meetups sportifs prives'),
 ('Envoyer une fiche produit enrichie video avis Proposer un comparatif en temps reel avec dautres modeles');
+
+
+-- Insertion des états
+INSERT INTO Etat (nom) VALUES
+('en cours'),
+('cloture'),
+('en attente'),
+('annule');
+
+-- Insertion des importances
+INSERT INTO Importance (nom) VALUES
+('faible'),
+('moyen'),
+('urgent'),
+('critique');
+
+-- Insertion des types de demande
+INSERT INTO TypeDemande (nom) VALUES
+('produit defectueux'),
+('retour'),
+('piece manquante'),
+('conseil d''utilisation');
+
+-- Insertion des demandes
+INSERT INTO Demande (idClient, valideOuPas, description, sujet) VALUES
+(1, TRUE, 'L''écran de la montre ne s''allume plus', 'Montre defectueuse'),
+(2, FALSE, 'Je veux retourner les chaussures', 'Demande de retour'),
+(3, TRUE, 'Manque une sangle dans le sac de sport', 'Accessoire manquant'),
+(4, TRUE, 'Je ne sais pas comment utiliser les haltères', 'Besoin d''explication');

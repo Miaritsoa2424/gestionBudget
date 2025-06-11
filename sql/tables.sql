@@ -80,3 +80,49 @@ CREATE TABLE Crm(
     idCrm INT PRIMARY KEY AUTO_INCREMENT,
     label VARCHAR(500) NOT NULL
 );
+
+
+CREATE TABLE Etat (
+    idEtat INT PRIMARY KEY AUTO_INCREMENT,
+    nom CHAR(50) NOT NULL
+);
+
+-- Table Importance
+CREATE TABLE Importance (
+    idImportance INT PRIMARY KEY AUTO_INCREMENT,
+    nom CHAR(50) NOT NULL
+);
+
+-- Table TypeDemande
+CREATE TABLE TypeDemande (
+    idTypeDemande INT PRIMARY KEY AUTO_INCREMENT,
+    nom CHAR(100) NOT NULL
+);
+
+-- Table Demande
+CREATE TABLE Demande (
+    idDemande INT PRIMARY KEY AUTO_INCREMENT,
+    idClient INT NOT NULL,
+    valideOuPas BOOLEAN NOT NULL,
+    description VARCHAR(255),
+    sujet VARCHAR(255),
+    dateDemande DATE NOT NULL,
+    FOREIGN KEY (idClient) REFERENCES client(idClient)
+);
+
+-- Table Ticket
+CREATE TABLE Ticket (
+    idTicket INT PRIMARY KEY AUTO_INCREMENT,
+    idDemande INT NOT NULL,
+    idImportance INT NOT NULL,
+    idTypeDemande INT NOT NULL,
+    idEtat INT NOT NULL,
+    idDept INT NOT NULL,
+    dateDebut DATE NOT NULL,
+    dateFin DATE DEFAULT NULL,
+    FOREIGN KEY (idDept) REFERENCES Dept(idDept),
+    FOREIGN KEY (idTypeDemande) REFERENCES TypeDemande(idTypeDemande),
+    FOREIGN KEY (idDemande) REFERENCES Demande(idDemande),
+    FOREIGN KEY (idImportance) REFERENCES Importance(idImportance),
+    FOREIGN KEY (idEtat) REFERENCES Etat(idEtat)
+);

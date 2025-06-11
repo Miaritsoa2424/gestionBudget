@@ -1,0 +1,100 @@
+.departement-container {
+    width: 90%;
+    max-width: 1200px; /* Limite la largeur maximale */
+    margin: 80px auto; /* Centre horizontalement et ajoute un espace en haut */
+    font-family: Arial, sans-serif;
+    background-color: transparent; /* Fond clair pour le conteneur */
+    padding: 20px;
+    transition: transform 0.3s ease-in-out; /* Animation de transformation */
+}
+
+.departement-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #444; /* Couleur légèrement différente pour le titre */
+}
+
+.departement-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fdfdfd; /* Fond clair pour le tableau */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre */
+}
+
+.departement-table th, .departement-table td {
+    border: 1px solid #ccc; /* Bordures grises */
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.departement-table th {
+    background-color: #28a745; /* Vert similaire à la validation */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.departement-table tr:nth-child(even) {
+    background-color: #f8f9fa; /* Gris clair pour les lignes paires */
+}
+
+.departement-table tr:hover {
+    background-color: #e9ecef; /* Gris légèrement plus foncé au survol */
+}
+
+.departement-table .edit-btn {
+    color: #17a2b8; /* Bleu clair pour le bouton Modifier */
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #17a2b8;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.departement-table .edit-btn:hover {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.departement-table .delete-btn {
+    color: #dc3545; /* Rouge pour le bouton Supprimer */
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #dc3545;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.departement-table .delete-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.modif-departement-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.modif-departement-container h1 {
+    margin-top: 0;
+}
+
+.modif-departement-container .close-form-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}

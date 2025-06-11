@@ -1,0 +1,160 @@
+/* Conteneur principal du formulaire */
+.modif-departement-container {
+    display: none; /* Masqué par défaut */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 400px;
+    max-width: 90%;
+}
+
+/* Titre du formulaire */
+.modif-departement-container h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* Champs du formulaire */
+.modif-departement-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.modif-departement-form input[type="text"],
+.modif-departement-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.modif-departement-form input[type="text"]:focus,
+.modif-departement-form input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Conteneur pour le champ de mot de passe et le bouton */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    flex: 1;
+    padding-right: 40px; /* Espace pour le bouton */
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #333;
+}
+
+.toggle-password-btn:hover {
+    color: #007bff;
+}
+
+/* Bouton de soumission */
+.modif-departement-submit-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.modif-departement-submit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .modif-departement-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .modif-departement-container h1 {
+        font-size: 18px;
+    }
+}
+
+.modal {
+    display: none; /* Masqué par défaut */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 50%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Bouton "X" pour fermer le popup */
+.close-popup-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.close-popup-btn:hover {
+    color: #ff0000;
+}

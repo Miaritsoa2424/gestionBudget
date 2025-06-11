@@ -46,3 +46,59 @@
         </tbody>
     </table>
 </section>
+
+<script>
+// Recherche en temps réel
+document.querySelector('.search-input').addEventListener('input', function () {
+    const searchValue = this.value.toLowerCase();
+    const rows = document.querySelectorAll('.validationList tbody tr');
+
+    rows.forEach(row => {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(searchValue) ? '' : 'none';
+    });
+});
+
+// Tri des colonnes
+document.querySelector('.sort-select').addEventListener('change', function () {
+    const sortBy = this.value;
+    const rows = Array.from(document.querySelectorAll('.validationList tbody tr'));
+    const tbody = document.querySelector('.validationList tbody');
+
+    const getCellValue = (row, column) => row.children[column].textContent.trim();
+
+    let columnIndex;
+    switch (sortBy) {
+        case 'nom':
+            columnIndex = 0; // Colonne "Nom Département"
+            break;
+        case 'date':
+            columnIndex = 2; // Colonne "Date"
+            break;
+        case 'montant':
+            columnIndex = 4; // Colonne "Montant"
+            break;
+        default:
+            return; // Pas de tri
+    }
+
+    rows.sort((a, b) => {
+        const aValue = getCellValue(a, columnIndex);
+        const bValue = getCellValue(b, columnIndex);
+
+        if (sortBy === 'montant') {
+            // Convertir les montants en nombres pour le tri
+            return parseFloat(aValue.replace(/\s/g, '').replace(',', '.')) - parseFloat(bValue.replace(/\s/g, '').replace(',', '.'));
+        } else if (sortBy === 'date') {
+            // Comparer les dates
+            return new Date(aValue) - new Date(bValue);
+        } else {
+            // Comparer les chaînes de texte
+            return aValue.localeCompare(bValue);
+        }
+    });
+
+    // Réinsérer les lignes triées dans le tableau
+    rows.forEach(row => tbody.appendChild(row));
+});
+</script>

@@ -31,7 +31,7 @@ class DepartementController
     public function deconnexion(){
         session_destroy();
         Flight::clear('idDept');
-        Flight::render('login', []);
-        
+        Flight::render('login', []);   
     }
+
 }

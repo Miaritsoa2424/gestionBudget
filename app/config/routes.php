@@ -12,6 +12,7 @@ use flight\Engine;
 use flight\net\Router;
 use app\controllers\DepartementController;
 use app\controllers\StatistiqueController;
+use app\controllers\ModifDeptController;
 
 /** 
  * @var Router $router 
@@ -67,4 +68,17 @@ Flight::route('/chart', function() use ($StatController) {
 
 Flight::route('/api/ventes-par-mois', function() use ($StatController) {
     $StatController->getSalesByMonthJson();
+});
+
+$modifDeptController = new ModifDeptController();
+Flight::route('/departement', function() use ($modifDeptController) {
+    $modifDeptController->getPageDepartement();
+});
+
+$router->post('/departement/modifier', function() use ($modifDeptController) {
+    $modifDeptController->modifierDepartement();
+});
+
+$router->get('/departement/supprimer/@id:[0-9]+', function($id) use ($modifDeptController) {
+    $modifDeptController->supprimerDepartement($id);
 });
