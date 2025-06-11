@@ -92,3 +92,8 @@ $router->group('/ticket', function (Router $router) {
     $router->get('/listeTicket', [$ticketController, 'getListeTicket']);
     $router->get('/statTicket', [$ticketController, 'getStatistique']);
 });
+
+$ticketController = new TicketController();
+$router->get('/ticketAdmin', [$ticketController, 'getAllTickets']);
+$router->get('/ticketDept', [$ticketController, 'getAllTicketsByIdDept']);
+

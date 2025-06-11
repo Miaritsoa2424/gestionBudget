@@ -133,33 +133,36 @@ SELECT
     t.idTicket,
     t.dateDebut,
     t.dateFin,
-    
+
     -- Données du Ticket
     t.idDept,
-    
+    dept.nomDept,
+
     -- Données de la Demande liée
     d.idDemande,
     d.idClient,
+    c.nomClient,
     d.valideOuPas,
     d.description,
     d.sujet,
     d.dateDemande,
-    
+
     -- Données de l'État
     e.idEtat,
     e.nom AS nomEtat,
-    
+
     -- Données de l'Importance
     i.idImportance,
     i.nom AS nomImportance,
-    
+
     -- Données du Type de Demande
     td.idTypeDemande,
     td.nom AS nomTypeDemande
-    
+
 FROM Ticket t
 JOIN Demande d ON t.idDemande = d.idDemande
+JOIN client c ON d.idClient = c.idClient
+JOIN Dept dept ON t.idDept = dept.idDept
 JOIN Etat e ON t.idEtat = e.idEtat
 JOIN Importance i ON t.idImportance = i.idImportance
 JOIN TypeDemande td ON t.idTypeDemande = td.idTypeDemande;
-

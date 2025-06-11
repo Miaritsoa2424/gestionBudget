@@ -14,7 +14,7 @@ class Ticket
 
     public function getAllTickets()
     {
-        $sql = "SELECT * FROM Vue_TicketsComplets ORDER BY dateCreation DESC";
+        $sql = "SELECT * FROM Vue_TicketsComplets ORDER BY dateDebut DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $tickets = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -29,7 +29,7 @@ class Ticket
 
     public function getAllTicketsByIdDept($idDept)
     {
-        $sql = "SELECT * FROM Vue_TicketsComplets WHERE idDept = ? ORDER BY dateCreation DESC";
+        $sql = "SELECT * FROM Vue_TicketsComplets WHERE idDept = ? ORDER BY dateDebut DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$idDept]);
         $tickets = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -40,6 +40,41 @@ class Ticket
         } else {
             return [];  // Tableau vide si aucun ticket n'est trouvé
         }
+    }
+
+     public function getAllClients() {
+        $sql = "SELECT idClient, nomClient FROM client ORDER BY nomClient";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getAllTypes() {
+        $sql = "SELECT idTypeDemande, nom FROM TypeDemande ORDER BY nom";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getAllImportances() {
+        $sql = "SELECT idImportance, nom FROM Importance ORDER BY nom";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getAllDepts() {
+        $sql = "SELECT idDept, nomDept FROM Dept ORDER BY nomDept";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getAllEtats() {
+        $sql = "SELECT idEtat, nom FROM Etat ORDER BY nom";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
   
