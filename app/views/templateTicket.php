@@ -2,7 +2,7 @@
 <div class="ticket-container">
     <div class="sidebar">
         <h3><i class="fas fa-ticket-alt"></i> Tickets</h3>
-        <a href="insertionTicket">
+        <a href="ticket/formTicket">
             <i class="fas fa-plus-circle"></i> Nouveau Ticket
         </a>
         <a href="listeTicket">

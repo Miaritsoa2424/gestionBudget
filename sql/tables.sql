@@ -81,6 +81,7 @@ CREATE TABLE Crm(
     label VARCHAR(500) NOT NULL
 );
 
+-- UPDATE 11-07-2025
 
 CREATE TABLE Etat (
     idEtat INT PRIMARY KEY AUTO_INCREMENT,
@@ -126,3 +127,39 @@ CREATE TABLE Ticket (
     FOREIGN KEY (idImportance) REFERENCES Importance(idImportance),
     FOREIGN KEY (idEtat) REFERENCES Etat(idEtat)
 );
+
+CREATE VIEW Vue_TicketsComplets AS
+SELECT
+    t.idTicket,
+    t.dateDebut,
+    t.dateFin,
+    
+    -- Données du Ticket
+    t.idDept,
+    
+    -- Données de la Demande liée
+    d.idDemande,
+    d.idClient,
+    d.valideOuPas,
+    d.description,
+    d.sujet,
+    d.dateDemande,
+    
+    -- Données de l'État
+    e.idEtat,
+    e.nom AS nomEtat,
+    
+    -- Données de l'Importance
+    i.idImportance,
+    i.nom AS nomImportance,
+    
+    -- Données du Type de Demande
+    td.idTypeDemande,
+    td.nom AS nomTypeDemande
+    
+FROM Ticket t
+JOIN Demande d ON t.idDemande = d.idDemande
+JOIN Etat e ON t.idEtat = e.idEtat
+JOIN Importance i ON t.idImportance = i.idImportance
+JOIN TypeDemande td ON t.idTypeDemande = td.idTypeDemande;
+
