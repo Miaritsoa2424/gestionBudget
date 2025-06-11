@@ -14,23 +14,29 @@
                 <tr>
                     <td><?= htmlspecialchars($dept->getIdDept()) ?></td>
                     <td><?= htmlspecialchars($dept->getNomDept()) ?></td>
-                    <td>
-                        <!-- Bouton Modifier -->
-                        <button 
-                            class="edit-btn" 
-                            data-id="<?= $dept->getIdDept() ?>" 
-                            data-nom="<?= htmlspecialchars($dept->getNomDept()) ?> "
-                            data-mdp="<?= htmlspecialchars($dept->getMdp()) ?>">
-                            Modifier
-                        </button>
-                        <!-- Bouton Supprimer -->
-                        <button 
-                            class="delete-btn" 
-                            data-id="<?= $dept->getIdDept() ?>" 
-                            data-url="<?= Flight::get('flight.base_url') ?>/departement/supprimer/<?= $dept->getIdDept() ?>">
-                            Supprimer
-                        </button>
-                    </td>
+                    <?php if ($dept->getIdDept() == $_SESSION['idDept']) { ?>
+                        <td>
+                            <!-- Bouton Modifier -->
+                            <button 
+                                class="edit-btn" 
+                                data-id="<?= $dept->getIdDept() ?>" 
+                                data-nom="<?= htmlspecialchars($dept->getNomDept()) ?> "
+                                data-mdp="<?= htmlspecialchars($dept->getMdp()) ?>">
+                                Modifier
+                            </button>
+                            <!-- Bouton Supprimer
+                            <button 
+                                class="delete-btn" 
+                                data-id="<?= $dept->getIdDept() ?>" 
+                                data-url="<?= Flight::get('flight.base_url') ?>/departement/supprimer/<?= $dept->getIdDept() ?>">
+                                Supprimer
+                            </button> -->
+                        </td>
+                    <?php } else { ?>
+                        <td>
+                            <span class="no-action">Aucune action disponible</span>
+                        </td>
+                    <?php } ?>
                 </tr>
             <?php } ?>
         </tbody>
