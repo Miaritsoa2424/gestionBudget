@@ -20,6 +20,8 @@ use app\controllers\TicketController;
  * @var Engine $app
  */
 $valeurController = new ValeurController();
+
+$StatController = new StatistiqueController();
 // $router->post('/valeur/savePrevision', [$valeurController, 'savePrevision']);
 $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
 $router->post('/savePrevision', [$valeurController, 'savePrevision']);
@@ -61,7 +63,6 @@ $router->group('/valeur', function (Router $router) {
 $formController = new FormController();
 $router->get('/crm', [$formController, 'crm']);
 
-$StatController = new StatistiqueController();
 
 Flight::route('/chart', function() use ($StatController) {
     $StatController->showDashboard();
@@ -90,5 +91,9 @@ $router->group('/ticket', function (Router $router) {
     $router->get('/insertionTicket', [$ticketController, 'getInsertionTicket']);
     $router->post('/insertionTicket', [$ticketController, 'postInsertionTicket']);
     $router->get('/listeTicket', [$ticketController, 'getListeTicket']);
-    $router->get('/statTicket', [$ticketController, 'getStatistique']);
+    $router->get('/ticketStats', [$ticketController, 'ticketStats']);
 });
+
+
+$router->get('/ticketStats/data', [$StatController, 'getData']);
+
