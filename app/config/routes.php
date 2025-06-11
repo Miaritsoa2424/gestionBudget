@@ -13,6 +13,7 @@ use flight\net\Router;
 use app\controllers\DepartementController;
 use app\controllers\StatistiqueController;
 use app\controllers\ModifDeptController;
+use app\controllers\TicketController;
 
 /** 
  * @var Router $router 
@@ -84,8 +85,15 @@ $router->get('/departement/supprimer/@id:[0-9]+', function($id) use ($modifDeptC
     $modifDeptController->supprimerDepartement($id);
 });
 
+$router->group('/ticket', function (Router $router) {
+    $ticketController = new TicketController();
+    $router->get('/', [$ticketController, 'getTemplateTicket']);
+    $router->get('/insertionTicket', [$ticketController, 'getInsertionTicket']);
+    $router->post('/insertionTicket', [$ticketController, 'postInsertionTicket']);
+    $router->get('/listeTicket', [$ticketController, 'getListeTicket']);
+    $router->get('/ticketStats', [$ticketController, 'ticketStats']);
+});
 
-$router->get('/ticketStats', [$StatController, 'ticketStats']);
 
 $router->get('/ticketStats/data', [$StatController, 'getData']);
 

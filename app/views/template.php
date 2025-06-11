@@ -14,6 +14,7 @@
 
 
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/template.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/templateTicket.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/validation.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/budget.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/formPrevReal.css">
@@ -39,6 +40,7 @@
         ?>
         <a href="budget"><i class="fas fa-wallet"></i>Budget</a>
         <a href="departement"><i class="fas fa-building"></i>Département</a>
+        <a href="ticket"><i class="fas fa-ticket-alt"></i>Tickets</a>
         <a href="crm"><i class="fas fa-handshake"></i>CRM</a>
         <a href="chart"><i class="fas fa-building"></i>Chart</a>
         <a href="ticketStats"><i class="fas fa-file-alt"></i>Ticket Stats</a>
