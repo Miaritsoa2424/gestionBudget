@@ -19,6 +19,8 @@ use app\controllers\ModifDeptController;
  * @var Engine $app
  */
 $valeurController = new ValeurController();
+
+$StatController = new StatistiqueController();
 // $router->post('/valeur/savePrevision', [$valeurController, 'savePrevision']);
 $router->post('/saveRealisation', [$valeurController, 'saveRealisation']);
 $router->post('/savePrevision', [$valeurController, 'savePrevision']);
@@ -60,7 +62,6 @@ $router->group('/valeur', function (Router $router) {
 $formController = new FormController();
 $router->get('/crm', [$formController, 'crm']);
 
-$StatController = new StatistiqueController();
 
 Flight::route('/chart', function() use ($StatController) {
     $StatController->showDashboard();
@@ -82,3 +83,9 @@ $router->post('/departement/modifier', function() use ($modifDeptController) {
 $router->get('/departement/supprimer/@id:[0-9]+', function($id) use ($modifDeptController) {
     $modifDeptController->supprimerDepartement($id);
 });
+
+
+$router->get('/ticketStats', [$StatController, 'ticketStats']);
+
+$router->get('/ticketStats/data', [$StatController, 'getData']);
+

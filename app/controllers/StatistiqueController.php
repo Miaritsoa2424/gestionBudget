@@ -69,4 +69,26 @@ class StatistiqueController {
         
         Flight::json($salesByMonth);
     }
+
+    public function ticketStats() {
+        $statistiqueModel = new Statistique(Flight::db());
+        $departements = $statistiqueModel->getDepartements();
+        $etats = $statistiqueModel->getEtats();
+        
+        Flight::render('template', [
+            'page' => 'ticketStats',
+            'departements' => $departements,
+            'etats' => $etats
+        ]);
+    }
+
+
+    public function getData() {
+        $etat = Flight::request()->query['etat'] ?? null;
+        $dept = Flight::request()->query['dept'] ?? null;
+        $annee = Flight::request()->query['annee'] ?? date('Y');
+
+        $data = Statistique::getTicketParMois($etat, $dept, $annee);
+        Flight::json($data);
+    }
 }
