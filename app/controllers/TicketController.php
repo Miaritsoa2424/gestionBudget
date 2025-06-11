@@ -42,7 +42,7 @@ class TicketController {
             Flight::redirect('/login');
         }
         $ticketModel = new Ticket();
-         $clients = $ticketModel->getAllClients();
+        $clients = $ticketModel->getAllClients();
         $types = $ticketModel->getAllTypes();
         $importances = $ticketModel->getAllImportances();
         $etats = $ticketModel->getAllEtats();
@@ -50,7 +50,7 @@ class TicketController {
         $tickets = Flight::Ticket()->getAllTicketsByIdDept($idDept);
         Flight::render('template', [
             'page' => 'templateTicket',
-            'pageContent' => 'ticketAdmin',
+            'pageContent' => 'ticketDept',
             'tickets' => $tickets,
             'clients' => $clients,
             'types' => $types,
@@ -58,7 +58,7 @@ class TicketController {
             'etats' => $etats
         ]);
     }
-}
+
     
     public function ticketStats() {
         $statistiqueModel = new Statistique(Flight::db());

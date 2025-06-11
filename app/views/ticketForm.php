@@ -1,8 +1,8 @@
 <div class="ticketForm" id="ticketForm">
     <!-- Bouton de fermeture -->
-    <button type="button" id="closeTicketForm"><a href="../ticket">&times;</a></button>
+    <button type="button" id="closeTicketForm"><a href="ticket">&times;</a></button>
 
-    <form action="saveTicket" method="POST">
+    <form action="insertTicket" method="POST">
         <fieldset>
             <h1>Création d’un Ticket</h1>
 
