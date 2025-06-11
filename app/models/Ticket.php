@@ -42,5 +42,31 @@ class Ticket
         }
     }
 
+    public function addTicket($idDemande, $idImportance, $idTypeDemande, $idEtat, $idDept, $dateFin = null)
+    {
+        $dateDebut = date('Y-m-d'); // Date actuelle
+
+        $sql = "INSERT INTO Ticket (idDemande, idImportance, idTypeDemande, idEtat, idDept, dateDebut, dateFin)
+                VALUES (:idDemande, :idImportance, :idTypeDemande, :idEtat, :idDept, :dateDebut, :dateFin)";
+        
+        $stmt = $this->conn->prepare($sql);
+        $result = $stmt->execute([
+            'idDemande' => $idDemande,
+            'idImportance' => $idImportance,
+            'idTypeDemande' => $idTypeDemande,
+            'idEtat' => $idEtat,
+            'idDept' => $idDept,
+            'dateDebut' => $dateDebut,
+            'dateFin' => $dateFin
+        ]);
+
+        if ($result) {
+            return $this->conn->lastInsertId();
+        } else {
+            return false;
+        }
+    }
+
+
   
 }

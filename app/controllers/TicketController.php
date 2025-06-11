@@ -6,6 +6,7 @@ use app\models\Etat;
 use app\models\Demande;
 use app\models\Departement;
 use app\models\TypeDemande;
+use app\models\Ticket;
 
 use Flight;
 
@@ -27,27 +28,40 @@ class TicketController {
         Flight::render('template', $data);
     }
 
-    public function insertTicket() {
+    public static function insertTicket()
+    {
         $data = Flight::request()->data;
 
-        $ticket = new Ticket(
-            $data->idDemande,
-            $data->idImportance,
-            $data->idTypeDemande,
-            $data->idEtat,
-            $data->idDept,
-            $data->dateDebut,
-            $data->dateFin
+        // Vérification des champs requis
+        if (
+            empty($data['idDemande']) ||
+            empty($data['idImportance']) ||
+            empty($data['idTypeDemande']) ||
+            empty($data['idEtat']) ||
+            empty($data['idDept'])
+        ) {
+            Flight::json(['error' => 'Champs manquants.'], 400);
+            return;
+        }
+
+        $ticket = new Ticket();
+        $idTicket = $ticket->addTicket(
+            $data['idDemande'],
+            $data['idImportance'],
+            $data['idTypeDemande'],
+            $data['idEtat'],
+            $data['idDept'],
+            $data['dateFin'] ?? null
         );
 
-        try {
-            $ticket->save();
+        if ($idTicket) {
             Flight::redirect('/ticket');
-        } catch (\Exception $e) {
+        } else {
             Flight::render('template', [
                 'page' => 'ticketForm',
-                'erreur' => 'Erreur lors de la création du ticket: ' . $e->getMessage()
+                'erreur' => 'Erreur lors de la création du ticket'
             ]);
         }
     }
+
 }
