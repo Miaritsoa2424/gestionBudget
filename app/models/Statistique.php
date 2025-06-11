@@ -139,5 +139,51 @@ class Statistique {
         return $result['chiffre_affaire'] ?? 0.0;
     }
     
+    public static function getTicketParMois($etat, $dept, $annee) {
+        $pdo = Flight::db();
+
+        $query = "
+            SELECT MONTH(dateDebut) as mois, COUNT(*) as nb
+            FROM Ticket
+            WHERE YEAR(dateDebut) = :annee
+              AND (idEtat = :etat)
+              AND (idDept = :dept)
+            GROUP BY mois
+            ORDER BY mois;
+        ";
+
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([
+            ':annee' => $annee,
+            ':etat' => $etat ?: null,
+            ':dept' => $dept ?: null
+        ]);
+
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $mois = ['Jan.', 'Fév.', 'Mars', 'Avr.', 'Mai', 'Juin', 'Juil.', 'Août', 'Sep.', 'Oct.', 'Nov.', 'Déc.'];
+        $valeurs = array_fill(0, 12, 0);
+
+        foreach ($result as $row) {
+            $valeurs[$row['mois'] - 1] = (int)$row['nb'];
+        }
+
+        return [
+            'mois' => $mois,
+            'valeurs' => $valeurs
+        ];
+    }
+
+    public function getDepartements() {
+        $query = "SELECT idDept, nomDept FROM Dept";
+        $result = $this->db->query($query);
+        return $result->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getEtats() {
+        $query = "SELECT idEtat, nom FROM Etat";
+        $result = $this->db->query($query);
+        return $result->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 }
 ?>
