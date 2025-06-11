@@ -8,7 +8,7 @@
         <a href="listeTicket">
             <i class="fas fa-list"></i> Liste des Tickets
         </a>
-        <a href="statTicket">
+        <a href="ticket/ticketStats">
             <i class="fas fa-chart-pie"></i> Statistiques
         </a>
     </div>

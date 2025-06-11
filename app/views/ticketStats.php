@@ -12,18 +12,18 @@
                         <div class="mb-3">
                             <label for="dept" class="form-label">D&eacute;partement</label>
                             <select class="form-select" id="dept" name="dept">
-                                <option value="">Sélectionner</option>
+                                <option value="">S&eacute;lectionner un d&eacute;partement</option>
                                 <?php foreach ($departements as $dept) { ?>
                                     <option value="<?= $dept['idDept'] ?>"><?= htmlspecialchars($dept['nomDept']) ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="createur" class="form-label">Créé par</label>
+                            <label for="createur" class="form-label">Cr&eacute;&eacute; par</label>
                             <input type="text" class="form-control" id="createur" value="Admin" readonly>
                         </div>
                         <div class="mb-3">
-                            <label for="etat" class="form-label">État</label>
+                            <label for="etat" class="form-label">&Eacute;tat</label>
                             <select class="form-select" name="etat" id="etat">
                                 <option value="">Tous</option>
                                 <?php foreach ($etats as $etat) { ?>
@@ -32,7 +32,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="annee" class="form-label">Année</label>
+                            <label for="annee" class="form-label">Ann&eacute;e</label>
                             <select class="form-select" name="annee" id="annee">
                                 <option value="2023">2023</option>
                                 <option value="2024">2024</option>

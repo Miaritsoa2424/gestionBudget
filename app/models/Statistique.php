@@ -146,18 +146,25 @@ class Statistique {
             SELECT MONTH(dateDebut) as mois, COUNT(*) as nb
             FROM Ticket
             WHERE YEAR(dateDebut) = :annee
-              AND (idEtat = :etat)
-              AND (idDept = :dept)
-            GROUP BY mois
-            ORDER BY mois;
         ";
 
+        $params = [':annee' => $annee];
+
+        // Ajouter dynamiquement les filtres seulement si les paramètres sont renseignés
+        if (!empty($etat)) {
+            $query .= " AND idEtat = :etat";
+            $params[':etat'] = $etat;
+        }
+
+        if (!empty($dept)) {
+            $query .= " AND idDept = :dept";
+            $params[':dept'] = $dept;
+        }
+
+        $query .= " GROUP BY mois ORDER BY mois;";
+
         $stmt = $pdo->prepare($query);
-        $stmt->execute([
-            ':annee' => $annee,
-            ':etat' => $etat ?: null,
-            ':dept' => $dept ?: null
-        ]);
+        $stmt->execute($params);
 
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $mois = ['Jan.', 'Fév.', 'Mars', 'Avr.', 'Mai', 'Juin', 'Juil.', 'Août', 'Sep.', 'Oct.', 'Nov.', 'Déc.'];
@@ -172,6 +179,7 @@ class Statistique {
             'valeurs' => $valeurs
         ];
     }
+
 
     public function getDepartements() {
         $query = "SELECT idDept, nomDept FROM Dept";
