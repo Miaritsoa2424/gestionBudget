@@ -18,7 +18,8 @@ class TicketController {
         $etats = $ticketModel->getAllEtats();
 
         Flight::render('template', [
-            'page' => 'ticketAdmin',
+            'page' => 'templateTicket',
+            'pageContent' => 'ticketAdmin',
             'tickets' => $tickets,
             'clients' => $clients,
             'types' => $types,
@@ -40,7 +41,8 @@ class TicketController {
         $idDept = $_SESSION['idDept'];
         $tickets = Flight::Ticket()->getAllTicketsByIdDept($idDept);
         Flight::render('template', [
-            'page' => 'ticketDept',
+            'page' => 'templateTicket',
+            'pageContent' => 'ticketAdmin',
             'tickets' => $tickets,
             'clients' => $clients,
             'types' => $types,

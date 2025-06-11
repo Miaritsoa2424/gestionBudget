@@ -8,6 +8,9 @@
         <a href="listeTicket">
             <i class="fas fa-list"></i> Liste des Tickets
         </a>
+        <a href="ticketDept">
+            <i class="fas fa-list"></i> Liste des tickets du departements
+        </a>
         <a href="statTicket">
             <i class="fas fa-chart-pie"></i> Statistiques
         </a>

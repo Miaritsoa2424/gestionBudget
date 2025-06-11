@@ -84,16 +84,17 @@ $router->get('/departement/supprimer/@id:[0-9]+', function($id) use ($modifDeptC
     $modifDeptController->supprimerDepartement($id);
 });
 
-$router->group('/ticket', function (Router $router) {
+// $router->group('/ticket', function (Router $router) {
     $ticketController = new TicketController();
-    $router->get('/', [$ticketController, 'getTemplateTicket']);
+    $router->get('/ticket', [$ticketController, 'getTemplateTicket']);
     $router->get('/insertionTicket', [$ticketController, 'getInsertionTicket']);
     $router->post('/insertionTicket', [$ticketController, 'postInsertionTicket']);
-    $router->get('/listeTicket', [$ticketController, 'getListeTicket']);
+    $router->get('/ticketDept', [$ticketController, 'getAllTicketsByIdDept']);
+    $router->get('/listeTicket', [$ticketController, 'getAllTickets']);
     $router->get('/statTicket', [$ticketController, 'getStatistique']);
-});
+// });
 
-$ticketController = new TicketController();
-$router->get('/ticketAdmin', [$ticketController, 'getAllTickets']);
-$router->get('/ticketDept', [$ticketController, 'getAllTicketsByIdDept']);
+// $ticketController = new TicketController();
+// $router->get('/ticketAdmin', [$ticketController, 'getAllTickets']);
+// $router->get('/ticketDept', [$ticketController, 'getAllTicketsByIdDept']);
 
