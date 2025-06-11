@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/template.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/templateTicket.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/validation.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/budget.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/formPrevReal.css">
@@ -35,6 +36,7 @@
         ?>
         <a href="budget"><i class="fas fa-wallet"></i>Budget</a>
         <a href="departement"><i class="fas fa-building"></i>Département</a>
+        <a href="ticket"><i class="fas fa-ticket-alt"></i>Tickets</a>
         <a href="crm"><i class="fas fa-handshake"></i>CRM</a>
         <a href="chart"><i class="fas fa-building"></i>Chart</a>
         <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
