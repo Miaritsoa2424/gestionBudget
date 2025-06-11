@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/crmForm.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/departement.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/formModifDepartement.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/ticketAdmin.css">
 
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/chart.css">
 
