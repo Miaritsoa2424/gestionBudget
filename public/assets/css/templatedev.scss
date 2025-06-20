@@ -1,14 +1,15 @@
 @charset "UTF-8";
 
 /* Container principal */
-/* .ticket-container {
+.container {
     display: flex;
+    height: 100vh;
     min-height: calc(100vh - 60px);
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #404040 0%, #575757 100%);
     position: relative;
-} */
+}
 
 /* Sidebar - Ajout de position fixed et gestion de la hauteur */
 .sidebar {
@@ -22,7 +23,6 @@
     box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     position: fixed; /* Changé de relative à fixed */
-    top: 60px; /* Ajustez selon la hauteur de votre header */
     left: 0;
     height: calc(100vh - 60px); /* Hauteur complète moins la hauteur du header */
     overflow-y: auto; /* Permet le scroll dans la sidebar si nécessaire */
