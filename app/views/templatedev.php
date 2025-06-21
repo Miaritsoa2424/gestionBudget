@@ -4,17 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navigation</title>
+    <title><?php echo $title ?></title>
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/templatedev.css">
-
-
-    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/chart.css">
-
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/list-client.css">
 </head>
 
 <body>
@@ -50,8 +47,12 @@
         </div>
 
         <div class="content">
-            <h1>Bienvenue dans le système de gestion des tickets</h1>
-            <p>Utilisez le menu de gauche pour naviguer dans les différentes sections.</p>
+            <?php
+            
+                if (isset($page)) {
+                    include($page . ".php");
+                } 
+            ?>
         </div>
     </div>
 

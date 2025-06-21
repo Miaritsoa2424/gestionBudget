@@ -7,6 +7,7 @@ use app\controllers\ValidationController;
 use app\controllers\WelcomeController;
 use app\controllers\BudgetController;
 use app\controllers\PdfController;
+use app\controllers\ClientController;
 
 use flight\Engine;
 use flight\net\Router;
@@ -96,3 +97,6 @@ $router->get('/ticketStats/data', [$ticketController, 'getData']);
 
 $welcomeController = new WelcomeController();
 $router->get('/welcome', [$welcomeController, 'home']);
+
+$ClientController = new ClientController();
+$router->get('/list-client', [$ClientController, 'listClientFront']);

@@ -1,0 +1,93 @@
+.date-range {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-bar {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+.filter-bar .filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+.filter-bar .filters input[type=text],
+.filter-bar .filters input[type=date],
+.filter-bar .filters select {
+  padding: 8px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #495057;
+  background-color: white;
+  transition: all 0.2s ease-in-out;
+  min-width: 150px;
+}
+.filter-bar .filters input[type=text]:focus,
+.filter-bar .filters input[type=date]:focus,
+.filter-bar .filters select:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.filter-bar .filters input[type=text]::-moz-placeholder, .filter-bar .filters input[type=date]::-moz-placeholder, .filter-bar .filters select::-moz-placeholder {
+  color: #adb5bd;
+}
+.filter-bar .filters input[type=text]::placeholder,
+.filter-bar .filters input[type=date]::placeholder,
+.filter-bar .filters select::placeholder {
+  color: #adb5bd;
+}
+.filter-bar .filters select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  padding-right: 32px;
+}
+.filter-bar .clear-btn {
+  background: transparent;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.filter-bar .clear-btn:hover {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border: 1px solid #ccc;
+}
+.results-table thead {
+  background-color: #f0f6fb;
+}
+.results-table th,
+.results-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+.results-table .empty td {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}/*# sourceMappingURL=list-client.css.map */
