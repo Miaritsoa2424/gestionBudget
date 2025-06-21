@@ -101,5 +101,28 @@ class Ticket
             return false;
         }
     }
+    
+    public function getTicketByAgent($id_agent, $status = null)
+    {
+        $sql = "SELECT t.*, s.id_status, s.date_status
+                FROM ticket t
+                LEFT JOIN statut_ticket s ON t.id_ticket = s.id_ticket
+                WHERE t.id_agent = :id_agent";
+        
+        $params = ['id_agent' => $id_agent];
+
+        if ($status !== null) {
+            $sql .= " AND s.id_status = :status";
+            $params['status'] = $status;
+        }
+
+        $sql .= " ORDER BY t.id_ticket DESC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+        $tickets = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $tickets ?: [];
+    }
   
 }
