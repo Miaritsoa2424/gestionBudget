@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+
+use app\models\Client;
 use Flight;
 
 class ClientController {
@@ -9,6 +11,27 @@ class ClientController {
 	public function __construct() {
 
 	}
+   public function getFormulaireLogin()
+    {
+        Flight::render('login');
+    }
+
+    public function getAccueil()
+    {
+        Flight::render('accueil');
+    }
+
+    public function getClientById()
+    {
+        $data = Client::getAll();
+        Flight::render('template', ['clients' => $data]);     
+    }
+
+    public function deconnexion(){
+        session_destroy();
+        Flight::clear('idDept');
+        Flight::render('login', []);   
+    }
     public function listClientFront() {
         $data = [
             'title' => 'Liste des Clients',
@@ -86,3 +109,4 @@ class ClientController {
   
  
 }
+

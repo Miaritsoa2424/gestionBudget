@@ -136,4 +136,25 @@ class TicketController {
             ]);
         }
     }
+
+    public function getAgentTicket() {
+        // Récupération des paramètres de tri depuis la requête (GET ou POST)
+        $id_agent = Flight::request()->query['id_agent'] ?? null;
+        $status = Flight::request()->query['status'] ?? null;
+
+        // Vérification de la présence de l'id_agent
+        if (empty($id_agent)) {
+            Flight::json(['error' => 'id_agent manquant.'], 400);
+            return;
+        }
+
+        $ticketModel = new Ticket();
+        $tickets = $ticketModel->getTicketByAgent($id_agent, $status);
+
+        // Tu peux ajouter d'autres données à passer au template si besoin
+        Flight::render('template', [
+            'page' => 'templateTicket',
+            'tickets' => $tickets
+        ]);
+    }
 }

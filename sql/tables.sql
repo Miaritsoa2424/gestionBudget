@@ -125,7 +125,7 @@ CREATE TABLE Ticket (
     FOREIGN KEY (idTypeDemande) REFERENCES TypeDemande(idTypeDemande),
     FOREIGN KEY (idDemande) REFERENCES Demande(idDemande),
     FOREIGN KEY (idImportance) REFERENCES Importance(idImportance),
-    FOREIGN KEY (idEtat) REFERENCES Etat(idEtat)
+    FOREIGN KEY (idEtat) REFERENCES Etat(idEtate)
 );
 
 CREATE VIEW Vue_TicketsComplets AS
@@ -166,3 +166,87 @@ JOIN Dept dept ON t.idDept = dept.idDept
 JOIN Etat e ON t.idEtat = e.idEtat
 JOIN Importance i ON t.idImportance = i.idImportance
 JOIN TypeDemande td ON t.idTypeDemande = td.idTypeDemande;
+
+
+CREATE TABLE client(
+   id_client INT,
+   nom VARCHAR(50),
+   prenom VARCHAR(50),
+   email VARCHAR(50),
+   password VARCHAR(50),
+   PRIMARY KEY(id_client)
+);
+
+CREATE TABLE categorie_ticket(
+   id_categorie INT,
+   nom VARCHAR(50),
+   PRIMARY KEY(id_categorie)
+);
+
+CREATE TABLE statut(
+   id_status INT,
+   nom VARCHAR(50),
+   PRIMARY KEY(id_status)
+);
+
+CREATE TABLE report_client(
+   id_report INT,
+   libelle VARCHAR(100),
+   piece_jointe VARCHAR(250),
+   date_report DATETIME,
+   note INT,
+   date_note DATE,
+   commentaire VARCHAR(1000),
+   id_client INT NOT NULL,
+   PRIMARY KEY(id_report),
+   FOREIGN KEY(id_client) REFERENCES client(id_client)
+);
+
+CREATE TABLE agent(
+   id_agent INT,
+   nom VARCHAR(50),
+   prenom VARCHAR(50),
+   email VARCHAR(50),
+   password VARCHAR(50),
+   PRIMARY KEY(id_agent)
+);
+
+CREATE TABLE message(
+   id_message INT,
+   id_envoyeur INT,
+   id_receveur INT,
+   client_agent BOOLEAN,
+   date_heure DATETIME NOT NULL,
+   PRIMARY KEY(id_message)
+);
+
+CREATE TABLE ticket(
+   id_ticket INT,
+   cout_horaire DECIMAL(15,2),
+   sujet VARCHAR(250),
+   id_categorie INT NOT NULL,
+   id_agent INT NOT NULL,
+   id_report INT NOT NULL,
+   PRIMARY KEY(id_ticket),
+   FOREIGN KEY(id_categorie) REFERENCES categorie_ticket(id_categorie),
+   FOREIGN KEY(id_agent) REFERENCES agent(id_agent),
+   FOREIGN KEY(id_report) REFERENCES report_client(id_report)
+);
+
+CREATE TABLE mvt_duree(
+   id_mvt_duree INT,
+   duree SMALLINT,
+   date_duree DATE,
+   id_ticket INT NOT NULL,
+   PRIMARY KEY(id_mvt_duree),
+   FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket)
+);
+
+CREATE TABLE statut_ticket(
+   id_ticket INT,
+   id_status INT,
+   date_status DATE,
+   PRIMARY KEY(id_ticket, id_status),
+   FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
+   FOREIGN KEY(id_status) REFERENCES statut(id_status)
+);

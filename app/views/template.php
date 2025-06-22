@@ -31,7 +31,6 @@
 
 <body>
     <div class="navbar">
-        <!-- <a href="#"><i class="fas fa-home"></i>Accueil</a> -->
         <?php
             if ($_SESSION['idDept'] == 1) { ?>
                 <a href="validation"><i class="fas fa-check-circle"></i>Validation</a>
