@@ -171,7 +171,9 @@ class TicketController {
                     'libelle' => 'Impossible de se connecter depuis ce matin. Message d\'erreur 404 persistant.',
                     'client' => 'Jean Dupont',
                     'date' => '2024-01-15',
-                    'priorite' => 'haute'
+                    'priorite' => 'haute',
+                    'etat' => 'en cours',
+                    'duree' => '2'
                 ],
                 [
                     'id' => 2,
@@ -180,7 +182,9 @@ class TicketController {
                     'libelle' => 'Le montant de la facture n°F2024-001 ne correspond pas au devis initial.',
                     'client' => 'Marie Martin',
                     'date' => '2024-01-14',
-                    'priorite' => 'moyenne'
+                    'priorite' => 'moyenne',
+                    'etat' => 'en cours',
+                    'duree' => '3'
                 ],
                 [
                     'id' => 3,
@@ -189,7 +193,9 @@ class TicketController {
                     'libelle' => 'Besoin d\'un devis pour l\'installation de 5 nouveaux postes.',
                     'client' => 'Pierre Durant',
                     'date' => '2024-01-13',
-                    'priorite' => 'basse'
+                    'priorite' => 'basse',
+                    'etat' => 'en cours',
+                    'duree' => '2'
                 ]]
         ];
         Flight::render('templatedev', $data);
