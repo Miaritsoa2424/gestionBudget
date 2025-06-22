@@ -141,7 +141,8 @@ class ValeurController
             } else {
                 echo "Erreur lors de l'ajout de la réalisation.";
             }
-        } else {
+        } 
+    } else {
             $previsionOuRealisation = 1;
             $validation = 0;
 
