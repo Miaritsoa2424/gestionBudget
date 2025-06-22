@@ -45,4 +45,19 @@ class Client {
         return $list;
     }
 
+
+    public function checkUser($mail,$password){
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT * FROM client WHERE email = :email AND password = :password");
+        $stmt->bindParam(':email', $mail);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        
+        if ($stmt->rowCount() > 0) {
+            return true; // Login successful
+        } else {
+            return false; // Login failed
+        }
+    }
+
 }
