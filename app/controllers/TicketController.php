@@ -157,4 +157,42 @@ class TicketController {
             'tickets' => $tickets
         ]);
     }
+
+    //////////////Controller pour les tickets des clients vaovao
+    public function getTickets(){
+        $data = [
+            'title' => 'Liste des Tickets',
+            'page' => 'affiliation-agent',
+            'tickets' => [
+                [
+                    'id' => 1,
+                    'sujet' => 'Problème de connexion',
+                    'categorie' => 'Technique',
+                    'libelle' => 'Impossible de se connecter depuis ce matin. Message d\'erreur 404 persistant.',
+                    'client' => 'Jean Dupont',
+                    'date' => '2024-01-15',
+                    'priorite' => 'haute'
+                ],
+                [
+                    'id' => 2,
+                    'sujet' => 'Facturation incorrecte',
+                    'categorie' => 'Facturation',
+                    'libelle' => 'Le montant de la facture n°F2024-001 ne correspond pas au devis initial.',
+                    'client' => 'Marie Martin',
+                    'date' => '2024-01-14',
+                    'priorite' => 'moyenne'
+                ],
+                [
+                    'id' => 3,
+                    'sujet' => 'Demande de devis',
+                    'categorie' => 'Commercial',
+                    'libelle' => 'Besoin d\'un devis pour l\'installation de 5 nouveaux postes.',
+                    'client' => 'Pierre Durant',
+                    'date' => '2024-01-13',
+                    'priorite' => 'basse'
+                ]]
+        ];
+        Flight::render('templatedev', $data);
+    
+    }
 }
