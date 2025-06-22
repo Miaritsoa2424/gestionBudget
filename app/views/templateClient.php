@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $title ?? 'Espace Client' ?></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/templateClient.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/report-client.css">
+
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-brand" >
+            <i class="fas fa-ticket-alt"></i>
+            <span>Support Client</span>
+        </div>
+        <ul class="nav-links" >
+            <li><a href="<?= Flight::get('flight.base_url') ?>/client/home"><i class="fas fa-home"></i> Accueil</a></li>
+            <li class="active"><a href="<?= Flight::get('flight.base_url') ?>/client/report"><i class="fas fa-file-alt "></i> Rapport</a></li>
+            <li><a href="<?= Flight::get('flight.base_url') ?>/client/chat"><i class="fas fa-comments"></i> Discussion</a></li>
+            <li>
+                <a href="<?= Flight::get('flight.base_url') ?>/client/notifications">
+                    <i class="fas fa-bell"></i> Notifications
+                    <span class="notification-badge">0</span>
+                </a>
+            </li>
+            <li><a href="<?= Flight::get('flight.base_url') ?>/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <?php
+            if (isset($page)) {
+                include($page . ".php");
+            }
+        ?>
+    </main>
+
+</body>
+</html>
