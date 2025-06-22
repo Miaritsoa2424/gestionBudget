@@ -12,10 +12,13 @@
 
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/templatedev.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/list-client.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/form-add-client.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/detail-client.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/detail-report.css">
+
 </head>
 
 <body>
-
     <div class="container">
         <div class="sidebar">
             <h3><i style="color: #0A6CF6;" class="fas fa-ticket-alt"></i> Tickets</h3>
@@ -31,13 +34,11 @@
             </div>
             <div class="nav-item">
                 <a class="nav-link">
-                    <i class="fas fa-list"></i> Liste des Tickets
+                    <i class="fas fa-users"></i> Clients
                     <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="sub-menu">
-                    <a><i class="fas fa-clock"></i> En attente</a>
-                    <a><i class="fas fa-check"></i> Traités</a>
-                    <a><i class="fas fa-exclamation"></i> Urgents</a>
+                    <a href="list-client"><i class="fas fa-list"></i> Liste des Clients</a>
                 </div>
             </div>
             
@@ -69,7 +70,10 @@
         // Gestion des sous-menus
         document.querySelectorAll('.sub-menu a').forEach(item => {
             item.addEventListener('click', event => {
-                event.preventDefault();
+                // Ne pas empêcher la navigation si le lien a un href
+                if (!item.getAttribute('href')) {
+                    event.preventDefault();
+                }
                 // Retire la classe active de tous les autres sous-menus
                 document.querySelectorAll('.sub-menu a').forEach(subItem => {
                     subItem.classList.remove('active');

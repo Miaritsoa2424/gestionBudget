@@ -1,8 +1,8 @@
 <div class="header-actions">
-    <h1>Liste des Clients</h1>
-    <a href="?action=add-client" class="btn btn-primary">+ Ajouter un client</a>
+    <h1><?= $title ?></h1>
+    <button class="btn btn-primary" id="addClientBtn">+ Ajouter un client</button>
 </div>
-
+<?php include 'form-client.php'; ?>
 <div class="filter-bar">
     <div class="filters">
         <input type="text" placeholder="🔍" id="global-search">
@@ -12,9 +12,9 @@
         <!-- Auteur (Clients) -->
         <select id="filter-auteur">
             <option value="">Auteur</option>
-            <option value="Client 1">Client 1</option>
-            <option value="Client 2">Client 2</option>
-            <option value="Client 3">Client 3</option>
+            <?php foreach ($clients as $client): ?>
+                <option value="<?= htmlspecialchars($client['name']) ?>"><?= htmlspecialchars($client['name']) ?></option>
+            <?php endforeach; ?>
         </select>
 
         <input type="text" placeholder="Sujet" id="filter-sujet">
@@ -65,91 +65,31 @@
             </tr>
         </thead>
         <tbody>
-            <?php for ($i = 0; $i < 10; $i++): ?>
-            <tr>
-                <td><?php echo $i + 1; ?></td>
-                <td>Client <?php echo $i + 1; ?></td>
-                <td>client<?php echo $i + 1; ?>@email.com</td>
-                <td>0123456789</td>
-                <td>
-                    <div class="notification-bell">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-badge"><?php echo rand(1,6) ?></span>
-                    </div>
-                </td>
-                <td>
-                    <a href="?action=detail-client&id=<?php echo $i + 1; ?>" class="btn btn-info">Détails</a>
-                </td>
-            </tr>
-            <?php endfor; ?>
-            <!-- <tr>
-                <td>1</td>
-                <td>Client 1</td>
-                <td>client1@email.com</td>
-                <td>0123456789</td>
-                <td>
-                    <div class="notification-bell">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-badge">3</span>
-                    </div>
-                </td>
-                <td>
-                    <a href="?action=detail-client&id=1" class="btn btn-info">Détails</a>
-                </td>
-            </tr> -->
+            <?php if (count($clients) === 0): ?>
+                <tr class="empty"><td colspan="6">Aucun client trouvé.</td></tr>
+            <?php else: ?>
+                <?php foreach ($clients as $client): ?>
+                    <tr>
+                        <td><?= $client['id'] ?></td>
+                        <td><?= htmlspecialchars($client['name']) ?></td>
+                        <td><?= htmlspecialchars($client['email']) ?></td>
+                        <td><?= htmlspecialchars($client['phone']) ?></td>
+                        <td>
+                            <div class="notification-bell">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-badge"><?= $client['notifications'] ?></span>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="detail-client" class="btn btn-info">Détails</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </div>
 
-<style>
-.header-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 0 20px;
-}
-
-.btn {
-    padding: 8px 16px;
-    border-radius: 4px;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: white;
-}
-
-.btn-info {
-    background-color: #17a2b8;
-    color: white;
-    font-size: 0.9em;
-}
-
-.notification-bell {
-    position: relative;
-    display: inline-block;
-}
-
-.notification-bell i {
-    color: #6c757d;
-    font-size: 1.2em;
-}
-
-.notification-badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background-color: #dc3545;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 0.7em;
-    font-weight: bold;
-}
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -241,6 +181,44 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             filterTable();
         });
+    }
+
+    // Modal handling
+    const modal = document.getElementById('addClientModal');
+    const addBtn = document.getElementById('addClientBtn');
+    const closeBtn = document.querySelector('.close');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const form = document.getElementById('addClientForm');
+
+    addBtn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    cancelBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    form.onsubmit = function(e) {
+        e.preventDefault();
+        // Ici vous pouvez ajouter la logique pour sauvegarder le client
+        const formData = {
+            name: document.getElementById('clientName').value,
+            email: document.getElementById('clientEmail').value,
+            phone: document.getElementById('clientPhone').value
+        };
+        console.log('Client à sauvegarder:', formData);
+        modal.style.display = "none";
+        form.reset();
     }
 });
 </script>

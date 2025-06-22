@@ -1,0 +1,65 @@
+.report-detail {
+    position: relative;
+}
+
+.content-wrapper {
+    transition: margin-right 0.3s ease;
+}
+
+.content-wrapper.shifted {
+    margin-right: 400px;
+}
+
+.section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+}
+
+.attachments {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.attachment {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.ticket-form {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    padding: 2rem;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+}
+
+.ticket-form.active {
+    right: 0;
+}
+
+.close-ticket {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .ticket-form {
+        width: 100%;
+        right: -100%;
+    }
+    .content-wrapper.shifted {
+        margin-right: 0;
+    }
+}

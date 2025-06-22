@@ -100,3 +100,7 @@ $router->get('/welcome', [$welcomeController, 'home']);
 
 $ClientController = new ClientController();
 $router->get('/list-client', [$ClientController, 'listClientFront']);
+$router->get('/detail-client', [$ClientController, 'clientDetail']);
+$router->get('/detail-report', [$ClientController, 'clientReportDetail']);
+
+
