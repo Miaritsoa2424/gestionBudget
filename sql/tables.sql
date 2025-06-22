@@ -153,7 +153,7 @@ CREATE TABLE mvt_duree(
 );
 
 CREATE TABLE statut_ticket(
-   id_ticket INT auto_increment,
+   id_ticket INT,
    id_status INT,
    date_status DATE,
    PRIMARY KEY(id_ticket, id_status),
