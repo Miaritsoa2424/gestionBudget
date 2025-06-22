@@ -104,6 +104,21 @@ class ClientController {
         ];
         Flight::render('templatedev', $data);
     }
+
+    public function getFormulaireReportClient()
+    {
+        $data = [
+            'title' => 'Formulaire de Report Client',
+            'page' => 'report-client'
+        ];
+        Flight::render('templateClient', $data);
+    }
+    public function getHomeCLient() {
+        $data = [
+            'title' => 'Espace Client'
+        ];
+        Flight::render('templateClient', $data);
+    }
     
 
   
