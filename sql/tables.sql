@@ -61,10 +61,6 @@ CREATE TABLE produit (
     stock INT NOT NULL CHECK (stock >= 0)
 );
 
-CREATE TABLE client (
-    idClient INT PRIMARY KEY AUTO_INCREMENT,
-    nomClient VARCHAR(100) NOT NULL
-);
 
 CREATE TABLE vente (
     idVente INT PRIMARY KEY AUTO_INCREMENT,
@@ -80,92 +76,6 @@ CREATE TABLE Crm(
     idCrm INT PRIMARY KEY AUTO_INCREMENT,
     label VARCHAR(500) NOT NULL
 );
-
--- UPDATE 11-07-2025
-
-CREATE TABLE Etat (
-    idEtat INT PRIMARY KEY AUTO_INCREMENT,
-    nom CHAR(50) NOT NULL
-);
-
--- Table Importance
-CREATE TABLE Importance (
-    idImportance INT PRIMARY KEY AUTO_INCREMENT,
-    nom CHAR(50) NOT NULL
-);
-
--- Table TypeDemande
-CREATE TABLE TypeDemande (
-    idTypeDemande INT PRIMARY KEY AUTO_INCREMENT,
-    nom CHAR(100) NOT NULL
-);
-
--- Table Demande
-CREATE TABLE Demande (
-    idDemande INT PRIMARY KEY AUTO_INCREMENT,
-    idClient INT NOT NULL,
-    valideOuPas BOOLEAN NOT NULL,
-    description VARCHAR(255),
-    sujet VARCHAR(255),
-    dateDemande DATE NOT NULL,
-    FOREIGN KEY (idClient) REFERENCES client(idClient)
-);
-
--- Table Ticket
-CREATE TABLE Ticket (
-    idTicket INT PRIMARY KEY AUTO_INCREMENT,
-    idDemande INT NOT NULL,
-    idImportance INT NOT NULL,
-    idTypeDemande INT NOT NULL,
-    idEtat INT NOT NULL,
-    idDept INT NOT NULL,
-    dateDebut DATE NOT NULL,
-    dateFin DATE DEFAULT NULL,
-    FOREIGN KEY (idDept) REFERENCES Dept(idDept),
-    FOREIGN KEY (idTypeDemande) REFERENCES TypeDemande(idTypeDemande),
-    FOREIGN KEY (idDemande) REFERENCES Demande(idDemande),
-    FOREIGN KEY (idImportance) REFERENCES Importance(idImportance),
-    FOREIGN KEY (idEtat) REFERENCES Etat(idEtate)
-);
-
-CREATE VIEW Vue_TicketsComplets AS
-SELECT
-    t.idTicket,
-    t.dateDebut,
-    t.dateFin,
-
-    -- Données du Ticket
-    t.idDept,
-    dept.nomDept,
-
-    -- Données de la Demande liée
-    d.idDemande,
-    d.idClient,
-    c.nomClient,
-    d.valideOuPas,
-    d.description,
-    d.sujet,
-    d.dateDemande,
-
-    -- Données de l'État
-    e.idEtat,
-    e.nom AS nomEtat,
-
-    -- Données de l'Importance
-    i.idImportance,
-    i.nom AS nomImportance,
-
-    -- Données du Type de Demande
-    td.idTypeDemande,
-    td.nom AS nomTypeDemande
-
-FROM Ticket t
-JOIN Demande d ON t.idDemande = d.idDemande
-JOIN client c ON d.idClient = c.idClient
-JOIN Dept dept ON t.idDept = dept.idDept
-JOIN Etat e ON t.idEtat = e.idEtat
-JOIN Importance i ON t.idImportance = i.idImportance
-JOIN TypeDemande td ON t.idTypeDemande = td.idTypeDemande;
 
 
 CREATE TABLE client(
