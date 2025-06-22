@@ -27,9 +27,6 @@
 
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/chart.css">
 
-    <style>
-
-    </style>
 </head>
 
 <body>

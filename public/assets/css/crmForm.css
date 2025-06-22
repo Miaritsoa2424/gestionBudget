@@ -40,22 +40,6 @@
 .crmForm button:hover {
   background-color: #0056b3;
 }
-/* Ajout pour le bouton de fermeture */
-#closeForm {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  cursor: pointer;
-}
-
-#closeForm:hover {
-  color: red;
-}
 .crmForm #closePopUpPrev {
   background-color: #5b5f64;
 }/*# sourceMappingURL=crmForm.css.map */

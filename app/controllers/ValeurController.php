@@ -106,6 +106,7 @@ class ValeurController
             $previsionOuRealisation = 1;
             $validation = 1;
 
+
             // Exemple de valeurs valides (ils doivent exister dans les tables produit et client)
             
             // Création d'un objet Vente
@@ -116,6 +117,17 @@ class ValeurController
                 $idClient = rand(1,8);
                 $dateVente = $date; // date du jour
                 $quantite = rand(1,5);
+
+            
+            
+            // Sauvegarde dans la base de données
+            for ($i=0; $i < 10; $i++) { 
+                // Exemple de valeurs valides (ils doivent exister dans les tables produit et client)
+                $idProduit = 1;
+                $idClient = 2;
+                $dateVente = date('Y-m-d'); // date du jour
+                $quantite = 3;
+                // Création d'un objet Vente
                 $vente = new Vente($idProduit, $idClient, $dateVente, $quantite);
                 $vente->save();
             }

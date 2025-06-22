@@ -7,6 +7,7 @@ use app\controllers\ValidationController;
 use app\controllers\WelcomeController;
 use app\controllers\BudgetController;
 use app\controllers\PdfController;
+use app\controllers\ClientController;
 
 use flight\Engine;
 use flight\net\Router;
@@ -64,33 +65,42 @@ $formController = new FormController();
 $router->get('/crm', [$formController, 'crm']);
 
 
-Flight::route('/chart', function() use ($StatController) {
+Flight::route('/chart', function () use ($StatController) {
     $StatController->showDashboard();
 });
 
-Flight::route('/api/ventes-par-mois', function() use ($StatController) {
+Flight::route('/api/ventes-par-mois', function () use ($StatController) {
     $StatController->getSalesByMonthJson();
 });
 
 $modifDeptController = new ModifDeptController();
-Flight::route('/departement', function() use ($modifDeptController) {
+Flight::route('/departement', function () use ($modifDeptController) {
     $modifDeptController->getPageDepartement();
 });
 
-$router->post('/departement/modifier', function() use ($modifDeptController) {
+$router->post('/departement/modifier', function () use ($modifDeptController) {
     $modifDeptController->modifierDepartement();
 });
 
-$router->get('/departement/supprimer/@id:[0-9]+', function($id) use ($modifDeptController) {
+$router->get('/departement/supprimer/@id:[0-9]+', function ($id) use ($modifDeptController) {
     $modifDeptController->supprimerDepartement($id);
 });
-    $ticketController = new TicketController();
+$ticketController = new TicketController();
 
-    $router->get('/ticket', [$ticketController, 'getTemplateTicket']);
-    $router->get('/formTicket', [$ticketController, 'getFormTicket']);
-    $router->post('/insertTicket', [$ticketController, 'insertTicket']);
-    $router->get('/ticketDept', [$ticketController, 'getAllTicketsByIdDept']);
-    $router->get('/listeTicket', [$ticketController, 'getAllTickets']);
-    $router->get('/ticketStats', [$ticketController, 'ticketStats']);
-    $router->get('/ticketStats/data', [$ticketController, 'getData']);
+$router->get('/ticket', [$ticketController, 'getTemplateTicket']);
+$router->get('/formTicket', [$ticketController, 'getFormTicket']);
+$router->post('/insertTicket', [$ticketController, 'insertTicket']);
+$router->get('/ticketDept', [$ticketController, 'getAllTicketsByIdDept']);
+$router->get('/listeTicket', [$ticketController, 'getAllTickets']);
+$router->get('/ticketStats', [$ticketController, 'ticketStats']);
+$router->get('/ticketStats/data', [$ticketController, 'getData']);
+
+$welcomeController = new WelcomeController();
+$router->get('/welcome', [$welcomeController, 'home']);
+
+$ClientController = new ClientController();
+$router->get('/list-client', [$ClientController, 'listClientFront']);
+$router->get('/detail-client', [$ClientController, 'clientDetail']);
+$router->get('/detail-report', [$ClientController, 'clientReportDetail']);
+
 

@@ -18,7 +18,7 @@ class WelcomeController {
     }
 
     public function home() {
-        Flight::render('template', []);
+        Flight::render('templatedev', []);
     }
 
   
