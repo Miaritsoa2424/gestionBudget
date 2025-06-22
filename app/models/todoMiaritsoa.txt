@@ -12,3 +12,6 @@ Ajout de Categorie CRM dans les donnees et ajout de donnees de test (ok)
 
     -front
         -Creation de formulaire de CRM(departement,crm,Valeur,date)
+
+Debug fonction getSoldeInitiale
+Transformation en boutton du lien precedent et suivant

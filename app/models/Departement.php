@@ -32,6 +32,14 @@ use PDO;
             $this->nomDept = $nomDept;
         }
 
+        public function getMdp() {
+            $sql = "SELECT mdp FROM Dept WHERE idDept = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$this->getIdDept()]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['mdp'] ?? null; // Retourne le mot de passe ou null si non trouvé
+        }
+
         // Méthode de connexion
         public static function login($nomDept, $mdp) {
             $sql = "SELECT * FROM Dept WHERE nomDept = ?";
@@ -126,14 +134,19 @@ use PDO;
                 return 0;  // Valeur par défaut si aucun solde n'est trouvé
             }
         }
-        
 
-        public function getSoldeInitialAtDate() {
-            $soldeInitial = $this->getSoldeInitial();
-
-
+        public function modifierDepartement($nomDept,$mdp) {
+            $sql = "UPDATE Dept SET nomDept = ?, mdp = ? WHERE idDept = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$nomDept, $mdp, $this->getIdDept()]);
         }
 
+        public function supprimerDepartement() {
+            $sql = "DELETE FROM Dept WHERE idDept = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$this->getIdDept()]);
+        }
+        
 
         
 

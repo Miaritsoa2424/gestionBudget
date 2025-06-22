@@ -1,0 +1,212 @@
+@charset "UTF-8";
+
+@keyframes slideInDown {
+    from { 
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Formulaire principal - style inspiré de csvForm mais intégré */
+.ticketForm {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    position: relative;
+    animation: slideInDown 0.6s ease;
+    transition: transform 0.2s ease-in-out;
+}
+
+.ticketForm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+.ticketForm h1 {
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 15px;
+}
+
+/* Fieldset */
+.ticketForm fieldset {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: none;
+}
+
+/* Labels */
+.ticketForm label {
+    color: #555;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+/* Inputs et selects - style identique à csvForm */
+.ticketForm input,
+.ticketForm select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ticketForm input:focus,
+.ticketForm select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.ticketForm input:hover,
+.ticketForm select:hover {
+    border-color: #999;
+}
+
+/* Select styling */
+.ticketForm select {
+    cursor: pointer;
+    background-color: #fff;
+}
+
+/* Bouton submit - style identique à csvForm */
+.ticketForm button[type="submit"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.ticketForm button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Bouton de fermeture - style inspiré de csvForm */
+#closeTicketForm {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #5b5f64;
+    border: 1px solid #5b5f64;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#closeTicketForm:hover {
+    background-color: #404448;
+    border-color: #404448;
+}
+
+/* Message d'erreur */
+.ticketForm .error {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .ticketForm {
+        width: 95%;
+        margin: 15px auto;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ticketForm {
+        width: 100%;
+        margin: 10px auto;
+        padding: 20px;
+        border-radius: 8px;
+    }
+    
+    .ticketForm h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .ticketForm input,
+    .ticketForm select,
+    .ticketForm button[type="submit"] {
+        padding: 12px;
+    }
+    
+    #closeTicketForm {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        top: 12px;
+        right: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ticketForm {
+        padding: 15px;
+        margin: 5px auto;
+    }
+    
+    .ticketForm h1 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+    
+    .ticketForm fieldset {
+        padding: 5px;
+    }
+    
+    .ticketForm label {
+        font-size: 0.9rem;
+    }
+    
+    .ticketForm input,
+    .ticketForm select,
+    .ticketForm button[type="submit"] {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+}

@@ -18,7 +18,7 @@ class PdfController {
             die("Ne peut pas voir le budget");
         }   
 
-        // Vérifier si les dates sont valides
+        // Vérifier si les dates sont valide
         if (!$dateDebut || !$dateFin) {
             die("Veuillez spécifier une date de début et une date de fin.");
         }
@@ -53,13 +53,15 @@ class PdfController {
             // Récupérer les données pour ce mois spécifique
             $query = "
                 SELECT 
-                    nomRubrique, 
+                    nomType, 
                     SUM(CASE WHEN previsionOuRealisation = 0 THEN montant ELSE 0 END) AS prevision,
                     SUM(CASE WHEN previsionOuRealisation = 1 THEN montant ELSE 0 END) AS realisation
                 FROM Valeur 
+                JOIN Type as t
+                ON t.idType = Valeur.idType
                 WHERE YEAR(date) = :year AND MONTH(date) = :month AND validation = 1 AND idDept = :idDept
-                GROUP BY nomRubrique
-                ORDER BY nomRubrique ASC
+                GROUP BY nomType
+                ORDER BY nomType ASC
             ";
             $stmt = $db->prepare($query);
             $stmt->execute([
@@ -93,7 +95,7 @@ class PdfController {
                 $realisation = $row['realisation'] ?? 0;
                 $ecart = $prevision - $realisation;
 
-                $pdf->Cell($widths[0], 10, $row['nomRubrique'], 1, 0, 'L');
+                $pdf->Cell($widths[0], 10, $row['nomType'], 1, 0, 'L');
                 $pdf->Cell($widths[1], 10, number_format($prevision, 2), 1, 0, 'R');
                 $pdf->Cell($widths[2], 10, number_format($realisation, 2), 1, 0, 'R');
                 $pdf->Cell($widths[3], 10, number_format($ecart, 2), 1, 0, 'R');

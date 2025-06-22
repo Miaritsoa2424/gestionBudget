@@ -9,6 +9,8 @@ use flight\database\PdoWrapper;
 use flight\debug\database\PdoQueryCapture;
 use Tracy\Debugger;
 use app\models\ProductModel;
+use app\models\Statistique;
+use app\models\Ticket;
 
 /** 
  * @var array $config This comes from the returned array at the bottom of the config.php file
@@ -33,8 +35,6 @@ use app\models\ProductModel;
 // $app->register('redis', Redis::class, [ $config['redis']['host'], $config['redis']['port'] ]);
 
 
-
-
-// Flight::map('Login', function () {
-//     return new Login(Flight::db());
-// });
+Flight::map('Ticket', function () {
+    return new Ticket(Flight::db());
+});

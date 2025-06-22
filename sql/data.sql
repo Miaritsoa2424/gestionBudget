@@ -144,17 +144,17 @@ INSERT INTO client (nomClient) VALUES
 ('Niry Rafalimanana'),
 ('Patrick Rakotomanga');
 
-INSERT INTO vente (idProduit, idClient, dateVente, quantite) VALUES
-(1, 1, '2025-04-01', 2),
-(3, 2, '2025-04-02', 1),
-(5, 3, '2025-04-05', 1),
-(4, 1, '2025-04-06', 2),
-(2, 4, '2025-04-07', 1),
-(6, 5, '2025-04-08', 1),
-(7, 6, '2025-04-09', 1),
-(8, 2, '2025-04-10', 3),
-(9, 7, '2025-04-11', 2),
-(10, 8, '2025-04-12', 1);
+-- INSERT INTO vente (idProduit, idClient, dateVente, quantite) VALUES
+-- (1, 1, '2025-04-01', 2),
+-- (3, 2, '2025-04-02', 1),
+-- (5, 3, '2025-04-05', 1),
+-- (4, 1, '2025-04-06', 2),
+-- (2, 4, '2025-04-07', 1),
+-- (6, 5, '2025-04-08', 1),
+-- (7, 6, '2025-04-09', 1),
+-- (8, 2, '2025-04-10', 3),
+-- (9, 7, '2025-04-11', 2),
+-- (10, 8, '2025-04-12', 1);
 
 INSERT INTO Crm (label) VALUES
 ('Email de bienvenue avec reduction Popup de chat en direct'),
@@ -186,3 +186,48 @@ INSERT INTO Crm (label) VALUES
 ('Mettre en place un parcours de decouverte de la marque Programmer un appel de suivi meme sans gain'),
 ('Lui envoyer un role Ambassadeur avec missions Organiser des meetups sportifs prives'),
 ('Envoyer une fiche produit enrichie video avis Proposer un comparatif en temps reel avec dautres modeles');
+
+
+-- Insertion des états
+INSERT INTO Etat (nom) VALUES
+('en cours'),
+('cloture'),
+('en attente'),
+('annule');
+
+-- Insertion des importances
+INSERT INTO Importance (nom) VALUES
+('faible'),
+('moyen'),
+('urgent'),
+('critique');
+
+-- Insertion des types de demande
+INSERT INTO TypeDemande (nom) VALUES
+('produit defectueux'),
+('retour'),
+('piece manquante'),
+('conseil d''utilisation');
+
+-- Insertion des demandes
+INSERT INTO Demande (idClient, valideOuPas, description, sujet, dateDemande) VALUES
+(1, TRUE, 'L''écran de la montre ne s''allume plus', 'Montre defectueuse', '2025-04-01'),
+(2, FALSE, 'Je veux retourner les chaussures', 'Demande de retour', '2025-04-02'),
+(3, TRUE, 'Manque une sangle dans le sac de sport', 'Accessoire manquant', '2025-04-03'),
+(4, TRUE, 'Je ne sais pas comment utiliser les haltères', 'Besoin d''explication', '2025-04-04');
+
+-- Insertion des tickets
+INSERT INTO Ticket (idDemande, idImportance, idTypeDemande, idEtat, idDept, dateDebut, dateFin) VALUES
+(1, 3, 1, 1, 1, '2025-04-01', NULL), -- Montre défectueuse, urgent, produit défectueux, en cours, Finance
+(2, 2, 2, 3, 2, '2025-04-02', NULL), -- Demande de retour, moyen, retour, en attente, RH
+(3, 4, 3, 2, 3, '2025-04-03', '2025-04-05'), -- Accessoire manquant, critique, pièce manquante, clôturé, Informatique
+(4, 1, 4, 1, 4, '2025-04-04', NULL); -- Besoin d'explication, faible, conseil d'utilisation, en cours, Marketing
+-- Insertion de tickets
+INSERT INTO Ticket (idDemande, idImportance, idTypeDemande, idEtat, idDept, dateDebut, dateFin) VALUES
+(2, 2, 2, 3, 5, '2025-05-02', NULL),   -- Ticket pour demande 2, moyen, retour, en attente, Logistique
+(2, 2, 2, 3, 5, '2025-05-03', NULL),   -- Ticket pour demande 2, moyen, retour, en attente, Logistique
+(1, 3, 1, 1, 3, '2025-04-01', NULL),   -- Ticket pour demande 1, urgent, produit defectueux, en cours, Informatique
+(2, 2, 2, 3, 5, '2025-04-02', NULL),   -- Ticket pour demande 2, moyen, retour, en attente, Logistique
+(3, 4, 3, 1, 4, '2025-04-03', NULL),   -- Ticket pour demande 3, critique, piece manquante, en cours, Marketing
+(4, 1, 4, 2, 1, '2025-04-04', '2025-04-05'); -- Ticket pour demande 4, faible, conseil d'utilisation, cloture, Finance
+

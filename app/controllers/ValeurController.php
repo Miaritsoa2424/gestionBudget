@@ -106,6 +106,18 @@ class ValeurController
             $previsionOuRealisation = 1;
             $validation = 1;
 
+
+            // Exemple de valeurs valides (ils doivent exister dans les tables produit et client)
+            
+            // Création d'un objet Vente
+            
+            // Sauvegarde dans la base de données
+            for ($i=0; $i < rand(1, 10); $i++) { 
+                $idProduit = rand(1,10);
+                $idClient = rand(1,8);
+                $dateVente = $date; // date du jour
+                $quantite = rand(1,5);
+
             
             
             // Sauvegarde dans la base de données
