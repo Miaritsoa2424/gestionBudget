@@ -17,7 +17,7 @@
         </div>
         <ul class="nav-links" >
             <li><a href="<?= Flight::get('flight.base_url') ?>/client/home"><i class="fas fa-home"></i> Accueil</a></li>
-            <li class="active"><a href="<?= Flight::get('flight.base_url') ?>/client/report"><i class="fas fa-file-alt "></i> Rapport</a></li>
+            <li class="active"><a href="report-client"><i class="fas fa-file-alt "></i> Rapport</a></li>
             <li><a href="<?= Flight::get('flight.base_url') ?>/client/chat"><i class="fas fa-comments"></i> Discussion</a></li>
             <li>
                 <a href="<?= Flight::get('flight.base_url') ?>/client/notifications">

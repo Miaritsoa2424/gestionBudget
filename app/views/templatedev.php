@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/form-add-client.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/detail-client.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/detail-report.css">
-
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/affiliation-agent.css">
 </head>
 
 <body>
@@ -24,11 +24,11 @@
             <h3><i style="color: #0A6CF6;" class="fas fa-ticket-alt"></i> Tickets</h3>
             <div class="nav-item">
                 <a class="active nav-link">
-                    <i class="fas fa-plus-circle"></i> Nouveau Ticket
+                    <i class="fas fa-plus-circle"></i> Ticket
                     <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="sub-menu">
-                    <a><i class="fas fa-file"></i> Ticket simple</a>
+                    <a href="ticket"><i class="fas fa-file"></i>Liste Ticket </a>
                     <a><i class="fas fa-file-medical"></i> Ticket urgent</a>
                 </div>
             </div>

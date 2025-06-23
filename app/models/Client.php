@@ -45,6 +45,7 @@ class Client {
         return $list;
     }
 
+
     public static function getClientReportDetail($id_report) {
         $conn = Flight::db();
         $sql = "SELECT rc.*, c.nom, c.prenom, c.email 
@@ -56,6 +57,22 @@ class Client {
             ':id_report'=> $id_report
         ]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+
+
+    public function checkUser($mail,$password){
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT * FROM client WHERE email = :email AND password = :password");
+        $stmt->bindParam(':email', $mail);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        
+        if ($stmt->rowCount() > 0) {
+            return true; // Login successful
+        } else {
+            return false; // Login failed
+        }
     }
 
 
