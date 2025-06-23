@@ -1,6 +1,6 @@
 <?php
 
-use app\controllers\StatController;
+use app\controllers\ReportController;
 use app\controllers\FormController;
 use app\controllers\ValeurController;
 use app\controllers\ValidationController;
@@ -111,6 +111,9 @@ $router->get('/home', [$ClientController, 'getHomeCLient']);
 
 $router->get('/message', [$welcomeController, 'message']);
 $router->get('/agent', [$welcomeController, 'message']);
+
+$reportController = new ReportController();
+$router->post('/submit-report', [$reportController, 'insertReport']);
 
 
 
