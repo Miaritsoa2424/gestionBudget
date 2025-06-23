@@ -134,15 +134,6 @@ INSERT INTO produit (nomProduit, prix, stock) VALUES
 ('Sac de sport', 35000.00, 35),
 ('Filet de volley', 50000.00, 12);
 
-INSERT INTO client (nomClient) VALUES
-('Andry Rakoto'),
-('Fanja Rasoanaivo'),
-('Jean-Claude Randria'),
-('Mialy Andriamanana'),
-('Tojo Rabe'),
-('Elena Rasoa'),
-('Niry Rafalimanana'),
-('Patrick Rakotomanga');
 
 -- INSERT INTO vente (idProduit, idClient, dateVente, quantite) VALUES
 -- (1, 1, '2025-04-01', 2),
@@ -188,46 +179,43 @@ INSERT INTO Crm (label) VALUES
 ('Envoyer une fiche produit enrichie video avis Proposer un comparatif en temps reel avec dautres modeles');
 
 
--- Insertion des états
-INSERT INTO Etat (nom) VALUES
-('en cours'),
-('cloture'),
-('en attente'),
-('annule');
 
--- Insertion des importances
-INSERT INTO Importance (nom) VALUES
-('faible'),
-('moyen'),
-('urgent'),
-('critique');
+INSERT INTO client (id_client, nom, prenom, email, password) VALUES
+(1, 'Dupont', 'Jean', 'jean.dupont@email.com', 'pass123'),
+(2, 'Martin', 'Claire', 'claire.martin@email.com', 'pass456');
 
--- Insertion des types de demande
-INSERT INTO TypeDemande (nom) VALUES
-('produit defectueux'),
-('retour'),
-('piece manquante'),
-('conseil d''utilisation');
+INSERT INTO categorie_ticket (id_categorie, nom) VALUES
+(1, 'Technique'),
+(2, 'Commercial');
 
--- Insertion des demandes
-INSERT INTO Demande (idClient, valideOuPas, description, sujet, dateDemande) VALUES
-(1, TRUE, 'L''écran de la montre ne s''allume plus', 'Montre defectueuse', '2025-04-01'),
-(2, FALSE, 'Je veux retourner les chaussures', 'Demande de retour', '2025-04-02'),
-(3, TRUE, 'Manque une sangle dans le sac de sport', 'Accessoire manquant', '2025-04-03'),
-(4, TRUE, 'Je ne sais pas comment utiliser les haltères', 'Besoin d''explication', '2025-04-04');
+INSERT INTO statut (id_status, nom) VALUES
+(1, 'Ouvert'),
+(2, 'En cours'),
+(3, 'Fermé');
 
--- Insertion des tickets
-INSERT INTO Ticket (idDemande, idImportance, idTypeDemande, idEtat, idDept, dateDebut, dateFin) VALUES
-(1, 3, 1, 1, 1, '2025-04-01', NULL), -- Montre défectueuse, urgent, produit défectueux, en cours, Finance
-(2, 2, 2, 3, 2, '2025-04-02', NULL), -- Demande de retour, moyen, retour, en attente, RH
-(3, 4, 3, 2, 3, '2025-04-03', '2025-04-05'), -- Accessoire manquant, critique, pièce manquante, clôturé, Informatique
-(4, 1, 4, 1, 4, '2025-04-04', NULL); -- Besoin d'explication, faible, conseil d'utilisation, en cours, Marketing
--- Insertion de tickets
-INSERT INTO Ticket (idDemande, idImportance, idTypeDemande, idEtat, idDept, dateDebut, dateFin) VALUES
-(2, 2, 2, 3, 5, '2025-05-02', NULL),   -- Ticket pour demande 2, moyen, retour, en attente, Logistique
-(2, 2, 2, 3, 5, '2025-05-03', NULL),   -- Ticket pour demande 2, moyen, retour, en attente, Logistique
-(1, 3, 1, 1, 3, '2025-04-01', NULL),   -- Ticket pour demande 1, urgent, produit defectueux, en cours, Informatique
-(2, 2, 2, 3, 5, '2025-04-02', NULL),   -- Ticket pour demande 2, moyen, retour, en attente, Logistique
-(3, 4, 3, 1, 4, '2025-04-03', NULL),   -- Ticket pour demande 3, critique, piece manquante, en cours, Marketing
-(4, 1, 4, 2, 1, '2025-04-04', '2025-04-05'); -- Ticket pour demande 4, faible, conseil d'utilisation, cloture, Finance
+INSERT INTO report_client (id_report, libelle, piece_jointe, date_report, note, date_note, commentaire, id_client) VALUES
+(1, 'Problème de connexion', 'screenshot1.png', '2025-06-22 10:00:00', 4, '2025-06-22', 'Connexion impossible ce matin.', 1),
+(2, 'Demande de devis', NULL, '2025-06-21 09:30:00', 5, '2025-06-21', 'Merci pour la rapidité.', 2);
+
+INSERT INTO agent (id_agent, nom, prenom, email, password) VALUES
+(1, 'Durand', 'Paul', 'paul.durand@email.com', 'agent123'),
+(2, 'Leroy', 'Sophie', 'sophie.leroy@email.com', 'agent456');
+
+INSERT INTO message (id_message, id_envoyeur, id_receveur, client_agent, date_heure) VALUES
+(1, 1, 1, TRUE, '2025-06-22 10:05:00'),
+(2, 2, 1, FALSE, '2025-06-22 10:10:00');
+
+INSERT INTO ticket (id_ticket, cout_horaire, sujet, id_categorie, id_agent, id_report) VALUES
+(1, 50.00, 'Connexion impossible', 1, 1, 1),
+(2, 60.00, 'Demande de devis', 2, 2, 2);
+
+INSERT INTO mvt_duree (id_mvt_duree, duree, date_duree, id_ticket) VALUES
+(1, 30, '2025-06-22', 1),
+(2, 45, '2025-06-21', 2);
+
+INSERT INTO statut_ticket (id_ticket, id_status, date_status) VALUES
+(1, 1, '2025-06-22'),
+(1, 2, '2025-06-22'),
+(2, 1, '2025-06-21'),
+(2, 3, '2025-06-22');
 

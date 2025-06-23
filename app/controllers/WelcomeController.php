@@ -20,6 +20,10 @@ class WelcomeController {
     public function home() {
         Flight::render('templatedev', ['page' => 'testElyance', 'title' => 'Accueil']);
     }
+    public function message() {
+        Flight::render('message', []);
+    }
+    
 
   
  

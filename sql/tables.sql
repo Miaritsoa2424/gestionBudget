@@ -75,8 +75,9 @@ CREATE TABLE Crm(
     label VARCHAR(500) NOT NULL
 );
 
+
 CREATE TABLE client(
-   id_client INT,
+   id_client INT auto_increment,
    nom VARCHAR(50),
    prenom VARCHAR(50),
    email VARCHAR(50),
@@ -85,19 +86,19 @@ CREATE TABLE client(
 );
 
 CREATE TABLE categorie_ticket(
-   id_categorie INT,
+   id_categorie INT auto_increment,
    nom VARCHAR(50),
    PRIMARY KEY(id_categorie)
 );
 
 CREATE TABLE statut(
-   id_status INT,
+   id_status INT auto_increment,
    nom VARCHAR(50),
    PRIMARY KEY(id_status)
 );
 
 CREATE TABLE report_client(
-   id_report INT,
+   id_report INT auto_increment,
    libelle VARCHAR(100),
    piece_jointe VARCHAR(250),
    date_report DATETIME,
@@ -110,7 +111,7 @@ CREATE TABLE report_client(
 );
 
 CREATE TABLE agent(
-   id_agent INT,
+   id_agent INT auto_increment,
    nom VARCHAR(50),
    prenom VARCHAR(50),
    email VARCHAR(50),
@@ -119,7 +120,7 @@ CREATE TABLE agent(
 );
 
 CREATE TABLE message(
-   id_message INT,
+   id_message INT auto_increment,
    id_envoyeur INT,
    id_receveur INT,
    client_agent BOOLEAN,
@@ -128,7 +129,7 @@ CREATE TABLE message(
 );
 
 CREATE TABLE ticket(
-   id_ticket INT,
+   id_ticket INT auto_increment,
    cout_horaire DECIMAL(15,2),
    sujet VARCHAR(250),
    id_categorie INT NOT NULL,
@@ -141,7 +142,7 @@ CREATE TABLE ticket(
 );
 
 CREATE TABLE mvt_duree(
-   id_mvt_duree INT,
+   id_mvt_duree INT auto_increment,
    duree SMALLINT,
    date_duree DATE,
    id_ticket INT NOT NULL,
@@ -156,4 +157,25 @@ CREATE TABLE statut_ticket(
    PRIMARY KEY(id_ticket, id_status),
    FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
    FOREIGN KEY(id_status) REFERENCES statut(id_status)
+);
+
+-- Update 23/06/2025
+
+ALTER TABLE ticket
+MODIFY COLUMN id_agent INT;
+
+ALTER TABLE report_client 
+ ADD COLUMN status_report INT DEFAULT 0;
+
+CREATE TABLE importance(
+    id_importance INT PRIMARY KEY auto_increment,
+    libelle VARCHAR(50)
+);
+
+CREATE TABLE ticket_importance(
+    id INT PRIMARY KEY auto_increment,
+    id_ticket INT NOT NULL,
+    id_importance INT NOT NULL,
+    FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
+    FOREIGN KEY(id_importance) REFERENCES importance(id_importance)
 );
