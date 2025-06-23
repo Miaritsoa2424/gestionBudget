@@ -108,12 +108,14 @@ $router->get('/detail-client', [$ClientController, 'clientDetail']);
 $router->get('/detail-report', [$ClientController, 'clientReportDetail']);
 $router->get('/report-client', [$ClientController, 'getFormulaireReportClient']);
 $router->get('/home', [$ClientController, 'getHomeCLient']);
+$router->post('/client-login', [$ClientController, 'clientLogin']);
 
 $router->get('/message', [$welcomeController, 'message']);
 $router->get('/agent', [$welcomeController, 'message']);
 
-$reportController = new ReportController();
-$router->post('/submit-report', [$reportController, 'insertReport']);
+$ReportController = new ReportController();
+$router->post('/submit-report', [$ReportController, 'insertReport']);
+
 
 
 

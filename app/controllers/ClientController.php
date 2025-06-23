@@ -119,7 +119,23 @@ class ClientController {
     }
     
 
-  
+    public function clientLogin() {
+        $nom = Flight::request()->data->nom;
+        $mdp = Flight::request()->data->mdp;
+
+        $client = Client::getByNom($nom);
+
+        if ($client && ($mdp == $client['mdp'])) {
+            // Authentification réussie
+            $_SESSION['idClient'] = $client['id_client'];
+            $_SESSION['nomClient'] = $client['nom'];
+
+            Flight::render('templateClient', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true]);
+        } else {
+           
+            Flight::render('templateClient', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true]);
+        }
+    }
  
 }
 
