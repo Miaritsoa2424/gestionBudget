@@ -27,6 +27,18 @@ class WelcomeController {
         ];
         Flight::render('template-agent', $data);
     }
+
+    public function listMessages() {
+        $data = [
+            'title' => 'Liste des messages',
+            'page' => 'list-message',
+            'messages' => [
+                ['id' => 1, 'content' => 'Message 1', 'date' => '2023-10-01'],
+                ['id' => 2, 'content' => 'Message 2', 'date' => '2023-10-02']
+            ]
+        ];
+        Flight::render('template-agent', $data);
+    }
     
 
   

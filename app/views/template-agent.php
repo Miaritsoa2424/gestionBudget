@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/detail-report.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/affiliation-agent.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/message.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/list-messages.css">
 
 </head>
 
@@ -35,13 +36,9 @@
                 </div>
             </div>
             <div class="nav-item">
-                <a class="nav-link">
-                    <i class="fas fa-users"></i> Clients
-                    <i class="fas fa-chevron-down"></i>
+                <a>
+                    <i class="fa fa-message"></i> Discussions
                 </a>
-                <div class="sub-menu">
-                    <a href="list-client"><i class="fas fa-list"></i> Liste des Clients</a>
-                </div>
             </div>
             
             <a>
