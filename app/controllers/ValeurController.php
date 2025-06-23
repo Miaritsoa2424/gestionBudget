@@ -86,43 +86,6 @@ class ValeurController
 
             
             
-    //         // Sauvegarde dans la base de données
-    //         for ($i=0; $i < 10; $i++) { 
-    //             // Exemple de valeurs valides (ils doivent exister dans les tables produit et client)
-    //             $idProduit = 1;
-    //             $idClient = 2;
-    //             $dateVente = date('Y-m-d'); // date du jour
-    //             $quantite = 3;
-    //             // Création d'un objet Vente
-    //             $vente = new Vente($idProduit, $idClient, $dateVente, $quantite);
-    //             $vente->save();
-    //         }
-
-    //         // Créer un objet Valeur
-    //         $valeur = new Valeur(0, $labelCRM, 7, $previsionOuRealisation, $montant, $date, $validation, $idDept);
-
-    //         // Sauvegarder dans la base de données
-    //         if ($valeur->insert()) {
-    //             Flight::redirect('budget');
-    //         } else {
-    //             echo "Erreur lors de l'ajout de la réalisation.";
-    //         }
-    //     } else {
-    //         $previsionOuRealisation = 1;
-    //         $validation = 0;
-
-    //         // Créer un objet Valeur
-    //         $valeur = new Valeur(0, $labelCRM, 7, $previsionOuRealisation, $montant, $date, $validation, $idDept);
-
-    //         // Sauvegarder dans la base de données
-    //         if ($valeur->insert()) {
-    //             Flight::redirect('budget');
-    //         } else {
-    //             echo "Erreur lors de l'ajout de la réalisation.";
-    //         }
-    //     }
-    //     }}
-
     public function savePrevision()
     {
         // Récupérer les données du formulaire
