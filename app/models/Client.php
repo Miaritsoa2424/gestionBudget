@@ -45,4 +45,18 @@ class Client {
         return $list;
     }
 
+    public static function getClientReportDetail($id_report) {
+        $conn = Flight::db();
+        $sql = "SELECT rc.*, c.nom, c.prenom, c.email 
+                FROM report_client rc
+                JOIN client c ON rc.id_client = c.id_client
+                WHERE rc.id_report = :id_report";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            ':id_report'=> $id_report
+        ]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+
 }

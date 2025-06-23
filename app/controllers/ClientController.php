@@ -4,6 +4,7 @@ namespace app\controllers;
 
 
 use app\models\Client;
+use app\models\Agent;
 use Flight;
 
 class ClientController {
@@ -82,27 +83,29 @@ class ClientController {
 
     public function clientReportDetail(){
        // Données statiques de démonstration
+        $data = Client::getClientReportDetail(1);
+        $agents = Agent::getAll();
+
         $demoReport = [
             'client' => [
-                'nom' => 'Jean Dupont',
-                'email' => 'jean.dupont@email.com',
-                'telephone' => '034 12 345 67'
+                'nom' => $data['nom'],
+                'prenom' => $data['prenom'],
+                'email' => $data['email']
             ],
-            'date' => '2023-11-15',
-            'statut' => 'en_cours',
-            'message' => "Bonjour,\n\nJe souhaite signaler un problème avec ma dernière commande.\nLe produit reçu ne correspond pas à la description sur le site.\n\nCordialement,\nJean Dupont",
+            'date' => $data['date_report'],
+            'statut' => 'Créé',
+            'message' => $data['libelle'],
             'attachments' => [
-                ['name' => 'photo_produit.jpg', 'url' => '#'],
-                ['name' => 'facture.pdf', 'url' => '#'],
-                ['name' => 'detail_commande.pdf', 'url' => '#']
+                ['name' => $data['piece_jointe'], 'url' => '#']
             ]
         ];
-        $data = [
+        $donnees = [
             'title' => 'Détail du Report',
             'page' => 'form-ticket',
-            'demoReport' => $demoReport
+            'demoReport' => $demoReport,
+            'agents' => $agents
         ];
-        Flight::render('templatedev', $data);
+        Flight::render('templatedev', $donnees);
     }
 
     public function getFormulaireReportClient()
