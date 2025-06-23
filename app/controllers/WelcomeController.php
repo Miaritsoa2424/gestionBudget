@@ -21,7 +21,11 @@ class WelcomeController {
         Flight::render('templatedev', []);
     }
     public function message() {
-        Flight::render('message', []);
+        $data = [
+            'title' => 'Message',
+            'page' => 'message'
+        ];
+        Flight::render('template-agent', $data);
     }
     
 
