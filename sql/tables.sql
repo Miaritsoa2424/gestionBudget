@@ -179,3 +179,8 @@ CREATE TABLE ticket_importance(
     FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
     FOREIGN KEY(id_importance) REFERENCES importance(id_importance)
 );
+
+-- Update 24/06/2025
+
+ALTER TABLE message 
+ ADD COLUMN contenu VARCHAR(1000);
