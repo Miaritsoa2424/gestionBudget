@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/form-add-client.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/detail-client.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/detail-report.css">
-    <!-- <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/affiliation-agent.css"> -->
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/affiliation-agent.css">
 </head>
 
 <body>
