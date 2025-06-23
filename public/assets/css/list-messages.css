@@ -1,0 +1,95 @@
+.list-message-box {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0 auto;
+  background-color: white;
+  min-height: 100vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.list-message-box .header {
+  padding: 15px 20px;
+  background-color: #021734;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.list-message-box .header h1 {
+  margin: 0;
+  font-size: 20px;
+}
+.list-message-box .search-bar {
+  padding: 15px;
+  background-color: #f0f2f5;
+}
+.list-message-box .search-bar input {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+}
+.list-message-box .client-list {
+  overflow-y: auto;
+}
+.list-message-box .client-item {
+  display: flex;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.list-message-box .client-item:hover {
+  background-color: #f9f9f9;
+}
+.list-message-box .client-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.list-message-box .client-info {
+  flex: 1;
+  overflow: hidden;
+}
+.list-message-box .client-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #021734;
+}
+.list-message-box .last-message {
+  color: #666;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list-message-box .message-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 10px;
+}
+.list-message-box .message-time {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 5px;
+}
+.list-message-box .unread-count {
+  background-color: #13325E;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.list-message-box .rating-indicator {
+  color: #F9DC5A;
+  font-size: 12px;
+}/*# sourceMappingURL=list-messages.css.map */

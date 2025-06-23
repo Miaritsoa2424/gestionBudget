@@ -74,7 +74,7 @@
                                 </span>
                             </td>
                             <td>
-                                <a href="detail-report" class="btn btn-sm btn-info">Voir</a>
+                                <a href="detail-report/<?= 1 ?>" class="btn btn-sm btn-info">Voir</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

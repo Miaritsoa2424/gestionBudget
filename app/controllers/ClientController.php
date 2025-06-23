@@ -76,7 +76,7 @@ class ClientController {
         Flight::render('templatedev', $data);
     }
 
-    public function clientReportDetail(){
+    public function clientReportDetail($id){
        // Données statiques de démonstration
         $data = Client::getClientReportDetail(1);
         $agents = Agent::getAll();

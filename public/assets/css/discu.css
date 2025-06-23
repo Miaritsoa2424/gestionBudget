@@ -1,0 +1,96 @@
+.chat-container {
+  font-size: 18px;
+  color: #021734;
+  border: 10px solid #d1d1d1;
+  font-family: sans-serif;
+  border-radius: 15px;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.user {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.user.right {
+  flex-direction: row-reverse;
+}
+
+.user img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.message {
+  padding: 12px 16px;
+  border-radius: 20px;
+  max-width: 70%;
+  line-height: 1.4;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.message.left {
+  background-color: #e4e6eb;
+  color: #050505;
+}
+
+.message.right {
+  background-color: #0084ff;
+  color: white;
+}
+
+.chat-box {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+  align-items: center;
+}
+
+.chat-box textarea {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  resize: none;
+  min-height: 40px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.chat-box button {
+  background-color: #0084ff;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  font-size: 18px;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-box button i {
+  margin-left: 4px;
+}/*# sourceMappingURL=discu.css.map */
