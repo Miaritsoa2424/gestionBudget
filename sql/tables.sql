@@ -160,3 +160,8 @@ CREATE TABLE statut_ticket(
    FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
    FOREIGN KEY(id_status) REFERENCES statut(id_status)
 );
+
+-- Update 23/06/2025
+
+ALTER TABLE ticket
+MODIFY COLUMN id_agent INT;
