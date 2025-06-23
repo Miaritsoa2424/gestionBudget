@@ -109,4 +109,9 @@ $router->get('/detail-report', [$ClientController, 'clientReportDetail']);
 $router->get('/report-client', [$ClientController, 'getFormulaireReportClient']);
 $router->get('/home', [$ClientController, 'getHomeCLient']);
 
+$router->get('/message', [$welcomeController, 'message']);
+$router->get('/agent', [$welcomeController, 'message']);
+
+
+
 
