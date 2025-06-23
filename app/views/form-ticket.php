@@ -48,10 +48,16 @@
     <!-- Formulaire de ticket -->
     <div class="ticket-form" id="ticketForm">
         <span class="close-ticket" onclick="closeTicketForm()">×</span>
-        <h3>Nouveau Ticket</h3>
+        <center><h3 style="margin-bottom: 30px;">Nouveau Ticket</h3></center>
         <form method="post" action="insertTicket">
             <div class="form-group">
                 <label>Importance</label>
+                <select class="form-control" name="priorite">
+                    <option value="">-- Séléctionner une priorité --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Categorie</label>
                 <select class="form-control" name="priorite">
                     <option value="">-- Séléctionner une priorité --</option>
                 </select>

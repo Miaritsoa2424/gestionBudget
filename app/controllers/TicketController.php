@@ -156,7 +156,6 @@ class TicketController {
             $data['sujet'],
             1,
             // $data['id_categorie'],
-            $data['id_agent'],
             1
             // $data['id_report']
         );
@@ -184,6 +183,7 @@ class TicketController {
 
             // Flight::json(['error' => 'Erreur lors de l\'insertion'], 500);
         }
+    }
       
     //////////////Controller pour les tickets des clients vaovao
     public function getTickets(){

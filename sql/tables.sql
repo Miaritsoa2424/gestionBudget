@@ -160,3 +160,24 @@ CREATE TABLE statut_ticket(
    FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
    FOREIGN KEY(id_status) REFERENCES statut(id_status)
 );
+
+-- Update 23/06/2025
+
+ALTER TABLE ticket
+MODIFY COLUMN id_agent INT;
+
+ALTER TABLE report_client 
+ ADD COLUMN status_report INT DEFAULT 0;
+
+CREATE TABLE importance(
+    id_importance INT PRIMARY KEY auto_increment,
+    libelle VARCHAR(50)
+);
+
+CREATE TABLE ticket_importance(
+    id INT PRIMARY KEY auto_increment,
+    id_ticket INT NOT NULL,
+    id_importance INT NOT NULL,
+    FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
+    FOREIGN KEY(id_importance) REFERENCES importance(id_importance)
+);

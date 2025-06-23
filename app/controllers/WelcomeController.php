@@ -20,6 +20,10 @@ class WelcomeController {
     public function home() {
         Flight::render('templatedev', []);
     }
+    public function message() {
+        Flight::render('message', []);
+    }
+    
 
   
  

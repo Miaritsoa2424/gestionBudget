@@ -126,16 +126,15 @@ class Ticket
     }
   
 
-    public function insertTicket($cout_horaire, $sujet, $id_categorie, $id_agent, $id_report) {
+    public function insertTicket($cout_horaire, $sujet, $id_categorie, $id_report) {
         $conn = Flight::db();
         $stmt = $conn->prepare(
-            "INSERT INTO ticket (cout_horaire, sujet, id_categorie, id_agent, id_report) VALUES (:cout_horaire, :sujet, :id_categorie, :id_agent, :id_report)"
+            "INSERT INTO ticket (cout_horaire, sujet, id_categorie,  id_report) VALUES (:cout_horaire, :sujet, :id_categorie, :id_report)"
         );
         $stmt->execute([
             'cout_horaire' => $cout_horaire, 
             ':sujet'=> $sujet, 
             ':id_categorie'=> $id_categorie, 
-            ':id_agent'=> $id_agent, 
             ':id_report'=> $id_report
         ]);
         return  1;
