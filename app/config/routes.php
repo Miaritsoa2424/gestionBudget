@@ -113,6 +113,7 @@ $router->get('/home', [$ClientController, 'getHomeCLient']);
 $router->get('/message', [$welcomeController, 'message']);
 $router->get('/agent', [$welcomeController, 'message']);
 $router->get('/listMessages', [$welcomeController, 'listMessages']);
+$router->get('/affilierTicket/@id', [$welcomeController, 'affilierTicket']);
 
 
 

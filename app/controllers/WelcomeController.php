@@ -39,6 +39,15 @@ class WelcomeController {
         ];
         Flight::render('template-agent', $data);
     }
+
+    public function affilierTicket($id){
+        $data = [
+            'title' => 'Affiliation Agent',
+            'page' => 'affiliation-ticket'
+        ];
+        Flight::render('templatedev', $data);
+        
+    }
     
 
   

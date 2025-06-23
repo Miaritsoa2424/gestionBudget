@@ -40,18 +40,22 @@
                     <i class="fa fa-message"></i> Discussions
                 </a>
             </div>
-            
+
             <a>
                 <i class="fas fa-chart-pie"></i> Statistiques
+            </a>
+
+            <a>
+                <i class="fa fa-sign-out-alt"></i> Deconnexion
             </a>
         </div>
 
         <div class="content">
             <?php
-            
-                if (isset($page)) {
-                    include($page . ".php");
-                } 
+
+            if (isset($page)) {
+                include($page . ".php");
+            }
             ?>
         </div>
     </div>
@@ -83,4 +87,5 @@
         });
     </script>
 </body>
+
 </html>
