@@ -1,12 +1,14 @@
 <?php
 namespace app\controllers;
 
+use app\models\Client;
 use app\models\Importance;
 use app\models\Etat;
 use app\models\Demande;
 use app\models\Departement;
 use app\models\TypeDemande;
 use app\models\Ticket;
+use app\models\Agent;
 
 use Flight;
 use app\models\Statistique;
@@ -94,48 +96,6 @@ class TicketController {
         $data = Statistique::getTicketParMois($etat, $dept, $annee);
         Flight::json($data);
     }
-          
-    public static function insertTicket()
-    {
-        $data = Flight::request()->data;
-
-        // Vérification des champs requis
-        if (
-            empty($data['idDemande']) ||
-            empty($data['idImportance']) ||
-            empty($data['idTypeDemande']) ||
-            empty($data['idEtat']) ||
-            empty($data['idDept'])
-        ) {
-            Flight::json(['error' => 'Champs manquants.'], 400);
-            return;
-        }
-
-        $ticket = new Ticket();
-        $idTicket = $ticket->addTicket(
-            $data['idDemande'],
-            $data['idImportance'],
-            $data['idTypeDemande'],
-            $data['idEtat'],
-            $data['idDept'],
-            $data['dateFin'] ?? null
-        );
-
-        if ($idTicket) {
-            Flight::redirect('/ticket');
-        } else {
-            Flight::render('template', [
-                'page' => 'templateTicket',
-                'pageContent' => 'ticketForm',
-                'importances' => Importance::getAll(),
-                'etats' => Etat::getAll(),
-                'demandes' => Demande::getAll(),
-                'departements' => Departement::getAllDepartement(),
-                'typeDemandes' => TypeDemande::getAll(),
-                'erreur' => 'Erreur lors de la création du ticket'
-            ]);
-        }
-    }
 
     public function getAgentTicket() {
         // Récupération des paramètres de tri depuis la requête (GET ou POST)
@@ -158,6 +118,73 @@ class TicketController {
         ]);
     }
 
+
+    public function insertTicket() {
+        $data = Flight::request()->data;
+
+        $clients = Client::getClientReportDetail(1);
+
+        $demoReport = [
+            'client' => [
+                'nom' => $clients['nom'],
+                'prenom' => $clients['prenom'],
+                'email' => $clients['email']
+            ],
+            'date' => $clients['date_report'],
+            'statut' => 'Créé',
+            'message' => $clients['libelle'],
+            'attachments' => [
+                ['name' => $clients['piece_jointe'], 'url' => '#']
+            ]
+        ];
+        // Vérification des champs requis
+        if (
+            empty($data['cout_horaire']) ||
+            empty($data['sujet']) 
+            // empty($data['id_categorie']) ||
+            // empty($data['id_agent']) 
+            // ||
+            // empty($data['id_report'])
+        ) {
+            Flight::json(['error' => 'Champs manquants.'], 400);
+            return;
+        }
+
+        $ticketModel = new Ticket();
+        $idTicket = $ticketModel->insertTicket(
+            $data['cout_horaire'],
+            $data['sujet'],
+            1,
+            // $data['id_categorie'],
+            $data['id_agent'],
+            1
+            // $data['id_report']
+        );
+
+        if ($idTicket > 0) {
+
+            $donnees = [
+                'title' => 'Détail du Report',
+                'page' => 'form-ticket',
+                'demoReport' => $demoReport,
+                'success' => 'Ticket inséré avec succès.'
+            ];
+            Flight::render('templatedev', $donnees);
+
+            // Flight::json(['success' => true, 'id_ticket' => $idTicket]);
+        } else {
+
+            $donnees = [
+                'title' => 'Détail du Report',
+                'page' => 'form-ticket',
+                'demoReport' => $demoReport,
+                'error' => 'Erreur lors de l\'insertion du ticket.'
+            ];
+            Flight::render('templatedev', $donnees);
+
+            // Flight::json(['error' => 'Erreur lors de l\'insertion'], 500);
+        }
+      
     //////////////Controller pour les tickets des clients vaovao
     public function getTickets(){
         $data = [
@@ -200,5 +227,6 @@ class TicketController {
         ];
         Flight::render('templatedev', $data);
     
+
     }
 }
