@@ -61,10 +61,6 @@ CREATE TABLE produit (
     stock INT NOT NULL CHECK (stock >= 0)
 );
 
-CREATE TABLE client (
-    idClient INT PRIMARY KEY AUTO_INCREMENT,
-    nomClient VARCHAR(100) NOT NULL
-);
 
 CREATE TABLE vente (
     idVente INT PRIMARY KEY AUTO_INCREMENT,
@@ -81,95 +77,9 @@ CREATE TABLE Crm(
     label VARCHAR(500) NOT NULL
 );
 
--- UPDATE 11-07-2025
-
-CREATE TABLE Etat (
-    idEtat INT PRIMARY KEY AUTO_INCREMENT,
-    nom CHAR(50) NOT NULL
-);
-
--- Table Importance
-CREATE TABLE Importance (
-    idImportance INT PRIMARY KEY AUTO_INCREMENT,
-    nom CHAR(50) NOT NULL
-);
-
--- Table TypeDemande
-CREATE TABLE TypeDemande (
-    idTypeDemande INT PRIMARY KEY AUTO_INCREMENT,
-    nom CHAR(100) NOT NULL
-);
-
--- Table Demande
-CREATE TABLE Demande (
-    idDemande INT PRIMARY KEY AUTO_INCREMENT,
-    idClient INT NOT NULL,
-    valideOuPas BOOLEAN NOT NULL,
-    description VARCHAR(255),
-    sujet VARCHAR(255),
-    dateDemande DATE NOT NULL,
-    FOREIGN KEY (idClient) REFERENCES client(idClient)
-);
-
--- Table Ticket
-CREATE TABLE Ticket (
-    idTicket INT PRIMARY KEY AUTO_INCREMENT,
-    idDemande INT NOT NULL,
-    idImportance INT NOT NULL,
-    idTypeDemande INT NOT NULL,
-    idEtat INT NOT NULL,
-    idDept INT NOT NULL,
-    dateDebut DATE NOT NULL,
-    dateFin DATE DEFAULT NULL,
-    FOREIGN KEY (idDept) REFERENCES Dept(idDept),
-    FOREIGN KEY (idTypeDemande) REFERENCES TypeDemande(idTypeDemande),
-    FOREIGN KEY (idDemande) REFERENCES Demande(idDemande),
-    FOREIGN KEY (idImportance) REFERENCES Importance(idImportance),
-    FOREIGN KEY (idEtat) REFERENCES Etat(idEtate)
-);
-
-CREATE VIEW Vue_TicketsComplets AS
-SELECT
-    t.idTicket,
-    t.dateDebut,
-    t.dateFin,
-
-    -- Données du Ticket
-    t.idDept,
-    dept.nomDept,
-
-    -- Données de la Demande liée
-    d.idDemande,
-    d.idClient,
-    c.nomClient,
-    d.valideOuPas,
-    d.description,
-    d.sujet,
-    d.dateDemande,
-
-    -- Données de l'État
-    e.idEtat,
-    e.nom AS nomEtat,
-
-    -- Données de l'Importance
-    i.idImportance,
-    i.nom AS nomImportance,
-
-    -- Données du Type de Demande
-    td.idTypeDemande,
-    td.nom AS nomTypeDemande
-
-FROM Ticket t
-JOIN Demande d ON t.idDemande = d.idDemande
-JOIN client c ON d.idClient = c.idClient
-JOIN Dept dept ON t.idDept = dept.idDept
-JOIN Etat e ON t.idEtat = e.idEtat
-JOIN Importance i ON t.idImportance = i.idImportance
-JOIN TypeDemande td ON t.idTypeDemande = td.idTypeDemande;
-
 
 CREATE TABLE client(
-   id_client INT,
+   id_client INT auto_increment,
    nom VARCHAR(50),
    prenom VARCHAR(50),
    email VARCHAR(50),
@@ -178,19 +88,19 @@ CREATE TABLE client(
 );
 
 CREATE TABLE categorie_ticket(
-   id_categorie INT,
+   id_categorie INT auto_increment,
    nom VARCHAR(50),
    PRIMARY KEY(id_categorie)
 );
 
 CREATE TABLE statut(
-   id_status INT,
+   id_status INT auto_increment,
    nom VARCHAR(50),
    PRIMARY KEY(id_status)
 );
 
 CREATE TABLE report_client(
-   id_report INT,
+   id_report INT auto_increment,
    libelle VARCHAR(100),
    piece_jointe VARCHAR(250),
    date_report DATETIME,
@@ -203,7 +113,7 @@ CREATE TABLE report_client(
 );
 
 CREATE TABLE agent(
-   id_agent INT,
+   id_agent INT auto_increment,
    nom VARCHAR(50),
    prenom VARCHAR(50),
    email VARCHAR(50),
@@ -212,7 +122,7 @@ CREATE TABLE agent(
 );
 
 CREATE TABLE message(
-   id_message INT,
+   id_message INT auto_increment,
    id_envoyeur INT,
    id_receveur INT,
    client_agent BOOLEAN,
@@ -221,7 +131,7 @@ CREATE TABLE message(
 );
 
 CREATE TABLE ticket(
-   id_ticket INT,
+   id_ticket INT auto_increment,
    cout_horaire DECIMAL(15,2),
    sujet VARCHAR(250),
    id_categorie INT NOT NULL,
@@ -234,7 +144,7 @@ CREATE TABLE ticket(
 );
 
 CREATE TABLE mvt_duree(
-   id_mvt_duree INT,
+   id_mvt_duree INT auto_increment,
    duree SMALLINT,
    date_duree DATE,
    id_ticket INT NOT NULL,
@@ -250,3 +160,8 @@ CREATE TABLE statut_ticket(
    FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
    FOREIGN KEY(id_status) REFERENCES statut(id_status)
 );
+
+-- Update 23/06/2025
+
+ALTER TABLE ticket
+MODIFY COLUMN id_agent INT;

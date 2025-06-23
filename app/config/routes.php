@@ -87,13 +87,17 @@ $router->get('/departement/supprimer/@id:[0-9]+', function ($id) use ($modifDept
 });
 $ticketController = new TicketController();
 
-$router->get('/ticket', [$ticketController, 'getTemplateTicket']);
+// $router->get('/ticket', [$ticketController, 'getTemplateTicket']);
 $router->get('/formTicket', [$ticketController, 'getFormTicket']);
 $router->post('/insertTicket', [$ticketController, 'insertTicket']);
 $router->get('/ticketDept', [$ticketController, 'getAllTicketsByIdDept']);
 $router->get('/listeTicket', [$ticketController, 'getAllTickets']);
 $router->get('/ticketStats', [$ticketController, 'ticketStats']);
 $router->get('/ticketStats/data', [$ticketController, 'getData']);
+
+// New controller de Miaritsoa
+$ticketController = new TicketController();
+$router->get('/ticket', [$ticketController, 'getTickets']);
 
 $welcomeController = new WelcomeController();
 $router->get('/welcome', [$welcomeController, 'home']);
@@ -102,7 +106,6 @@ $ClientController = new ClientController();
 $router->get('/list-client', [$ClientController, 'listClientFront']);
 $router->get('/detail-client', [$ClientController, 'clientDetail']);
 $router->get('/detail-report', [$ClientController, 'clientReportDetail']);
-$router->get('/report-client', [$ClientController, 'getFormulaireReportClient']);
 $router->get('/report-client', [$ClientController, 'getFormulaireReportClient']);
 $router->get('/home', [$ClientController, 'getHomeCLient']);
 

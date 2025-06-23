@@ -1,0 +1,81 @@
+<?php
+namespace app\models;
+use Flight;
+
+class Agent {
+    private $id_agent;
+    private $nom;
+    private $prenom;
+    private $email;
+    private $password;
+
+    public function __construct($id_agent = null, $nom = null, $prenom = null, $email = null, $password = null) {
+        $this->id_agent = $id_agent;
+        $this->nom = $nom;
+        $this->prenom = $prenom;
+        $this->email = $email;
+        $this->password = $password;
+    }
+
+    // Getters
+    public function getIdAgent() { return $this->id_agent; }
+    public function getNom() { return $this->nom; }
+    public function getPrenom() { return $this->prenom; }
+    public function getEmail() { return $this->email; }
+    public function getPassword() { return $this->password; }
+
+    // Setters
+    public function setIdAgent($id_agent) { $this->id_agent = $id_agent; }
+    public function setNom($nom) { $this->nom = $nom; }
+    public function setPrenom($prenom) { $this->prenom = $prenom; }
+    public function setEmail($email) { $this->email = $email; }
+    public function setPassword($password) { $this->password = $password; }
+
+    // CRUD Methods
+
+    // Create
+    public function save() {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("INSERT INTO agent (nom, prenom, email, password) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$this->nom, $this->prenom, $this->email, $this->password]);
+        $this->id_agent = $conn->lastInsertId();
+        return $this->id_agent;
+    }
+
+    // Read all
+    public static function getAll() {
+        $conn = Flight::db();
+        $stmt = $conn->query("SELECT * FROM agent");
+        $agents = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $agents[] = new Agent($row['id_agent'], $row['nom'], $row['prenom'], $row['email'], $row['password']);
+        }
+        return $agents;
+    }
+
+    // Read one
+    public static function getById($id_agent) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT * FROM agent WHERE id_agent = ?");
+        $stmt->execute([$id_agent]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row) {
+            return new Agent($row['id_agent'], $row['nom'], $row['prenom'], $row['email'], $row['password']);
+        }
+        return null;
+    }
+
+    // Update
+    public function update() {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("UPDATE agent SET nom = ?, prenom = ?, email = ?, password = ? WHERE id_agent = ?");
+        return $stmt->execute([$this->nom, $this->prenom, $this->email, $this->password, $this->id_agent]);
+    }
+
+    // Delete
+    public static function delete($id_agent) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("DELETE FROM agent WHERE id_agent = ?");
+        return $stmt->execute([$id_agent]);
+    }
+}

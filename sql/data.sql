@@ -180,13 +180,42 @@ INSERT INTO Crm (label) VALUES
 
 
 
--- Ajout de clients pour la table client (id_client, nom, prenom, email, password)
 INSERT INTO client (id_client, nom, prenom, email, password) VALUES
-(1, 'Rakoto', 'Andry', 'andry.rakoto@email.com', 'pass123'),
-(2, 'Rasoanaivo', 'Fanja', 'fanja.rasoanaivo@email.com', 'pass456'),
-(3, 'Randria', 'Jean-Claude', 'jc.randria@email.com', 'pass789'),
-(4, 'Andriamanana', 'Mialy', 'mialy.andriamanana@email.com', 'pass101'),
-(5, 'Rabe', 'Tojo', 'tojo.rabe@email.com', 'pass102'),
-(6, 'Rasoa', 'Elena', 'elena.rasoa@email.com', 'pass103'),
-(7, 'Rafalimanana', 'Niry', 'niry.rafalimanana@email.com', 'pass104'),
-(8, 'Rakotomanga', 'Patrick', 'patrick.rakotomanga@email.com', 'pass105');
+(1, 'Dupont', 'Jean', 'jean.dupont@email.com', 'pass123'),
+(2, 'Martin', 'Claire', 'claire.martin@email.com', 'pass456');
+
+INSERT INTO categorie_ticket (id_categorie, nom) VALUES
+(1, 'Technique'),
+(2, 'Commercial');
+
+INSERT INTO statut (id_status, nom) VALUES
+(1, 'Ouvert'),
+(2, 'En cours'),
+(3, 'Fermé');
+
+INSERT INTO report_client (id_report, libelle, piece_jointe, date_report, note, date_note, commentaire, id_client) VALUES
+(1, 'Problème de connexion', 'screenshot1.png', '2025-06-22 10:00:00', 4, '2025-06-22', 'Connexion impossible ce matin.', 1),
+(2, 'Demande de devis', NULL, '2025-06-21 09:30:00', 5, '2025-06-21', 'Merci pour la rapidité.', 2);
+
+INSERT INTO agent (id_agent, nom, prenom, email, password) VALUES
+(1, 'Durand', 'Paul', 'paul.durand@email.com', 'agent123'),
+(2, 'Leroy', 'Sophie', 'sophie.leroy@email.com', 'agent456');
+
+INSERT INTO message (id_message, id_envoyeur, id_receveur, client_agent, date_heure) VALUES
+(1, 1, 1, TRUE, '2025-06-22 10:05:00'),
+(2, 2, 1, FALSE, '2025-06-22 10:10:00');
+
+INSERT INTO ticket (id_ticket, cout_horaire, sujet, id_categorie, id_agent, id_report) VALUES
+(1, 50.00, 'Connexion impossible', 1, 1, 1),
+(2, 60.00, 'Demande de devis', 2, 2, 2);
+
+INSERT INTO mvt_duree (id_mvt_duree, duree, date_duree, id_ticket) VALUES
+(1, 30, '2025-06-22', 1),
+(2, 45, '2025-06-21', 2);
+
+INSERT INTO statut_ticket (id_ticket, id_status, date_status) VALUES
+(1, 1, '2025-06-22'),
+(1, 2, '2025-06-22'),
+(2, 1, '2025-06-21'),
+(2, 3, '2025-06-22');
+

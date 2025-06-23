@@ -7,23 +7,23 @@
             <div class="photo-container">
                     <img src="https://placehold.co/200x250/CCCCCC/000000/png?text=Portrait+Test" alt="" class="client-photo">
                 </div>
-            <p><strong>Nom:</strong> <?php echo $demoReport['client']['nom']; ?></p>
-            <p><strong>Email:</strong> <?php echo $demoReport['client']['email']; ?></p>
-            <p><strong>Téléphone:</strong> <?php echo $demoReport['client']['telephone']; ?></p>
+            <p><strong>Nom:</strong> <?= $demoReport['client']['nom']; ?></p>
+            <p><strong>Prénom:</strong> <?= $demoReport['client']['prenom']; ?></p>
+            <p><strong>Email:</strong> <?= $demoReport['client']['email']; ?></p>
         </div>
 
         <!-- Détails du report -->
         <div class="section">
             <h3>Détails du report</h3>
-            <p><strong>Date d'envoi:</strong> <?php echo $demoReport['date']; ?></p>
+            <p><strong>Date d'envoi:</strong> <?= $demoReport['date']; ?></p>
             <p><strong>Statut:</strong> 
-                <span class="badge badge-<?php echo getStatusClass($demoReport['statut']); ?>">
-                    <?php echo $demoReport['statut']; ?>
+                <span class="badge badge-<?= getStatusClass($demoReport['statut']); ?>">
+                    <?= $demoReport['statut']; ?>
                 </span>
             </p>
             <div class="description">
                 <h4>Description</h4>
-                <p><?php echo nl2br($demoReport['message']); ?></p>
+                <p><?= nl2br($demoReport['message']); ?></p>
             </div>
         </div>
 
@@ -34,8 +34,8 @@
                 <?php foreach($demoReport['attachments'] as $attachment): ?>
                 <div class="attachment">
                     <i class="fas fa-file"></i>
-                    <a href="<?php echo $attachment['url']; ?>" target="_blank">
-                        <?php echo $attachment['name']; ?>
+                    <a href="<?= $attachment['url']; ?>" target="_blank">
+                        <?= $attachment['name']; ?>
                     </a>
                 </div>
                 <?php endforeach; ?>
@@ -49,27 +49,24 @@
     <div class="ticket-form" id="ticketForm">
         <span class="close-ticket" onclick="closeTicketForm()">×</span>
         <h3>Nouveau Ticket</h3>
-        <form>
+        <form method="post" action="insertTicket">
             <div class="form-group">
-                <label>Priorité</label>
-                <select class="form-control">
-                    <option value="low">Basse</option>
-                    <option value="medium">Moyenne</option>
-                    <option value="high">Haute</option>
+                <label>Importance</label>
+                <select class="form-control" name="priorite">
+                    <option value="">-- Séléctionner une priorité --</option>
                 </select>
             </div>
+
             <div class="form-group">
-                <label>Assigné à</label>
-                <select class="form-control">
-                    <option value="">Sélectionner un agent</option>
-                    <!-- Options des agents -->
-                </select>
+                <label>Sujet</label>
+                <textarea name="sujet" class="form-control" rows="4"></textarea>
             </div>
-            <div class="form-group">
-                <label>Commentaire</label>
-                <textarea class="form-control" rows="4"></textarea>
+            <div class="cout form-group">
+                <label>Coût horaire estimé</label>
+                <input type="number" class="form-control" name="cout_horaire" placeholder="Ex: 1000">
             </div>
             <button type="submit" class="btn btn-primary">Créer le ticket</button>
+
         </form>
     </div>
 </div>
@@ -77,9 +74,9 @@
 <?php
 function getStatusClass($status) {
     switch($status) {
-        case 'en_cours': return 'warning';
-        case 'valide': return 'success';
-        case 'refuse': return 'danger';
+        case 'En Cours': return 'warning';
+        case 'Validé': return 'success';
+        case 'Refusé': return 'danger';
         default: return 'secondary';
     }
 }
@@ -95,4 +92,20 @@ function closeTicketForm() {
     document.getElementById('ticketForm').classList.remove('active');
     document.querySelector('.content-wrapper').classList.remove('shifted');
 }
+
+function success () {
+    alert('Ticket créé avec succès !');
+}
+
+function error () {
+    alert('Erreur lors de la création du ticket.');
+}
+
+<?php if (isset($error)): ?>
+    error();
+<?php endif; ?>
+<?php if (isset($success)): ?>
+    success();
+<?php endif; ?>
+
 </script>
