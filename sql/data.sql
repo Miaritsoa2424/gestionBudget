@@ -179,6 +179,7 @@ INSERT INTO Crm (label) VALUES
 ('Envoyer une fiche produit enrichie video avis Proposer un comparatif en temps reel avec dautres modeles');
 
 
+
 INSERT INTO client (id_client, nom, prenom, email, password) VALUES
 (1, 'Dupont', 'Jean', 'jean.dupont@email.com', 'pass123'),
 (2, 'Martin', 'Claire', 'claire.martin@email.com', 'pass456');
@@ -217,3 +218,4 @@ INSERT INTO statut_ticket (id_ticket, id_status, date_status) VALUES
 (1, 2, '2025-06-22'),
 (2, 1, '2025-06-21'),
 (2, 3, '2025-06-22');
+
