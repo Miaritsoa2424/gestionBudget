@@ -36,12 +36,7 @@ class ClientController {
         $data = [
             'title' => 'Liste des Clients',
             'page' => 'list-client',
-            'clients' => [
-                ['id' => 1, 'name' => 'Client 1', 'email' => 'miaritsoa24@gmail.com', 'phone' => '0341234567', 'notifications' => 5],
-                ['id' => 2, 'name' => 'Client 2', 'email' => 'kdjsfd', 'phone' => '0341234567', 'notifications' => 2],
-                ['id' => 3, 'name' => 'Client 3', 'email' => 'kdjsfd', 'phone' => '0341234567', 'notifications' => 9],
-                ['id' => 4, 'name' => 'Client 4', 'email' => 'kdjsfd', 'phone' => '0341234567', 'notifications' => 3]
-            ]
+            'clients' => Client::getAll()
         ];
     
         Flight::render('templatedev', $data);

@@ -13,7 +13,7 @@
         <select id="filter-auteur">
             <option value="">Auteur</option>
             <?php foreach ($clients as $client): ?>
-                <option value="<?= htmlspecialchars($client['name']) ?>"><?= htmlspecialchars($client['name']) ?></option>
+                <option value="<?= htmlspecialchars($client->getNom()).' '.htmlspecialchars($client->getPrenom()) ?>"><?= htmlspecialchars($client->getNom()).' '.htmlspecialchars($client->getPrenom()) ?></option>
             <?php endforeach; ?>
         </select>
 
@@ -59,7 +59,6 @@
                 <th>ID</th>
                 <th>Nom du client</th>
                 <th>Email</th>
-                <th>Téléphone</th>
                 <th>Notifications</th>
                 <th>Actions</th>
             </tr>
@@ -70,14 +69,13 @@
             <?php else: ?>
                 <?php foreach ($clients as $client): ?>
                     <tr>
-                        <td><?= $client['id'] ?></td>
-                        <td><?= htmlspecialchars($client['name']) ?></td>
-                        <td><?= htmlspecialchars($client['email']) ?></td>
-                        <td><?= htmlspecialchars($client['phone']) ?></td>
+                        <td><?= $client->getId() ?></td>
+                        <td><?= htmlspecialchars($client->getNom()) ?></td>
+                        <td><?= htmlspecialchars($client->getEmail()) ?></td>
                         <td>
                             <div class="notification-bell">
                                 <i class="fas fa-bell"></i>
-                                <span class="notification-badge"><?= $client['notifications'] ?></span>
+                                <span class="notification-badge">5</span>
                             </div>
                         </td>
                         <td>
