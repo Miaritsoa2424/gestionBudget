@@ -4,6 +4,7 @@ namespace app\controllers;
 
 
 use app\models\Client;
+use app\models\Report;
 use app\models\Agent;
 use Flight;
 
@@ -42,56 +43,70 @@ class ClientController {
     
         Flight::render('templatedev', $data);
     }
-    public function clientDetail(){
+    
+    public function clientDetail($id){
+        $statuts = [
+            [
+                'id' => 0,
+                'libelle' => "non lu"
+            ],
+            [
+                'id' => 1,
+                'libelle' => "lu"
+            ]
+        ];
+
+        $client = Client::getClientById($id);
+
+        // Récupérer les filtres depuis l'URL
+        $dateDebut = $_GET['date_debut'] ?? null;
+        $dateFin = $_GET['date_fin'] ?? null;
+        $statut = $_GET['statut'] ?? null;
+
+        // Si aucun filtre n'est appliqué, on affiche tous les reports
+        $reports = Report::getReportByIdClient($id);
+
+        $repos = [];
+        foreach ($reports as $rep) {
+            $reportFormated = [];
+            $reportFormated['id'] = $rep->getId();
+            $reportFormated['date'] = $rep->getDateReport();
+            $reportFormated['message'] = $rep->getLibelle();
+            $reportFormated['statut'] = $rep->getStatutLibelle();
+            $reportFormated['idStatut'] = $rep->getStatut();
+            $repos[] = $reportFormated;
+        }
         $data = [
             'title' => 'Détail du client',
             'page' => 'report-client-admin',
             'client' => [
-                'nom' => 'Client 1',
-                'email' => 'jhdgf@mail.com',
-                'telephone' => '0341234567',
-                'date_inscription' => '2023-10-01',
-                'reports' => [
-                    [
-                        'id' => 1,
-                        'date' => '2023-10-01',
-                        'statut' => 'en_cours',
-                        'message' => 'Problème avec le service de livraison.'
-                    ],
-                    [
-                        'id' => 2,
-                        'date' => '2023-10-02',
-                        'statut' => 'valide',
-                        'message' => 'Demande de remboursement traitée avec succès.'
-                    ],
-                    [
-                        'id' => 3,
-                        'date' => '2023-10-03',
-                        'statut' => 'refuse',
-                        'message' => 'Réclamation injustifiée selon nos vérifications.'
-                    ]
-                ]
-            ]
+                'nom' => $client->getNom(),
+                'email' => $client->getEmail(),
+                'reports' => $repos,
+            ],
+            'statuts' => $statuts
         ];
         Flight::render('templatedev', $data);
     }
 
-    public function clientReportDetail(){
-       // Données statiques de démonstration
-        $data = Client::getClientReportDetail(1);
+    public function clientReportDetail($id_report) {
+        $report = Report::getReportById($id_report);
+
         $agents = Agent::getAll();
+
+        $client = Client::getClientById($report->getIdClient());
 
         $demoReport = [
             'client' => [
-                'nom' => $data['nom'],
-                'prenom' => $data['prenom'],
-                'email' => $data['email']
+                'nom' => $client->getNom(),
+                'prenom' => $client->getPrenom(),
+                'email' => $client->getEmail()
             ],
-            'date' => $data['date_report'],
-            'statut' => 'Créé',
-            'message' => $data['libelle'],
+            'date' => $report->getDateReport(),
+            'statut' => $report->getStatutLibelle(),
+            'message' => $report->getLibelle(),
             'attachments' => [
-                ['name' => $data['piece_jointe'], 'url' => '#']
+                ['name' => $report->getPieceJointe(), 'url' => '#']
             ]
         ];
         $donnees = [

@@ -1,4 +1,3 @@
-
 <div class="client-detail">
     <div class="card">
         <div class="card-header">
@@ -15,8 +14,6 @@
                         <p><strong>Email:</strong> <?php echo $client['email']; ?></p>
                     </div>
                     <div>
-                        <p><strong>Téléphone:</strong> <?php echo $client['telephone']; ?></p>
-                        <p><strong>Date d'inscription:</strong> <?php echo $client['date_inscription']; ?></p>
                     </div>
                 </div>
             </div>
@@ -28,29 +25,25 @@
             <h4>Reports du client</h4>
         </div>
         <div class="card-body">
-            <!-- Filtres en haut -->
-            <form method="GET" class="mb-4">
                 <div class="grid">
                     <div class="form-group">
                         <label>Date début</label>
-                        <input type="date" name="date_debut" class="form-control" value="<?php echo $_GET['date_debut'] ?? ''; ?>">
+                        <input type="date" name="date_debut" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Date fin</label>
-                        <input type="date" name="date_fin" class="form-control" value="<?php echo $_GET['date_fin'] ?? ''; ?>">
+                        <input type="date" name="date_fin" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Statut</label>
                         <select name="statut" class="form-control">
                             <option value="">Tous</option>
-                            <option value="en_cours">En cours</option>
-                            <option value="valide">Validé</option>
-                            <option value="refuse">Refusé</option>
+                            <?php foreach($statuts as $statut): ?>
+                                <option value="<?php echo $statut['id']; ?>"><?php echo ucfirst($statut['libelle']); ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Filtrer</button>
-            </form>
 
             <!-- Tableau des reports -->
             <div class="table-container">
@@ -69,12 +62,12 @@
                             <td><?php echo $report['date']; ?></td>
                             <td><?php echo $report['message']; ?></td>
                             <td>
-                                <span class="badge badge-<?php echo getStatusClass($report['statut']); ?>">
+                                <span class="badge badge-<?php echo getStatusClass($report['idStatut']); ?>">
                                     <?php echo $report['statut']; ?>
                                 </span>
                             </td>
                             <td>
-                                <a href="detail-report" class="btn btn-sm btn-info">Voir</a>
+                                <a href="<?= Flight::get('flight.base_url') ?>/detail-report/<?= $report['id']?>" class="btn btn-sm btn-info">Voir</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -95,3 +88,37 @@ function getStatusClass($status) {
     }
 }
 ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dateDebut = document.querySelector('input[name="date_debut"]');
+    const dateFin = document.querySelector('input[name="date_fin"]');
+    const statut = document.querySelector('select[name="statut"]');
+    const rows = document.querySelectorAll('.table tbody tr');
+
+    function filterRows() {
+        const dDeb = dateDebut.value;
+        const dFin = dateFin.value;
+        const stat = statut.value;
+
+        rows.forEach(row => {
+            const date = row.children[0].textContent.trim();
+            const status = row.children[2].textContent.trim();
+            let show = true;
+
+            // Filtre date début
+            if (dDeb && date < dDeb) show = false;
+            // Filtre date fin
+            if (dFin && date > dFin) show = false;
+            // Filtre statut
+            if (stat && status !== stat) show = false;
+
+            row.style.display = show ? '' : 'none';
+        });
+    }
+
+    dateDebut.addEventListener('change', filterRows);
+    dateFin.addEventListener('change', filterRows);
+    statut.addEventListener('change', filterRows);
+});
+</script>
