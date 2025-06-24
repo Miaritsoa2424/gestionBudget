@@ -26,7 +26,7 @@
                     <span class="notification-badge">0</span>
                 </a>
             </li>
-            <li><a href="<?= Flight::get('flight.base_url') ?>/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+            <li><a href="<?= Flight::get('flight.base_url') ?>/logout-client"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
         </ul>
     </nav>
 

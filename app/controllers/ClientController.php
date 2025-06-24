@@ -37,7 +37,7 @@ class ClientController {
     public function deconnexion(){
         session_destroy();
         Flight::clear('id_client');
-        Flight::render('login', []);   
+        Flight::render('login-client', []);   
     }
     
     public function listClientFront() {
@@ -144,7 +144,7 @@ class ClientController {
 
     public function listMessagesClient() {
         // Supposons que l'id du client est stocké en session
-        $id_client = $_SESSION['idClient'] ?? 1;
+        $id_client = $_SESSION['id_client'];
         if (!$id_client) {
             Flight::redirect('login');
             return;
@@ -156,13 +156,13 @@ class ClientController {
                 JOIN report_client rc ON rc.id_report = t.id_report
                 JOIN agent a ON a.id_agent = t.id_agent
                 JOIN client c ON c.id_client = rc.id_client
-                WHERE c.id_client = 1";
+                WHERE c.id_client = :id_client";
                 // -- WHERE c.id_client = :id_client";
 
 
         $stmt = $db->prepare($sql);
-        // $stmt->execute([':id_client' => $id_client]);
-        $stmt->execute();
+        $stmt->execute([':id_client' => $id_client]);
+        // $stmt->execute();
         $agents = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         Flight::render('template-client', [
@@ -237,5 +237,6 @@ class ClientController {
             Flight::render('login-client', ['error' => 'Identifiants incorrects']);
         }
     }
+
 }
 
