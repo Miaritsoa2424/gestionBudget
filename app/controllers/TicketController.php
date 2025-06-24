@@ -182,7 +182,7 @@ class TicketController {
                 'client' => Client::getClientById(Report::getReportById($ticket->getIdReport())->getIdClient()),
                 'date' => $ticket->getDateCreation(),
                 'priorite' => "haute", // Assuming a static value for priority
-                'statut' => Statut::getById($ticket->getIdStatut())->getLibelle(),
+                'statut' => Statut::getById($ticket->getIdStatut())->getNom(),
                 'duree' => MvtDuree::getLastDureeByIdTicket($ticket->getId())->getDuree() ?? 0
             ];
             $ticket2d[] = $ticket1D;

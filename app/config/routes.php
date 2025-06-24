@@ -123,7 +123,7 @@ $router->get('/listMessages', [$AgentController, 'listMessages']);
 
 $ReportController = new ReportController();
 $router->post('/submit-report', [$ReportController, 'insertReport']);
-$router->get('/affilierTicket/@id', [$ticketController, 'affilierTicket']);
+$router->get('/affilierTicket/@id', [$welcomeController, 'affilierTicket']);
 
 
 
