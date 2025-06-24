@@ -105,6 +105,14 @@ class AgentController {
             'messages' => $messages
         ]);
     }
+    public function listAgents() {
+        $data = [
+            'title' => 'Liste des agents',
+            'page' => 'list-agent',
+            'agents' => Agent::getAll()
+        ];
+        Flight::render('templatedev', $data);
+    }
     
     public function sendMessage() {
         $id_agent = $_SESSION['id_agent'] ?? 1;
@@ -146,17 +154,42 @@ class AgentController {
         exit;
     }
 
-    public function fichePaieAgent($id_agent) {
-        $tickets = Agent::getTicketsByAgent($id_agent);
-        $agent = Agent::getById($id_agent);
-        $nom = $agent ? $agent->getNom() . ' ' . $agent->getPrenom() : 'Inconnu';
-
-        Flight::render('templatedev', [
+    public function fichePaie($id_agent) {
+        $db = Flight::db();
+        
+        // Récupérer le mois et l'année sélectionnés
+        $month = isset($_GET['month']) ? $_GET['month'] : date('m');
+        $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+    
+        // Récupérer les informations de l'agent
+        $stmtAgent = $db->prepare("SELECT id_agent AS id, nom, prenom FROM agent WHERE id_agent = ?");
+        $stmtAgent->execute([$id_agent]);
+        $agent = $stmtAgent->fetch(\PDO::FETCH_ASSOC);
+    
+        // Récupérer les tickets liés à l'agent pour le mois sélectionné
+        $stmtTickets = $db->prepare("
+            SELECT d.id_ticket, ticket.sujet, ticket.cout_horaire, d.duree, ticket.date_creation
+            FROM ticket
+            JOIN mvt_duree AS d ON ticket.id_ticket = d.id_ticket
+            WHERE ticket.id_agent = ?
+            AND MONTH(ticket.date_creation) = ?
+            AND YEAR(ticket.date_creation) = ?
+            ORDER BY ticket.date_creation DESC
+        ");
+        $stmtTickets->execute([$id_agent, $month, $year]);
+        $tickets = $stmtTickets->fetchAll(\PDO::FETCH_ASSOC);
+    
+        $data = [
+            'title' => 'Fiche de paie',
             'page' => 'fiche-paie',
-            'title' => 'Fiche de Paie',
+            'nom' => 'Miaritsoa',
+            'agent' => (object) $agent,
             'tickets' => $tickets,
-            'nom' => $nom
-        ]);
+            'currentMonth' => $month,
+            'currentYear' => $year
+        ];
+    
+        Flight::render('templatedev', $data);
     }
+    
 }
- 

@@ -239,25 +239,37 @@ class ClientController {
     }
 
     public function insertClient() {
-        $nom = $_POST['nom'] ?? null;
-        $prenom = $_POST['prenom'] ?? null;
-        $email = $_POST['email'] ?? null;
-        $password = $_POST['password'] ?? null;
 
-        if ($nom && $prenom && $email && $password) {
-            $success = true;
-            
-            $client = new Client(null, $nom, $prenom, $email);
-            $client->saveClient();
+        // Affiche toutes les données reçues pour vérification
+        $data = Flight::request()->data;
+        print_r($data); // ou var_dump($data);
+        
 
-            if ($success) {
-                Flight::redirect('list-client');
-            } else {
-                Flight::render('form-client', ['error' => 'Erreur lors de l\'ajout du client.']);
-            }
-        } else {
-            Flight::render('form-client', ['error' => 'Tous les champs sont obligatoires.']);
+        // Tu peux aussi logger dans un fichier si besoin :
+        // file_put_contents('debug_client.txt', print_r($data, true));
+
+        // Création du nouveau client
+        $nom = $data->nom;
+        $email = $data->email;
+        $password = $data->password;
+        $prenom = $data->prenom;
+
+        // Vérification si le client existe déjà
+        if (Client::getByNom($nom)) {
+            Flight::json(['success' => false, 'message' => 'Le client existe déjà.']);
+            return;
         }
+
+        
+
+        // Création du nouveau client
+        $client = new Client(null, $nom, $prenom, $email, $password);
+        $client->save();
+
+        print_r($client);
+
+        Flight::json(['success' => true, 'message' => 'Client ajouté avec succès.']);
+
     }
 
 }

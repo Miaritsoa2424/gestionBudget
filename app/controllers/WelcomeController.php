@@ -4,6 +4,13 @@ namespace app\controllers;
 
 use app\models\ProductModel;
 use app\models\Agent;
+use app\models\Importance;
+use app\models\TicketModel;
+use app\models\Statut;
+use app\models\Report;
+use app\models\Client;
+use app\models\CategorieTicket;
+use app\models\MvtDuree;
 use Flight;
 
 class WelcomeController {
@@ -48,6 +55,33 @@ class WelcomeController {
         ];
         Flight::render('templatedev', $data);
         
+    }
+
+    public function getInfoTicket($idTicket) {
+        $ticket = TicketModel::getById($idTicket);
+        if (!$ticket) {
+            Flight::notFound();
+            return;
+        }
+
+        $data = [
+            'title' => 'Information Ticket',
+            'page' => 'info-ticket',
+            'ticket' => [
+                'id' => $ticket->getId(),
+                'sujet' => $ticket->getSujet(),
+                'description' => Report::getReportById($ticket->getIdReport())->getLibelle(),
+                'date_creation' => $ticket->getDateCreation(),
+                'statut' => Statut::getById($ticket->getIdStatut())->getNom(),
+                'agent_affecte' => $ticket->getAgentAffecte() ? $ticket->getAgentAffecte()->getNom() : 'Aucun',
+                'priorite' => Importance::getImportanceByIdTicket($ticket->getId())->getNom(),
+                'categorie' => CategorieTicket::getCategorieById($ticket->getIdCategorie())->getNom(),
+                'client' => Client::getById(Report::getReportById($ticket->getIdReport())->getIdClient()),
+                'duree' => MvtDuree::getLastDureeByIdTicket($ticket->getId())->getDuree(),
+                'cout_horaire' => $ticket->getCoutHoraire()
+            ]
+        ];
+        Flight::render('template-agent', $data);
     }
 
 
@@ -95,54 +129,42 @@ class WelcomeController {
         Flight::render('templatedev', $data);
     }
 
-    public function listAgents() {
-        $data = [
-            'title' => 'Liste des agents',
-            'page' => 'list-agent',
-            'agents' => Agent::getAll()
-        ];
-        Flight::render('templatedev', $data);
-    }
+    
 
     public function fichePaie($idAgent) {
-        // Simulation des données d'un agent
-        $agent = [
-            'id' => $idAgent,
-            'nom' => 'Dupont Jean'
-        ];
+        // Connexion à la base (tu peux remplacer par ton propre accès modèle si tu en as un)
+        $db = Flight::db(); // ou ton propre accès DB
     
-        // Simulation des tickets
-        $tickets = [
-            [
-                'id_ticket' => 'TK001',
-                'sujet' => 'Développement interface login',
-                'cout_horaire' => 45.00,
-                'duree' => 8,
-            ],
-            [
-                'id_ticket' => 'TK002',
-                'sujet' => 'Correction bug authentification',
-                'cout_horaire' => 45.00,
-                'duree' => 4,
-            ],
-            [
-                'id_ticket' => 'TK003',
-                'sujet' => 'Mise à jour base données',
-                'cout_horaire' => 50.00,
-                'duree' => 6,
-            ]
-        ];
+        // Récupérer les informations de l'agent
+        $stmtAgent = $db->prepare("SELECT id_agent AS id, nom, prenom FROM agent WHERE id_agent = ?");
+        $stmtAgent->execute([$idAgent]);
+        $agent = $stmtAgent->fetch(\PDO::FETCH_ASSOC);
     
+        // Récupérer les tickets liés à l’agent (selon ta requête donnée)
+        $stmtTickets = $db->prepare("
+            SELECT d.id_ticket, ticket.sujet, ticket.cout_horaire, d.duree
+            FROM ticket
+            JOIN mvt_duree AS d ON ticket.id_ticket = d.id_ticket
+            WHERE d.id_agent = ?
+            ORDER BY d.id_mvt_duree DESC
+            LIMIT 1
+        ");
+        $stmtTickets->execute([$idAgent]);
+        $tickets = $stmtTickets->fetchAll(\PDO::FETCH_ASSOC);
+    
+        // Préparer les données à envoyer à la vue
         $data = [
             'title' => 'Fiche de paie',
             'page' => 'fiche-paie',
-            'nom' => 'Dupont Jean',
-            'agent' => (object)$agent,
+            'nom' => $agent['nom'] . ' ' . $agent['prenom'],
+            'agent' => (object) $agent,
             'tickets' => $tickets
         ];
     
+        // Affichage
         Flight::render('templatedev', $data);
     }
+    
 
     
    
