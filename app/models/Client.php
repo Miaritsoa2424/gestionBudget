@@ -38,6 +38,13 @@ class Client {
         return $this->id;
     }
 
+    public function getNotification() {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM report_client WHERE id_client = :id_client AND statut = 0");
+        $stmt->execute([':id_client' => $this->id]);
+        return (int)$stmt->fetchColumn();
+    }
+
     public static function getAll() {
         $conn = Flight::db();
         $stmt = $conn->query("SELECT * FROM client");
@@ -85,24 +92,25 @@ class Client {
         return null;
     }
 
-    public static function getById($id) {
-        $conn = Flight::db();
-        $stmt = $conn->prepare("SELECT * FROM client WHERE id_client = :id");
 
-        $stmt->execute([
-            ':id' => $id
-        ]);
-        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if ($row) {
+    public static function getClientById($id) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT * FROM client WHERE id_client = :id_client");
+        $stmt->execute([':id_client' => $id]);
+        
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
             return new Client(
                 $row['id_client'],
                 $row['nom'],
                 $row['prenom'],
-                $row['email'],
-                $row['password']
+                $row['email']
             );
+        } else {
+            return null; // No client found
         }
-        return null;
     }
+
 
 }
