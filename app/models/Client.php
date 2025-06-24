@@ -112,5 +112,25 @@ class Client {
         }
     }
 
+    public static function getById($id) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT * FROM client WHERE id_client = :id");
+
+        $stmt->execute([':id' => $id]);
+
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row) {
+            return new Client(
+                $row['id_client'],
+                $row['nom'],
+                $row['prenom'],
+                $row['email'],
+                $row['password']
+            ); 
+        }
+
+        return null; 
+    }
+
 
 }

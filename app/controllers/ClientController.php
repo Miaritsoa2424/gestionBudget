@@ -6,6 +6,11 @@ namespace app\controllers;
 use app\models\Client;
 use app\models\Report;
 use app\models\Agent;
+
+use app\models\Message;
+use app\models\CategorieTicket;
+use app\models\Importance;
+
 use Flight;
 
 class ClientController {
@@ -100,14 +105,17 @@ class ClientController {
             'client' => [
                 'nom' => $client->getNom(),
                 'prenom' => $client->getPrenom(),
-                'email' => $client->getEmail()
+                'email' => $client->getEmail()             
             ],
+            'importance' => Importance::getAll(),
+            'categories' => CategorieTicket::getAll(), 
             'date' => $report->getDateReport(),
             'statut' => $report->getStatutLibelle(),
             'message' => $report->getLibelle(),
+            'id_report' => $id_report,
             'attachments' => [
-                ['name' => $report->getPieceJointe(), 'url' => '#']
-            ]
+                ['name' => $report->getPieceJointe(), 'url' => $report->getPieceJointe()]
+                ]
         ];
         $donnees = [
             'title' => 'Détail du Report',
@@ -124,13 +132,13 @@ class ClientController {
             'title' => 'Formulaire de Report Client',
             'page' => 'report-client'
         ];
-        Flight::render('templateClient', $data);
+        Flight::render('template-client', $data);
     }
     public function getHomeCLient() {
         $data = [
             'title' => 'Espace Client'
         ];
-        Flight::render('templateClient', $data);
+        Flight::render('template-client', $data);
     }
     
 
@@ -145,12 +153,82 @@ class ClientController {
             $_SESSION['idClient'] = $client['id_client'];
             $_SESSION['nomClient'] = $client['nom'];
 
-            Flight::render('templateClient', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true]);
+            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true]);
         } else {
            
-            Flight::render('templateClient', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true]);
+            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true]);
         }
     }
+
+    public function listMessagesClient() {
+        // Supposons que l'id du client est stocké en session
+        $id_client = $_SESSION['idClient'] ?? 1;
+        if (!$id_client) {
+            Flight::redirect('login');
+            return;
+        }
+
+        $db = \Flight::db();
+        $sql = "SELECT DISTINCT a.id_agent, a.nom, a.prenom, a.email
+                FROM ticket t
+                JOIN report_client rc ON rc.id_report = t.id_report
+                JOIN agent a ON a.id_agent = t.id_agent
+                JOIN client c ON c.id_client = rc.id_client
+                WHERE c.id_client = 1";
+                // -- WHERE c.id_client = :id_client";
+
+
+        $stmt = $db->prepare($sql);
+        // $stmt->execute([':id_client' => $id_client]);
+        $stmt->execute();
+        $agents = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        Flight::render('template-client', [
+            'title' => 'Liste des messages',
+            'page' => 'list-message-client',
+            'agents' => $agents
+        ]);
+    }
  
+    public function messageClient() {
+
+        $id_agent = $_GET['agent_id'] ?? null;
+        // Tu peux charger ici les infos de l'agent, les messages, etc.
+        $agent = Agent::getById($id_agent);
+        if (!$agent) {
+            Flight::redirect('list-messages-client');
+            return;
+        }
+
+        // $messages = Message::getMessageByAgentClient($_SESSION['idClient'], $id_agent, 1);
+        $messages = Message::getMessageByAgentClient(1, $id_agent);
+
+        $data = [
+            'title' => 'Message',
+            'page' => 'message-client',
+            'agent' => $agent,
+            'messages' => $messages
+        ];
+        Flight::render('template-client', $data);
+    }
+
+    public function sendMessageClient() {
+        $id_agent = $_SESSION['id_client'] ?? 1;
+        // $id_agent = $_SESSION['id_client'] ?? 1;
+        $id_client = $_POST['id_agent'] ?? null;
+        $contenu = $_POST['contenu'] ?? '';
+        if ($id_client && $contenu !== '') {
+            $db = Flight::db();
+            $stmt = $db->prepare("INSERT INTO message (id_envoyeur, id_receveur, client_agent, date_heure, contenu) VALUES (:id_agent, :id_client, 0, NOW(), :contenu)");
+            $stmt->execute([
+                ':id_agent' => $id_agent,
+                ':id_client' => $id_client,
+                ':contenu' => $contenu
+            ]);
+            Flight::json(['success' => true]);
+        } else {
+            Flight::json(['success' => false]);
+        }
+    }
 }
 

@@ -17,10 +17,11 @@
     </button>
   </div>
 <div class="chat-messages" id="chatMessages">
-  <?php if (!empty($messages)): ?>
+  <?php if (!empty($messages)): 
+    ?>
     <?php foreach ($messages as $msg): ?>
       <?php
-        $isAgent = ($msg['id_envoyeur'] == 1);
+        $isAgent = ($msg['client_agent'] == 1);
         // $isAgent = ($msg['id_envoyeur'] == $_SESSION['id_agent']);
         $avatar = $isAgent
           ? 'https://i.pravatar.cc/45?img=2'
@@ -39,6 +40,12 @@
           <?php endif; ?>
         </div>
       </div>
+
+
+    <form id="sendMessageForm" style="display:none;">
+        <input type="hidden" name="id_client" value="<?= $client ? $client->getId() : 0 ?>">
+        <input type="hidden" name="contenu" id="hiddenContenu">
+    </form>
     <?php endforeach; ?>
   <?php else: ?>
     <div style="text-align:center;color:#888;">Aucun message pour cette conversation.</div>
@@ -52,11 +59,8 @@
   </div>
 </div>
 
+
 <script>
-  // const messages = [
-  //   { user: 'user1', text: 'Salut, tu es dispo ce soir ?', avatar: 'https://i.pravatar.cc/45?img=1' },
-  //   { user: 'user2', text: 'Oui, je finis à 19h 😊', avatar: 'https://i.pravatar.cc/45?img=2' }
-  // ];
 
   const chatMessages = document.getElementById('chatMessages');
   const messageInput = document.getElementById('messageInput');
@@ -65,59 +69,106 @@
   const ratingCommentDisplay = document.getElementById('ratingCommentDisplay');
   let currentRating = 0;
 
-  // function renderMessages() {
-  //   chatMessages.innerHTML = '';
-  //   messages.forEach(msg => {
-  //     const msgDiv = document.createElement('div');
-  //     msgDiv.className = `user ${msg.user === 'user2' ? 'right' : ''}`;
-  //     const messageClass = msg.isRating ? 'rating-message' : (msg.user === 'user2' ? 'right' : 'left');
-  //     const sendButton = msg.user === 'user1' ? 
-  //       `<button class="send-button" onclick="forwardMessage('${msg.text}')">
-  //          <i class="fas fa-share"></i>
-  //        </button>` : '';
-  //     msgDiv.innerHTML = `
-  //       <img src="${msg.avatar}" alt="${msg.user}">
-  //       <div class="message ${messageClass}">
-  //         ${msg.text}
-  //         ${sendButton}
-  //       </div>
-  //     `;
-  //     chatMessages.appendChild(msgDiv);
-  //   });
-    
-  //   if (ratingMessageContainer.style.display !== 'none') {
-  //     chatMessages.appendChild(ratingMessageContainer);
-  //   }
-    
-  //   chatMessages.scrollTop = chatMessages.scrollHeight;
-  // }
+  
 
   function sendMessage() {
     const text = messageInput.value.trim();
-    if (text !== '') {
-      messages.push({
-        user: 'user2',
-        text: text,
-        avatar: 'https://i.pravatar.cc/45?img=2'
-      });
-      messageInput.value = '';
-      renderMessages();
-      messageInput.style.height = 'auto';
-    }
-  }
+    if (text === '') return;
 
-  function forwardMessage(text) {
-    alert('Message transféré: ' + text);
-  }
+    // Prépare les données à envoyer
+    const formData = new FormData();
+    formData.append('id_client', <?= $client ? $client->getId() : 0 ?>);
+    formData.append('contenu', text);
 
-  function sendRatingMessage() {
-    messages.push({
-      user: 'user2',
-      text: `⭐⭐⭐⭐⭐\nFormulaire d'évaluation envoyé`,
-      avatar: 'https://i.pravatar.cc/45?img=2'
+    fetch('send-message', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success) {
+            // Ajoute le message dans le chat sans recharger
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'user right';
+            msgDiv.innerHTML = `
+                <img src="https://i.pravatar.cc/45?img=2" alt="">
+                <div class="message">${escapeHtml(text)}</div>
+            `;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+        } else {
+            alert('Erreur lors de l\'envoi du message.');
+        }
+    })
+    .catch(() => {
+        alert('Erreur lors de l\'envoi du message.');
     });
-    renderMessages();
   }
+  function forwardMessage(text) {
+      const idClient = <?= $client ? $client->getId() : 0 ?>;
+      const formData = new FormData();
+      formData.append('title', 'Transfert de message');
+      formData.append('description', text);
+      formData.append('id_client', idClient);
+
+      fetch('submit-report', {
+          method: 'POST',
+          body: formData
+      })
+      .then(response => {
+          // Si l'API retourne du HTML, tu peux afficher une notification ou recharger la page
+          if (response.ok) {
+              alert('Message transféré comme rapport client !');
+          } else {
+              alert('Erreur lors du transfert du message.');
+          }
+      })
+      .catch(() => {
+          alert('Erreur lors du transfert du message.');
+      });
+  }
+
+  // Petite fonction pour éviter les injections HTML
+function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.innerText = text;
+    return div.innerHTML;
+}
+
+function disableForwardButtons() {
+    document.querySelectorAll('.send-button').forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('disabled');
+        btn.title = "Discussion terminée";
+    });
+}
+
+function sendRatingMessage() {
+    const idClient = <?= $client ? $client->getId() : 0 ?>;
+    const formData = new FormData();
+    formData.append('id_client', idClient);
+
+    fetch('end-discussion', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success) {
+            alert('Discussion terminée !');
+            document.querySelector('.chat-box textarea').disabled = true;
+            disableForwardButtons(); // Désactive les boutons de transfert
+        } else {
+            alert('Erreur lors de la terminaison de la discussion.');
+        }
+    })
+    .catch(() => {
+        alert('Erreur lors de la terminaison de la discussion.');
+    });
+}
+
 
   messageInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && !e.shiftKey) {
