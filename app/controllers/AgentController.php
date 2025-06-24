@@ -14,7 +14,9 @@ class AgentController {
 	}
 
     public function deconnexion() {
-        session_destroy();
+        unset($_SESSION['id_agent']);
+        unset($_SESSION['nom_agent']);
+    
         Flight::redirect('agent');
     }
 

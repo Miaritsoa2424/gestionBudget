@@ -35,8 +35,9 @@ class ClientController {
     }
 
     public function deconnexion(){
-        session_destroy();
-        Flight::clear('id_client');
+        unset($_SESSION['id_client']);
+        unset($_SESSION['nom_client']);
+
         Flight::render('login-client', []);   
     }
     
