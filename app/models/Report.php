@@ -207,4 +207,11 @@ class Report
 
         return $count > 0; // Retourne true si au moins un ticket existe pour ce report
     }
+
+    public static function reportToLu($id_report)
+    {
+        $db = Flight::db();
+        $stmt = $db->prepare("UPDATE report_client SET statut = 1 WHERE id_report = :id_report");
+        return $stmt->execute([':id_report' => $id_report]);
+    }
 }
