@@ -36,9 +36,10 @@ class ClientController {
 
     public function deconnexion(){
         session_destroy();
-        Flight::clear('idDept');
+        Flight::clear('id_client');
         Flight::render('login', []);   
     }
+    
     public function listClientFront() {
         $data = [
             'title' => 'Liste des Clients',
