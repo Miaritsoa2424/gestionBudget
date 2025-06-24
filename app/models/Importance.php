@@ -3,16 +3,16 @@ namespace app\models;
 use Flight;
 
 class Importance {
-    private $idmportance;
+    private $idImportance;
     private $nom;
 
-    public function __construct($nom, $idmportance = null) {
+    public function __construct($nom, $idImportance = null) {
         $this->nom = $nom;
-        $this->idmportance = $idmportance;
+        $this->idImportance = $idImportance;
     }
 
-    public function getIdmportance() {
-        return $this->idmportance;
+    public function getidImportance() {
+        return $this->idImportance;
     }
 
     public function getNom() {
@@ -25,21 +25,21 @@ class Importance {
 
     public function save() {
         $conn = Flight::db();
-        if ($this->idmportance === null) {
+        if ($this->idImportance === null) {
             $stmt = $conn->prepare("INSERT INTO importance (nom) VALUES (:nom)");
             $stmt->execute(['nom' => $this->nom]);
-            $this->idmportance = $conn->lastInsertId();
+            $this->idImportance = $conn->lastInsertId();
         } else {
-            $stmt = $conn->prepare("UPDATE importance SET nom = :nom WHERE idmportance = :id");
-            $stmt->execute(['nom' => $this->nom, 'id' => $this->idmportance]);
+            $stmt = $conn->prepare("UPDATE importance SET nom = :nom WHERE idImportance = :id");
+            $stmt->execute(['nom' => $this->nom, 'id' => $this->idImportance]);
         }
     }
 
     public function delete() {
-        if ($this->idmportance !== null) {
+        if ($this->idImportance !== null) {
             $conn = Flight::db();
-            $stmt = $conn->prepare("DELETE FROM importance WHERE idmportance = :id");
-            $stmt->execute(['id' => $this->idmportance]);
+            $stmt = $conn->prepare("DELETE FROM importance WHERE idImportance = :id");
+            $stmt->execute(['id' => $this->idImportance]);
         }
     }
 
@@ -58,7 +58,17 @@ class Importance {
         $stmt = $conn->prepare("SELECT * FROM importance WHERE idimportance = :id");
         $stmt->execute(['id' => $id]);
         $row = $stmt->fetch();
-        return $row ? new Importance($row['nom'], $row['idmportance']) : null;
+        return $row ? new Importance($row['nom'], $row['idImportance']) : null;
+    }
+
+    public static function getImportanceByIdTicket($idTicket) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT i.* FROM importance i
+            JOIN ticket_importance ti ON i.id_importance = ti.id_importance
+            WHERE ti.id_ticket = :idTicket");
+        $stmt->execute(['idTicket' => $idTicket]);
+        $row = $stmt->fetch();
+        return $row ? new Importance($row['libelle'], $row['id_importance']) : null;
     }
     
 }
