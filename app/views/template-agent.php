@@ -42,7 +42,7 @@
             </div>
 
 
-            <a>
+            <a href="<?= Flight::get('flight.base_url') ?>/logout-agent">
                 <i class="fa fa-sign-out-alt"></i> Deconnexion
             </a>
         </div>

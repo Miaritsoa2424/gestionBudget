@@ -202,39 +202,39 @@ INSERT INTO agent (id_agent, nom, prenom, email, password) VALUES
 (2, 'Leroy', 'Sophie', 'sophie.leroy@email.com', 'agent456');
 
 
--- REPORTS (avec colonne statut)
 INSERT INTO report_client (id_report, libelle, piece_jointe, date_report, note, date_note, commentaire, id_client, statut) VALUES
 (1, 'Problème de connexion', 'screenshot1.png', '2025-06-22 10:00:00', 4, '2025-06-22', 'Connexion impossible ce matin.', 1, 1),
 (2, 'Demande de devis', NULL, '2025-06-21 09:30:00', 5, '2025-06-21', 'Merci pour la rapidité.', 2, 0);
 
 
+
 -- TICKETS (avec id_statut et date_creation)
-INSERT INTO ticket (id_ticket, cout_horaire, sujet, id_categorie, id_agent, id_report, id_statut, date_creation) VALUES
-(1, 50.00, 'Connexion impossible', 1, 1, 1, 1, '2025-06-22 10:15:00'),
-(2, 60.00, 'Demande de devis', 2, 2, 2, 2, '2025-06-21 09:45:00');
+-- INSERT INTO ticket (id_ticket, cout_horaire, sujet, id_categorie, id_agent, id_report, id_statut, date_creation) VALUES
+-- (1, 50.00, 'Connexion impossible', 1, 1, 1, 1, '2025-06-22 10:15:00'),
+-- (2, 60.00, 'Demande de devis', 2, 2, 2, 2, '2025-06-21 09:45:00');
 
 -- MOUVEMENTS DE DUREE
-INSERT INTO mvt_duree (id_mvt_duree, duree, date_duree, id_ticket) VALUES
-(1, 30, '2025-06-22', 1),
-(2, 45, '2025-06-21', 2);
+-- INSERT INTO mvt_duree (id_mvt_duree, duree, date_duree, id_ticket) VALUES
+-- (1, 30, '2025-06-22', 1),
+-- (2, 45, '2025-06-21', 2);
 
--- STATUTS DES TICKETS
-INSERT INTO statut_ticket (id_ticket, id_statut, date_statut) VALUES
-(1, 1, '2025-06-22'),
-(1, 2, '2025-06-22'),
-(2, 1, '2025-06-21'),
-(2, 3, '2025-06-22');
+-- -- STATUTS DES TICKETS
+-- INSERT INTO statut_ticket (id_ticket, id_statut, date_statut) VALUES
+-- (1, 1, '2025-06-22'),
+-- (1, 2, '2025-06-22'),
+-- (2, 1, '2025-06-21'),
+-- (2, 3, '2025-06-22');
 
 
--- TICKET_IMPORTANCE
-INSERT INTO ticket_importance (id, id_ticket, id_importance) VALUES
-(1, 1, 1),
-(2, 2, 2);
+-- -- TICKET_IMPORTANCE
+-- INSERT INTO ticket_importance (id, id_ticket, id_importance) VALUES
+-- (1, 1, 1),
+-- (2, 2, 2);
 
 -- MESSAGES (avec contenu)
-INSERT INTO message (id_message, id_envoyeur, id_receveur, client_agent, date_heure, contenu) VALUES
-(1, 1, 1, TRUE, '2025-06-22 10:05:00', 'Bonjour, j-ai un problème de connexion.'),
-(2, 2, 1, FALSE, '2025-06-22 10:10:00', 'Merci pour votre retour rapide.');
+-- INSERT INTO message (id_message, id_envoyeur, id_receveur, client_agent, date_heure, contenu) VALUES
+-- (1, 1, 1, TRUE, '2025-06-22 10:05:00', 'Bonjour, j-ai un problème de connexion.'),
+-- (2, 2, 1, FALSE, '2025-06-22 10:10:00', 'Merci pour votre retour rapide.');
 
 INSERT INTO importance (libelle) VALUES 
 ('Très faible'),

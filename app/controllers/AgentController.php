@@ -12,13 +12,10 @@ class AgentController {
 
 	}
 
-    // public function message() {
-    //     $data = [
-    //         'title' => 'Message',
-    //         'page' => 'message'
-    //     ];
-    //     Flight::render('template-agent', $data);
-    // }
+    public function deconnexion() {
+        session_destroy();
+        Flight::redirect('login');
+    }
 
     // public function listMessages() {
             

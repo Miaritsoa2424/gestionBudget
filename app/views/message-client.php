@@ -276,6 +276,25 @@
     <?php endif; ?>
   </div>
 
+
+  <!-- Formulaire d'évaluation -->
+  <div id="ratingFormContainer" class="rating-form" style="display: none;">
+    <div style="text-align: center; font-weight: bold; color: #13325E;">Noter la conversation</div>
+    <div class="rating-stars-input">
+      <i class="fas fa-star" data-rating="1"></i>
+      <i class="fas fa-star" data-rating="2"></i>
+      <i class="fas fa-star" data-rating="3"></i>
+      <i class="fas fa-star" data-rating="4"></i>
+      <i class="fas fa-star" data-rating="5"></i>
+    </div>
+    <textarea id="ratingCommentInput" class="rating-comment" placeholder="Laissez un commentaire..." rows="3"></textarea>
+    <div class="rating-buttons">
+      <button class="cancel" onclick="cancelRating()">Annuler</button>
+      <button class="submit" onclick="submitRating()">Envoyer</button>
+    </div>
+  </div>
+
+  
     <form id="sendMessageForm" style="display:none;">
         <input type="hidden" name="id_client" value="<?= $agent ? $agent->getIdAgent() : 0 ?>">
         <input type="hidden" name="contenu" id="hiddenContenu">

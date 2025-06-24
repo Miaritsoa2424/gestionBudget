@@ -104,8 +104,10 @@ $welcomeController = new WelcomeController();
 $router->get('/welcome', [$welcomeController, 'home']);
 
 $AgentController = new AgentController();
+$router->get('/logout-agent', [$AgentController, 'deconnexion']);
 
 $ClientController = new ClientController();
+$router->get('/logout-client', [$ClientController, 'deconnexion']);
 $router->get('/list-client', [$ClientController, 'listClientFront']);
 
 $router->get('/detail-client/@id', [$ClientController, 'clientDetail']);
