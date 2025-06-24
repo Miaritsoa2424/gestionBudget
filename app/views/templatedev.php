@@ -43,7 +43,7 @@
                 </div>
             </div>
             
-            <a>
+            <a href="stat-admin">
                 <i class="fas fa-chart-pie"></i> Statistiques
             </a>
         </div>

@@ -201,9 +201,9 @@ INSERT INTO agent (id_agent, nom, prenom, email, password) VALUES
 (1, 'Durand', 'Paul', 'paul.durand@email.com', 'agent123'),
 (2, 'Leroy', 'Sophie', 'sophie.leroy@email.com', 'agent456');
 
-INSERT INTO message (id_message, id_envoyeur, id_receveur, client_agent, date_heure) VALUES
-(1, 1, 1, TRUE, '2025-06-22 10:05:00'),
-(2, 2, 1, FALSE, '2025-06-22 10:10:00');
+INSERT INTO message (id_envoyeur, id_receveur, client_agent, date_heure,contenu) VALUES
+( 1, 1, TRUE, '2025-06-22 10:05:00','blablabla'),
+( 2, 1, FALSE, '2025-06-22 10:10:00','Merci pour votre réponse rapide.');
 
 INSERT INTO ticket (id_ticket, cout_horaire, sujet, id_categorie, id_agent, id_report) VALUES
 (1, 50.00, 'Connexion impossible', 1, 1, 1),
