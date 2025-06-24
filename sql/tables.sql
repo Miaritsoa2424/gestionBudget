@@ -92,9 +92,9 @@ CREATE TABLE categorie_ticket(
 );
 
 CREATE TABLE statut(
-   id_status INT auto_increment,
+   id_statut INT auto_increment,
    nom VARCHAR(50),
-   PRIMARY KEY(id_status)
+   PRIMARY KEY(id_statut)
 );
 
 CREATE TABLE report_client(
@@ -152,11 +152,11 @@ CREATE TABLE mvt_duree(
 
 CREATE TABLE statut_ticket(
    id_ticket INT,
-   id_status INT,
-   date_status DATE,
-   PRIMARY KEY(id_ticket, id_status),
+   id_statut INT,
+   date_statut DATE,
+   PRIMARY KEY(id_ticket, id_statut),
    FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
-   FOREIGN KEY(id_status) REFERENCES statut(id_status)
+   FOREIGN KEY(id_statut) REFERENCES statut(id_statut)
 );
 
 -- Update 23/06/2025
@@ -170,14 +170,14 @@ ALTER TABLE report_client ADD COLUMN statut INTEGER DEFAULT 0 NOT NULL;
 -- ALTER TABLE report_client DROP COLUMN status_report;
 -- ALTER TABLE report_client MODIFY COLUMN statut INTEGER DEFAULT 0 NOT NULL;
 
-ALTER TABLE ticket ADD COLUMN id_etat INTEGER DEFAULT 0 NOT NULL;
 -- ALTER TABLE ticket CHANGE COLUMN etat id_etat INTEGER DEFAULT 0 NOT NULL;
 
+ALTER TABLE ticket ADD COLUMN id_statut INTEGER DEFAULT 0 NOT NULL;
 
-ALTER TABLE ticket ADD COLUMN dateCreation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
--- ALTER TABLE report_client 
---  ADD COLUMN status_report INT DEFAULT 0;
+
+ALTER TABLE ticket ADD COLUMN date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
 
 CREATE TABLE importance(
     id_importance INT PRIMARY KEY auto_increment,
@@ -198,6 +198,21 @@ ALTER TABLE message
  ADD COLUMN contenu VARCHAR(1000);
 
 
+ALTER TABLE report_client
+ADD CONSTRAINT fk_report_statut
+FOREIGN KEY (statut) REFERENCES statut(id_statut);
+
+ALTER TABLE ticket
+ADD CONSTRAINT fk_ticket_statut
+FOREIGN KEY (id_statut) REFERENCES statut(id_statut);
+
+
+-- Modification de la colonne id_agent pour qu'elle soit NULL par défaut
+ALTER TABLE ticket 
+MODIFY COLUMN id_agent INT DEFAULT NULL;
+
+
 ALTER TABLE message
 ADD COLUMN discu_termine INT DEFAULT 0;
+
 
