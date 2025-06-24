@@ -65,6 +65,18 @@ class Agent {
         return null;
     }
 
+    public static function getByNom($nom) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT * FROM agent WHERE nom = :nom");
+        $stmt->execute([':nom' => $nom]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row) {
+            return new Agent($row['id_agent'], $row['nom'], $row['prenom'], $row['email'], $row['password']);
+        }
+        return null;
+    }
+
+
     // Update
     public function update() {
         $conn = Flight::db();
@@ -92,6 +104,24 @@ class Agent {
             $agents[] = new Agent($row['id_agent'], $row['nom'], $row['prenom']);
         }
         return $agents;
+    }
+
+    public static function getTicketsByAgent($id_agent) {
+        $db = Flight::db();
+        $sql = "
+            SELECT 
+                t.id_ticket,
+                t.sujet,
+                t.cout_horaire,
+                IFNULL(SUM(md.duree), 0) AS duree
+            FROM ticket t
+            LEFT JOIN mvt_duree md ON md.id_ticket = t.id_ticket
+            WHERE t.id_agent = :id_agent
+            GROUP BY t.id_ticket, t.sujet, t.cout_horaire
+        ";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id_agent' => $id_agent]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
 

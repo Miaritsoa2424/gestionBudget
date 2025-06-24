@@ -229,6 +229,43 @@ class TicketController {
         ];
         Flight::render('templatedev', $data);
     }
+    public function getTicketsAgent(){
+        $tickets = TicketModel::getAllTicketAgent($_SESSION['id_agent']);
+
+        $ticket2d = [];
+        foreach ($tickets as $ticket) {
+            $statutObj = Statut::getById($ticket->getIdStatut());
+            $statut = $statutObj ? $statutObj->getNom() : "";
+
+            $dureeObj = MvtDuree::getLastDureeByIdTicket($ticket->getId());
+            $duree = $dureeObj ? $dureeObj->getDuree() : "";
+
+            $prioriteObj = Importance::getImportanceByIdTicket($ticket->getId());
+            $priorite = $prioriteObj ? $prioriteObj->getNom() : "";
+
+            $ticket1D = [
+                'id' => $ticket->getId(),
+                'sujet' => $ticket->getSujet(),
+                'categorie' => CategorieTicket::getCategorieById($ticket->getIdCategorie())->getNom(),
+                'libelle' => Report::getReportById($ticket->getIdReport())->getLibelle(),
+                'client' => Client::getClientById(Report::getReportById($ticket->getIdReport())->getIdClient()),
+                'date' => $ticket->getDateCreation(),
+                'priorite' => $priorite,
+                'statut' => $statut,
+                'duree' => $duree
+            ];
+            $ticket2d[] = $ticket1D;
+        }
+
+        $data = [
+            'title' => 'Mes Tickets',
+            'page' => 'tickets-agent',
+            'tickets' => $ticket2d,
+            'categories' => CategorieTicket::getAll(),
+            'priorites' => Importance::getAll()
+        ];
+        Flight::render('template-agent', $data);
+    }
 
     public function affilierTicket($id) {
         $ticket = TicketModel::getById($id);

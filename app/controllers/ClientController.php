@@ -239,6 +239,7 @@ class ClientController {
     }
 
     public function insertClient() {
+
         // Affiche toutes les données reçues pour vérification
         $data = Flight::request()->data;
         print_r($data); // ou var_dump($data);
@@ -253,13 +254,9 @@ class ClientController {
         $client = new Client(null, $nom, $prenom, $email, $password);
         $client->save();
 
-        // Redirection vers la page de connexion ou une autre page
-        Flight::render('templatedev', [
-            'title' => 'Inscription réussie',
-            'page' => 'list-client',
-            'clients' => Client::getAll(),
-            'message' => 'Inscription réussie, vous pouvez maintenant vous connecter.'
-        ]);
+        print_r($client);
+
+        Flight::json(['success' => true, 'message' => 'Client ajouté avec succès.']);
     }
 
 }
