@@ -14,6 +14,7 @@ use app\models\CategorieTicket;
 use app\models\MvtDuree;
 use Flight;
 use app\models\Statistique;
+use app\models\StatutTicket;
 
 use app\models\Statut;
 use app\models\TicketImportance;
@@ -167,6 +168,9 @@ class TicketController {
             // Insertion dans ticket_importance
             $importance = new TicketImportance(null, $idTicket, $data['id_importance']);
             $importance->save();
+            Report::reportToLu($data['id_report']);
+
+            StatutTicket::create($idTicket,1);
     
             $donnees = [
                 'title' => 'Détail du Report',
