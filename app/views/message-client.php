@@ -350,39 +350,47 @@
       });
   }
 
-  function sendRatingMessage() {
-      const idAgent = <?= $agent ? $agent->getIdAgent() : 0 ?>;
-      const formData = new FormData();
-      formData.append('id_agent', idAgent);
-
-      fetch('end-discussion-client', {
-          method: 'POST',
-          body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-          if(data.success) {
-              alert('Discussion terminée !');
-              document.querySelector('.chat-box textarea').disabled = true;
-              disableForwardButtons();
-          } else {
-              alert('Erreur lors de la terminaison de la discussion.');
-          }
-      })
-      .catch(() => {
-          alert('Erreur lors de la terminaison de la discussion.');
-      });
-  }
-
-  messageInput.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
+function submitRating() {
+    const stars = document.querySelectorAll('.rating-stars-input i.active').length;
+    const comment = document.getElementById('ratingCommentInput').value.trim();
+    if (stars === 0) {
+        alert('Merci de donner une note.');
+        return;
     }
-  });
+    const idAgent = <?= $agent ? $agent->getIdAgent() : 0 ?>;
+    // Envoie la note et le commentaire au backend
+    fetch('submit-rating', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id_agent: idAgent,
+            note: stars,
+            commentaire: comment
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            alert('Merci pour votre retour !');
+            document.getElementById('ratingFormContainer').style.display = 'none';
+        } else {
+            alert('Erreur lors de l\'envoi de la note.');
+        }
+    })
+    .catch(() => alert('Erreur lors de l\'envoi de la note.'));
+}
 
   messageInput.addEventListener('input', function () {
     this.style.height = 'auto';
     this.style.height = this.scrollHeight + 'px';
   });
+
+  document.querySelectorAll('.rating-stars-input i').forEach(star => {
+    star.addEventListener('click', function() {
+        const rating = parseInt(this.getAttribute('data-rating'));
+        document.querySelectorAll('.rating-stars-input i').forEach((s, idx) => {
+            s.classList.toggle('active', idx < rating);
+        });
+    });
+});
 </script>

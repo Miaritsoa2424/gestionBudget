@@ -142,6 +142,7 @@ $ReportController = new ReportController();
 $router->post('/submit-report', [$ReportController, 'insertReport']);
 $router->get('/affilierTicket/@id', [$ticketController, 'affilierTicket']);
 $router->post('/doAffiliation', [$ticketController, 'doAffiliation']);
+$router->post('/submit-rating', [$ReportController, 'submitRating']);
 
 
 

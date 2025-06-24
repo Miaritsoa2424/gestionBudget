@@ -15,7 +15,7 @@ class AgentController {
 
     public function deconnexion() {
         session_destroy();
-        Flight::redirect('login');
+        Flight::redirect('agent');
     }
 
     // public function listMessages() {
@@ -95,7 +95,7 @@ class AgentController {
 
         // Tu peux charger ici les infos du client, les messages, etc.
         $client = Client::getById($id_client);
-        $messages = Message::getMessageByAgentClient($_SESSION['id_agent'], $id_client, 1);
+        $messages = Message::getMessageByAgentClient($_SESSION['id_agent'], $id_client);
         // $messages = Message::getMessageByAgentClient(1, $id_client);
 
         Flight::render('template-agent', [

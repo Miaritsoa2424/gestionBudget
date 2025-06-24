@@ -59,13 +59,13 @@ class Message {
         $sql = "SELECT * FROM message
                 WHERE (id_envoyeur = :p1 AND id_receveur = :p2)
                 OR (id_envoyeur = :p2 AND id_receveur = :p1)
-                AND client_agent = :client_agent
+                -- AND client_agent = :client_agent
                 ORDER BY date_heure ASC";
         $stmt = $db->prepare($sql);
         $stmt->execute([
             ':p1' => $id_personne1,
-            ':p2' => $id_personne2,
-            ':client_agent' => $client_agent
+            ':p2' => $id_personne2
+            // ':client_agent' => $client_agent
         ]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
