@@ -31,12 +31,12 @@
                     <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="sub-menu">
-                    <a href="ticket"><i class="fas fa-file"></i>Liste Ticket </a>
+                    <a href="<?= Flight::get('flight.base_url') ?>/ticket"><i class="fas fa-file"></i>Liste Ticket </a>
                     <a><i class="fas fa-file-medical"></i> Ticket urgent</a>
                 </div>
             </div>
             <div class="nav-item">
-                <a href="list-">
+                <a href="<?= Flight::get('flight.base_url') ?>/list-messages">
                     <i class="fa fa-message"></i> Discussions
                 </a>
             </div>

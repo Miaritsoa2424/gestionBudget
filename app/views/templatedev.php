@@ -29,8 +29,7 @@
                     <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="sub-menu">
-                    <a href="ticket"><i class="fas fa-file"></i>Liste Ticket </a>
-                    <a><i class="fas fa-file-medical"></i> Ticket urgent</a>
+                    <a href="<?= Flight::get('flight.base_url') ?>/ticket"><i class="fas fa-list"></i>Liste Ticket </a>
                 </div>
             </div>
             <div class="nav-item">
@@ -39,12 +38,15 @@
                     <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="sub-menu">
-                    <a href="list-client"><i class="fas fa-list"></i> Liste des Clients</a>
+                    <a href="<?= Flight::get('flight.base_url') ?>/list-client"><i class="fas fa-list"></i> Liste des Clients</a>
                 </div>
             </div>
             
-            <a href="stat-admin">
+            <a href="<?= Flight::get('flight.base_url') ?>/stat-admin">
                 <i class="fas fa-chart-pie"></i> Statistiques
+            </a>
+            <a href="<?= Flight::get('flight.base_url') ?>/stat-admin">
+                <i class="fas fa-sign-out-alt"></i> Deconnexion
             </a>
         </div>
 
