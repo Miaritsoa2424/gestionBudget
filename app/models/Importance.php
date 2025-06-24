@@ -60,4 +60,5 @@ class Importance {
         $row = $stmt->fetch();
         return $row ? new Importance($row['nom'], $row['idImportance']) : null;
     }
+    
 }

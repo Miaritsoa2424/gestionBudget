@@ -8,35 +8,17 @@ use app\models\Demande;
 use app\models\Departement;
 use app\models\TypeDemande;
 use app\models\Ticket;
+use app\models\Report;
 use app\models\Agent;
-
+use app\models\CategorieTicket;
+use app\models\MvtDuree;
 use Flight;
 use app\models\Statistique;
+use app\models\TicketModel;
 
 class TicketController {
     public function getTemplateTicket() {
         Flight::render('template', ['page' => 'templateTicket']);
-    }
-
-    public function getAllTickets() {
-        $ticketModel = new Ticket();
-        $tickets = $ticketModel->getAllTickets();
-        $clients = $ticketModel->getAllClients();
-        $types = $ticketModel->getAllTypes();
-        $importances = $ticketModel->getAllImportances();
-        $depts = $ticketModel->getAllDepts();
-        $etats = $ticketModel->getAllEtats();
-
-        Flight::render('template', [
-            'page' => 'templateTicket',
-            'pageContent' => 'ticketAdmin',
-            'tickets' => $tickets,
-            'clients' => $clients,
-            'types' => $types,
-            'importances' => $importances,
-            'depts' => $depts,
-            'etats' => $etats
-        ]);
     }
 
     public function getAllTicketsByIdDept() {
@@ -187,46 +169,30 @@ class TicketController {
       
     //////////////Controller pour les tickets des clients vaovao
     public function getTickets(){
+        $tickets = TicketModel::getAll();
+
+        $ticket2d = [];
+        foreach ($tickets as $ticket) {
+            $ticket = [
+                'id' => $ticket->getId(),
+                'sujet' => $ticket->getSujet(),
+                'categorie' => $ticket->getIdCategorie(),
+                'libelle' => Report::getReportById($ticket->getIdReport())->getLibelle(),
+                'client' => Client::getClientById(Report::getReportById($ticket->getIdReport())->getIdClient()),
+                'date' => $ticket->getDateCreation(),
+                'priorite' => "haute", // Assuming a static value for priority
+                'etat' => Etat::findById($ticket->getIdEtat())->getNom(),
+                'duree' => MvtDuree::getDureeByIdTicket($ticket->getId())['duree'] ?? '0'
+            ];
+            $ticket2d[] = $ticket;
+        }
+
         $data = [
             'title' => 'Liste des Tickets',
             'page' => 'affiliation-agent',
-            'tickets' => [
-                [
-                    'id' => 1,
-                    'sujet' => 'Problème de connexion',
-                    'categorie' => 'Technique',
-                    'libelle' => 'Impossible de se connecter depuis ce matin. Message d\'erreur 404 persistant.',
-                    'client' => 'Jean Dupont',
-                    'date' => '2024-01-15',
-                    'priorite' => 'haute',
-                    'etat' => 'en cours',
-                    'duree' => '2'
-                ],
-                [
-                    'id' => 2,
-                    'sujet' => 'Facturation incorrecte',
-                    'categorie' => 'Facturation',
-                    'libelle' => 'Le montant de la facture n°F2024-001 ne correspond pas au devis initial.',
-                    'client' => 'Marie Martin',
-                    'date' => '2024-01-14',
-                    'priorite' => 'moyenne',
-                    'etat' => 'en cours',
-                    'duree' => '3'
-                ],
-                [
-                    'id' => 3,
-                    'sujet' => 'Demande de devis',
-                    'categorie' => 'Commercial',
-                    'libelle' => 'Besoin d\'un devis pour l\'installation de 5 nouveaux postes.',
-                    'client' => 'Pierre Durant',
-                    'date' => '2024-01-13',
-                    'priorite' => 'basse',
-                    'etat' => 'en cours',
-                    'duree' => '2'
-                ]]
+            'tickets' => $ticket2d,
+            'categories' => CategorieTicket::getAll(),
         ];
         Flight::render('templatedev', $data);
-    
-
     }
 }
