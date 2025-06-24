@@ -7,6 +7,24 @@ use Flight;
 
 class StatistiqueController {
 
+    public function dashboard() {
+        $stat = new Statistique(Flight::db());
+
+        $topClients = $stat->getTopClientsByTickets();
+        $satisfactionByAgent = $stat->getSatisfactionByAgent();
+        $timeByCategory = $stat->getTimeByCategory();
+        $budget = $stat->getBudgetPrevisionnel();
+
+        Flight::render('templatedev', [
+            'title' => 'Statistiques Administrateur',
+            'page' => 'stat-admin',
+            'topClients' => $topClients,
+            'satisfactionByAgent' => $satisfactionByAgent,
+            'timeByCategory' => $timeByCategory,
+            'budget' => $budget
+        ]);
+    }
+
     public static function showDashboard() {
         $statistiqueModel = new Statistique(Flight::db());
         // Récupération de l'année (paramètre optionnel)
