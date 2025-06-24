@@ -46,6 +46,7 @@ class ReportController {
 
         // Création de l'objet Report
         $report = new Report(
+            null, // id
             $description,
             $piece_jointe,
             date('Y-m-d H:i:s'),
