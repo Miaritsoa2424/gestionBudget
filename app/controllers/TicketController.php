@@ -332,7 +332,7 @@ class TicketController {
                 'agents' => Agent::getAgentDispo(),
                 'errorMessage' => 'Erreur lors de l\'affiliation du ticket.'
             ];
-            Flight::render('templatedev', $dataRender);
+            Flight::render('templatedev', $dataRender);}}
 
     public function updateTicketDuration() {
         $data = Flight::request()->data;

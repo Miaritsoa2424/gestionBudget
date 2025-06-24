@@ -343,67 +343,52 @@ function setupSortHandlers() {
 // Modal pour modification de durée
 let currentTicketId = null;
 
-
 function openModal(ticketId) {
+    if (!ticketId) return;
+    
     currentTicketId = ticketId;
     const modal = document.getElementById('modifyModal');
     const row = document.querySelector(`tr[data-ticket-id="${ticketId}"]`);
     
-    if (row) {
-        const durationCell = row.children[7]; // Colonne durée
-        const currentDuration = durationCell ? durationCell.textContent.trim().split(' ')[0] : '0';
-        document.getElementById('currentDuration').textContent = currentDuration;
-        document.getElementById('duration').value = currentDuration;
+    if (!row) return;
+    
+    const currentDuration = row.querySelector('td:nth-child(8)').textContent.trim().split(' ')[0];
+    
+    // Mettre à jour l'ID du ticket dans le formulaire
+    document.getElementById('id_ticket').value = ticketId;
+    document.getElementById('ticketIdDisplay').textContent = '#' + ticketId;
+    document.getElementById('currentDuration').textContent = currentDuration;
+    document.getElementById('duree').value = currentDuration;
+    
+    modal.style.display = 'block';
+}
 
-    function validateForm() {
-        const ticketId = document.getElementById('id_ticket').value;
-        const duree = document.getElementById('duree').value;
-        
-        if (!ticketId || !duree) {
-            alert('Le ID du ticket et la durée sont obligatoires');
-            return false;
-        }
-        return true;
+function validateForm() {
+    const ticketId = document.getElementById('id_ticket').value;
+    const duree = document.getElementById('duree').value;
+    
+    if (!ticketId || !duree) {
+        alert('Le ID du ticket et la durée sont obligatoires');
+        return false;
     }
-
-    function openModal(ticketId) {
-        if (!ticketId) return;
-        
-        const modal = document.getElementById('modifyModal');
-        const row = document.querySelector(`tr[data-ticket-id="${ticketId}"]`);
-        if (!row) return;
-        
-        const currentDuration = row.querySelector('td:nth-child(8)').textContent.trim().split(' ')[0];
-        
-        // Mettre à jour l'ID du ticket dans le formulaire
-        document.getElementById('id_ticket').value = ticketId;
-        document.getElementById('ticketIdDisplay').textContent = '#' + ticketId;
-        document.getElementById('currentDuration').textContent = currentDuration;
-        document.getElementById('duree').value = currentDuration;
-        
-
-        modal.style.display = 'block';
-    }
+    return true;
 }
 
 function saveDuration() {
-    const duration = document.getElementById('duration').value;
-    if (duration && currentTicketId) {
-        // Mettre à jour l'affichage dans le tableau
+    const duree = document.getElementById('duree').value;
+    if (duree && currentTicketId) {
         const row = document.querySelector(`tr[data-ticket-id="${currentTicketId}"]`);
         if (row) {
             const durationCell = row.children[7];
             if (durationCell) {
-                durationCell.textContent = `${duration} h`;
+                durationCell.textContent = `${duree} h`;
             }
         }
         
-        // Ici vous pouvez ajouter l'appel AJAX pour sauvegarder en base
-        console.log(`Ticket ${currentTicketId}: ${duration} heures`);
+        console.log(`Ticket ${currentTicketId}: ${duree} heures`);
         
-        // Fermer la modal
         document.getElementById('modifyModal').style.display = 'none';
-        document.getElementById('duration').value = '';
+        document.getElementById('duree').value = '';
         currentTicketId = null;
     } else {
         alert('Veuillez saisir une durée valide');
@@ -447,7 +432,6 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.style.display = 'none';
         }
     });
-
     
     // Configuration des boutons de sauvegarde
     const saveBtn = document.querySelector('.btn-save');
@@ -463,10 +447,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 saveDuration();
             }
         });
-
-    function affilierTicket(ticketId) {
-        window.location.href = `affilierTicket/${ticketId}`;
-
     }
     
     console.log('Système de filtrage des tickets initialisé');
