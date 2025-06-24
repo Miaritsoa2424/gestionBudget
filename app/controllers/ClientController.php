@@ -239,6 +239,7 @@ class ClientController {
     }
 
     public function insertClient() {
+
         // Affiche toutes les données reçues pour vérification
         $data = Flight::request()->data;
         print_r($data); // ou var_dump($data);
@@ -268,6 +269,7 @@ class ClientController {
         print_r($client);
 
         Flight::json(['success' => true, 'message' => 'Client ajouté avec succès.']);
+
     }
 
 }

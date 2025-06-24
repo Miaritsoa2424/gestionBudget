@@ -27,7 +27,7 @@
                         <td><?= htmlspecialchars($agent->getNom()) ?></td>
                         <td><?= htmlspecialchars($agent->getEmail()) ?></td>
                         <td>
-                            <a href="fiche-paie/id_agent=<?= $agent->getIdAgent() ?>" class="btn btn-info">Voir fiche de paie</a>
+                            <a href="fiche-paie/<?= $agent->getIdAgent() ?>" class="btn btn-info">Voir fiche de paie</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

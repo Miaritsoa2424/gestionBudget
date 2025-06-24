@@ -109,14 +109,20 @@ $router->get('/welcome', [$welcomeController, 'home']);
 
 $AgentController = new AgentController();
 $router->get('/logout-agent', [$AgentController, 'deconnexion']);
+$router->get('/agent', [$AgentController, 'formLoginAgent']);
+$router->post('/agent-login', [$AgentController, 'loginAgent']);
+$router->get('/fiche-paie/@id', [$AgentController, 'fichePaie']);
+    
 
 $ClientController = new ClientController();
 $router->get('/logout-client', [$ClientController, 'deconnexion']);
 $router->get('/list-client', [$ClientController, 'listClientFront']);
 $router->get('/client', [$ClientController, 'getFormulaireLoginClient']);
 $router->post('/client-login', [$ClientController, 'loginClient']);
+
 $router->post('/ajouterClient', [$ClientController, 'insertClient']);
 $router->get('/info-ticket/@id', [$welcomeController, 'getInfoTicket']);
+$router->post('/add-client', [$ClientController, 'insertClient']);
 
 $router->get('/detail-client/@id', [$ClientController, 'clientDetail']);
 $router->get('/detail-report/@id', [$ClientController, 'clientReportDetail']);
@@ -139,13 +145,15 @@ $router->post('/doAffiliation', [$ticketController, 'doAffiliation']);
 
 
 
+
 $router->get('/homeClient', [$welcomeController, 'homeClient']);
 $router->get('/listMessagesClient', [$ClientController, 'listMessagesClient']);
 $router->get('/messageClient/@id', [$ClientController, 'messageClient']);
 
 $router->get('/stat-admin', [$StatController, 'dashboard']);
-$router->get('/list-agents', [$welcomeController, 'listAgents']);
-$router->get('/fiche-paie/@id_agent', [$welcomeController, 'fichePaie']);
+$router->get('/list-agents', [$AgentController, 'listAgents']);
+
+$router->get('/list-ticket-agent', [$ticketController, 'getTicketsAgent']);
 
 
 
