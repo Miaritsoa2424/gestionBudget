@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/templateClient.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/report-client.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/list-messages.css">
 
 </head>
 <body>
@@ -16,9 +17,9 @@
             <span>Support Client</span>
         </div>
         <ul class="nav-links" >
-            <li><a href="<?= Flight::get('flight.base_url') ?>/client/home"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="homeClient"><i class="fas fa-home"></i> Accueil</a></li>
             <li class="active"><a href="report-client"><i class="fas fa-file-alt "></i> Rapport</a></li>
-            <li><a href="<?= Flight::get('flight.base_url') ?>/client/chat"><i class="fas fa-comments"></i> Discussion</a></li>
+            <li><a href="listMessagesClient"><i class="fas fa-comments"></i> Discussion</a></li>
             <li>
                 <a href="<?= Flight::get('flight.base_url') ?>/client/notifications">
                     <i class="fas fa-bell"></i> Notifications

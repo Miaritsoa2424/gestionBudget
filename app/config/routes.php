@@ -116,6 +116,20 @@ $router->get('/listMessages', [$welcomeController, 'listMessages']);
 $router->get('/affilierTicket/@id', [$welcomeController, 'affilierTicket']);
 
 
+$router->get('/homeClient', [$welcomeController, 'homeClient']);
+$router->get('/listMessagesClient', [$welcomeController, 'listMessagesClient']);
+$router->get('/messageClient/@id', [$welcomeController, 'messageClient']);
+
+$router->get('/stat-admin', [$welcomeController, 'statAdmin']);
+$router->get('/list-agents', [$welcomeController, 'listAgents']);
+$router->get('/fiche-paie/@id_agent', [$welcomeController, 'fichePaie']);
+
+
+
+
+
+
+
 
 
 

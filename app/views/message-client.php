@@ -10,7 +10,7 @@
     background-color: #F0F4FA;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 85vh;
     overflow: hidden;
     }
 
@@ -181,11 +181,9 @@
   flex-direction: column;
   background-color: #e4e6eb;
   padding: 15px;
-  width: 25%;
+  width: 70%;
   border-radius: 15px;
-  margin-bottom: 15px;
-  position: absolute;
-  right: 25px;
+  margin: 15px auto;
 }
 
 .rating-stars-input {
@@ -214,6 +212,7 @@
   resize: none;
   font-family: inherit;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
 .rating-buttons {
@@ -242,18 +241,30 @@
 </style>
 
 <div class="chat-container">
-  <!-- En-tête avec bouton "Envoyer note" -->
   <div class="chat-header">
     <i class="fas fa-arrow-left back-button" onclick="history.back()"></i>
     <img src="https://i.pravatar.cc/45?img=2" alt="Destinataire">
     <div class="name">Jean Rakoto</div>
-    <button class="rate-button" onclick="showRatingForm()">
-      <i class="fas fa-star"></i> Envoyer note
-    </button>
   </div>
 
   <!-- Zone des messages -->
   <div class="chat-messages" id="chatMessages">
+    <div id="ratingFormContainer" class="rating-form" style="display: none;">
+      <div style="text-align: center; font-weight: bold; color: #13325E;">Noter la conversation</div>
+      <div class="rating-stars-input">
+        <i class="fas fa-star" data-rating="1"></i>
+        <i class="fas fa-star" data-rating="2"></i>
+        <i class="fas fa-star" data-rating="3"></i>
+        <i class="fas fa-star" data-rating="4"></i>
+        <i class="fas fa-star" data-rating="5"></i>
+      </div>
+      <textarea id="ratingCommentInput" class="rating-comment" placeholder="Laissez un commentaire..." rows="3"></textarea>
+      <div class="rating-buttons">
+        <button class="cancel" onclick="cancelRating()">Annuler</button>
+        <button class="submit" onclick="submitRating()">Envoyer</button>
+      </div>
+    </div>
+    
     <!-- L'évaluation sera affichée ici comme un message -->
     <div id="ratingMessageContainer" style="display: none;">
       <div class="user right">
@@ -270,23 +281,6 @@
   <div class="chat-box">
     <textarea id="messageInput" placeholder="Écrire un message..." rows="1"></textarea>
     <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-  </div>
-
-  <!-- Formulaire d'évaluation -->
-  <div id="ratingFormContainer" class="rating-form" style="display: none;">
-    <div style="text-align: center; font-weight: bold; color: #13325E;">Noter la conversation</div>
-    <div class="rating-stars-input">
-      <i class="fas fa-star" data-rating="1"></i>
-      <i class="fas fa-star" data-rating="2"></i>
-      <i class="fas fa-star" data-rating="3"></i>
-      <i class="fas fa-star" data-rating="4"></i>
-      <i class="fas fa-star" data-rating="5"></i>
-    </div>
-    <textarea id="ratingCommentInput" class="rating-comment" placeholder="Laissez un commentaire..." rows="3"></textarea>
-    <div class="rating-buttons">
-      <button class="cancel" onclick="cancelRating()">Annuler</button>
-      <button class="submit" onclick="submitRating()">Envoyer</button>
-    </div>
   </div>
 </div>
 
@@ -310,21 +304,20 @@
       const msgDiv = document.createElement('div');
       msgDiv.className = `user ${msg.user === 'user2' ? 'right' : ''}`;
       const messageClass = msg.isRating ? 'rating-message' : (msg.user === 'user2' ? 'right' : 'left');
-      const sendButton = msg.user === 'user1' ? 
-        `<button class="send-button" onclick="forwardMessage('${msg.text}')">
-           <i class="fas fa-share"></i>
-         </button>` : '';
       msgDiv.innerHTML = `
         <img src="${msg.avatar}" alt="${msg.user}">
         <div class="message ${messageClass}">
           ${msg.text}
-          ${sendButton}
         </div>
       `;
       chatMessages.appendChild(msgDiv);
     });
     
-    // Ajouter le formulaire ou le message d'évaluation si nécessaire
+    // Afficher aléatoirement le formulaire de notation
+    if (Math.random() < 0.3 && ratingFormContainer.style.display === 'none' && ratingMessageContainer.style.display === 'none') {
+      showRatingForm();
+    }
+    
     if (ratingMessageContainer.style.display !== 'none') {
       chatMessages.appendChild(ratingMessageContainer);
     } else if (ratingFormContainer.style.display !== 'none') {
