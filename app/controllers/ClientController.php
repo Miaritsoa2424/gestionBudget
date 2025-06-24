@@ -182,8 +182,8 @@ class ClientController {
             return;
         }
 
-        // $messages = Message::getMessageByAgentClient($_SESSION['idClient'], $id_agent, 1);
-        $messages = Message::getMessageByAgentClient(1, $id_agent);
+        $messages = Message::getMessageByAgentClient($_SESSION['id_client'], $id_agent, 1);
+        // $messages = Message::getMessageByAgentClient(1, $id_agent);
 
         $data = [
             'title' => 'Message',
