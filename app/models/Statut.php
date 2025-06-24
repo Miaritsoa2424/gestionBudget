@@ -5,21 +5,21 @@ namespace app\models;
 class Statut
 {
     private $id;
-    private $libelle;
+    private $nom;
 
-    public function __construct($id = null, $libelle = null)
+    public function __construct($id = null, $nom = null)
     {
         $this->id = $id;
-        $this->libelle = $libelle;
+        $this->nom = $nom;
     }
 
     // Getters
     public function getId() { return $this->id; }
-    public function getLibelle() { return $this->libelle; }
+    public function getNom() { return $this->nom; }
 
     // Setters
     public function setId($id) { $this->id = $id; }
-    public function setLibelle($libelle) { $this->libelle = $libelle; }
+    public function setNom($nom) { $this->nom = $nom; }
 
     // Récupérer tous les statuts
     public static function getAll()
@@ -30,7 +30,7 @@ class Statut
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $statuts[] = new Statut(
                 $row['id_statut'],
-                $row['nom'] ?? $row['libelle'] ?? null
+                $row['nom']
             );
         }
         return $statuts;
@@ -45,7 +45,7 @@ class Statut
         if ($row) {
             return new Statut(
                 $row['id_statut'],
-                $row['nom'] ?? $row['libelle'] ?? null
+                $row['nom']
             );
         }
         return null;

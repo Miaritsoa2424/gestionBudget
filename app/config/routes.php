@@ -125,7 +125,7 @@ $router->post('/send-message-client', [$ClientController, 'sendMessageClient']);
 
 $ReportController = new ReportController();
 $router->post('/submit-report', [$ReportController, 'insertReport']);
-$router->get('/affilierTicket/@id', [$ticketController, 'affilierTicket']);
+$router->get('/affilierTicket/@id', [$welcomeController, 'affilierTicket']);
 
 
 
