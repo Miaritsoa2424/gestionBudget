@@ -136,7 +136,7 @@ $router->get('/homeClient', [$welcomeController, 'homeClient']);
 $router->get('/listMessagesClient', [$ClientController, 'listMessagesClient']);
 $router->get('/messageClient/@id', [$ClientController, 'messageClient']);
 
-$router->get('/stat-admin', [$welcomeController, 'statAdmin']);
+$router->get('/stat-admin', [$StatController, 'dashboard']);
 $router->get('/list-agents', [$welcomeController, 'listAgents']);
 $router->get('/fiche-paie/@id_agent', [$welcomeController, 'fichePaie']);
 
