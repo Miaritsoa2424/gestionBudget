@@ -67,21 +67,42 @@ class Client {
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-
-
-    public function checkUser($mail,$password){
+    public static function getByNom($nom) {
         $conn = Flight::db();
-        $stmt = $conn->prepare("SELECT * FROM client WHERE email = :email AND password = :password");
-        $stmt->bindParam(':email', $mail);
-        $stmt->bindParam(':password', $password);
+        $stmt = $conn->prepare("SELECT * FROM client WHERE nom = :nom");
+        $stmt->bindParam(':nom', $nom);
         $stmt->execute();
-        
-        if ($stmt->rowCount() > 0) {
-            return true; // Login successful
-        } else {
-            return false; // Login failed
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row) {
+            return new Client(
+                $row['id_client'],
+                $row['nom'],
+                $row['prenom'],
+                $row['email'],
+                $row['password']
+            );
         }
+        return null;
     }
 
+    public static function getById($id) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT * FROM client WHERE id_client = :id");
+
+        $stmt->execute([
+            ':id' => $id
+        ]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row) {
+            return new Client(
+                $row['id_client'],
+                $row['nom'],
+                $row['prenom'],
+                $row['email'],
+                $row['password']
+            );
+        }
+        return null;
+    }
 
 }
