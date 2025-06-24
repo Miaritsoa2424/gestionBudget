@@ -22,7 +22,7 @@ class AgentController {
             
     public function listMessages() {
         // Supposons que l'id de l'agent est stocké en session
-        $id_agent = $_SESSION['id_agent'] ?? 1;
+        $id_agent = $_SESSION['id_agent'];
         if (!$id_agent) {
             Flight::redirect('login');
             return;
@@ -42,12 +42,12 @@ class AgentController {
             JOIN client c ON c.id_client = rc.id_client
             JOIN agent a ON a.id_agent = t.id_agent
             -- JOIN message m ON m.id_envoyeur = t.id_agent
-            WHERE a.id_agent = 1
+            WHERE a.id_agent = :id_agent
         ";
 
         $stmt = $db->prepare($sql);
         // $stmt->execute([':id_agent' => $id_agent]);
-        $stmt->execute();
+        $stmt->execute([':id_agent' => $id_agent]); 
         $clients = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         // Tu peux aussi récupérer le dernier message pour chaque client ici si besoin
@@ -75,8 +75,8 @@ class AgentController {
 
         if ($agent && ($mdp == $agent->getPassword())) {
             // Authentification réussie
-            $_SESSION['id_client'] = $agent->getIdAgent();
-            $_SESSION['nom_client'] = $agent->getNom();
+            $_SESSION['id_agent'] = $agent->getIdAgent();
+            $_SESSION['nom_agent'] = $agent->getNom();
 
             Flight::redirect('list-ticket-agent');
         } else {

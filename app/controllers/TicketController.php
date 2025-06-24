@@ -230,7 +230,7 @@ class TicketController {
         Flight::render('templatedev', $data);
     }
     public function getTicketsAgent(){
-        $tickets = TicketModel::getAllTicketAgent($_SESSION['id-agent']);
+        $tickets = TicketModel::getAllTicketAgent($_SESSION['id_agent']);
 
         $ticket2d = [];
         foreach ($tickets as $ticket) {
@@ -258,7 +258,7 @@ class TicketController {
         }
 
         $data = [
-            'title' => 'Liste des Tickets',
+            'title' => 'Mes Tickets',
             'page' => 'tickets-agent',
             'tickets' => $ticket2d,
             'categories' => CategorieTicket::getAll(),
