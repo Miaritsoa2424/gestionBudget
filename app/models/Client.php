@@ -60,6 +60,20 @@ class Client {
         return $list;
     }
 
+    public function saveClient()
+    {
+        $db = Flight::db();
+        $stmt = $db->prepare(
+            "INSERT INTO client (nom, prenom, email)
+            VALUES (:nom, :prenom, :email)"
+        );
+
+        return $stmt->execute([
+            ':nom'      => $this->nom,
+            ':prenom' => $this->prenom,
+            ':email'  => $this->email
+        ]);
+    }
 
     public static function getClientReportDetail($id_report) {
         $conn = Flight::db();

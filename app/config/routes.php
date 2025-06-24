@@ -113,6 +113,7 @@ $router->get('/logout-client', [$ClientController, 'deconnexion']);
 $router->get('/list-client', [$ClientController, 'listClientFront']);
 $router->get('/client', [$ClientController, 'getFormulaireLoginClient']);
 $router->post('/client-login', [$ClientController, 'loginClient']);
+$router->post('/add-client', [$ClientController, 'insertClient']);
 
 $router->get('/detail-client/@id', [$ClientController, 'clientDetail']);
 $router->get('/detail-report/@id', [$ClientController, 'clientReportDetail']);
