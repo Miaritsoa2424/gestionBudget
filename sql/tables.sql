@@ -165,15 +165,19 @@ ALTER TABLE ticket
 MODIFY COLUMN id_agent INT;
 
 
-
+-- Mbola tsy hay ny tena marina
 ALTER TABLE report_client ADD COLUMN statut INTEGER DEFAULT 0 NOT NULL;
+-- ALTER TABLE report_client DROP COLUMN status_report;
 -- ALTER TABLE report_client MODIFY COLUMN statut INTEGER DEFAULT 0 NOT NULL;
 
+-- ALTER TABLE ticket CHANGE COLUMN etat id_etat INTEGER DEFAULT 0 NOT NULL;
 
 ALTER TABLE ticket ADD COLUMN id_statut INTEGER DEFAULT 0 NOT NULL;
 
 
+
 ALTER TABLE ticket ADD COLUMN date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
 
 CREATE TABLE importance(
     id_importance INT PRIMARY KEY auto_increment,
@@ -193,6 +197,7 @@ CREATE TABLE ticket_importance(
 ALTER TABLE message 
  ADD COLUMN contenu VARCHAR(1000);
 
+
 ALTER TABLE report_client
 ADD CONSTRAINT fk_report_statut
 FOREIGN KEY (statut) REFERENCES statut(id_statut);
@@ -205,3 +210,9 @@ FOREIGN KEY (id_statut) REFERENCES statut(id_statut);
 -- Modification de la colonne id_agent pour qu'elle soit NULL par défaut
 ALTER TABLE ticket 
 MODIFY COLUMN id_agent INT DEFAULT NULL;
+
+
+ALTER TABLE message
+ADD COLUMN discu_termine INT DEFAULT 0;
+
+

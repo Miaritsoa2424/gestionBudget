@@ -54,10 +54,12 @@ class Message {
         $this->date_heure = $date_heure;
     }
 
-    public static function getMessageByAgentClient($id_personne1, $id_personne2, $client_agent) {
+    public static function getMessageByAgentClient($id_personne1, $id_personne2, $client_agent = null) {
         $db = \Flight::db(); 
         $sql = "SELECT * FROM message
-                WHERE id_envoyeur = :p1 AND id_receveur = :p2 AND client_agent = :client_agent
+                WHERE (id_envoyeur = :p1 AND id_receveur = :p2)
+                OR (id_envoyeur = :p2 AND id_receveur = :p1)
+                AND client_agent = :client_agent
                 ORDER BY date_heure ASC";
         $stmt = $db->prepare($sql);
         $stmt->execute([

@@ -201,10 +201,12 @@ INSERT INTO agent (id_agent, nom, prenom, email, password) VALUES
 (1, 'Durand', 'Paul', 'paul.durand@email.com', 'agent123'),
 (2, 'Leroy', 'Sophie', 'sophie.leroy@email.com', 'agent456');
 
+
 -- REPORTS (avec colonne statut)
 INSERT INTO report_client (id_report, libelle, piece_jointe, date_report, note, date_note, commentaire, id_client, statut) VALUES
 (1, 'Problème de connexion', 'screenshot1.png', '2025-06-22 10:00:00', 4, '2025-06-22', 'Connexion impossible ce matin.', 1, 1),
 (2, 'Demande de devis', NULL, '2025-06-21 09:30:00', 5, '2025-06-21', 'Merci pour la rapidité.', 2, 2);
+
 
 -- TICKETS (avec id_statut et date_creation)
 INSERT INTO ticket (id_ticket, cout_horaire, sujet, id_categorie, id_agent, id_report, id_statut, date_creation) VALUES
@@ -223,11 +225,6 @@ INSERT INTO statut_ticket (id_ticket, id_statut, date_statut) VALUES
 (2, 1, '2025-06-21'),
 (2, 3, '2025-06-22');
 
--- IMPORTANCE
-INSERT INTO importance (id_importance, libelle) VALUES
-(1, 'Haute'),
-(2, 'Moyenne'),
-(3, 'Basse');
 
 -- TICKET_IMPORTANCE
 INSERT INTO ticket_importance (id, id_ticket, id_importance) VALUES
@@ -238,4 +235,13 @@ INSERT INTO ticket_importance (id, id_ticket, id_importance) VALUES
 INSERT INTO message (id_message, id_envoyeur, id_receveur, client_agent, date_heure, contenu) VALUES
 (1, 1, 1, TRUE, '2025-06-22 10:05:00', 'Bonjour, j-ai un problème de connexion.'),
 (2, 2, 1, FALSE, '2025-06-22 10:10:00', 'Merci pour votre retour rapide.');
+
+INSERT INTO importance (libelle) VALUES 
+('Très faible'),
+('Faible'),
+('Moyenne'),
+('Élevée'),
+('Critique');
+
+
 

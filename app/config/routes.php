@@ -116,10 +116,12 @@ $router->get('/home', [$ClientController, 'getHomeCLient']);
 $router->post('/client-login', [$ClientController, 'clientLogin']);
 
 $router->get('/message', [$AgentController, 'message']);
-$router->get('/agent', [$welcomeController, 'message']);
+$router->get('/messageClient', [$ClientController, 'messageClient']);
 
 $router->get('/listMessages', [$AgentController, 'listMessages']);
-
+$router->post('/send-message', [$AgentController, 'sendMessage']);
+$router->post('/end-discussion', [$AgentController, 'endDiscussion']);
+$router->post('/send-message-client', [$ClientController, 'sendMessageClient']);
 
 $ReportController = new ReportController();
 $router->post('/submit-report', [$ReportController, 'insertReport']);
@@ -128,8 +130,8 @@ $router->get('/affilierTicket/@id', [$welcomeController, 'affilierTicket']);
 
 
 $router->get('/homeClient', [$welcomeController, 'homeClient']);
-$router->get('/listMessagesClient', [$welcomeController, 'listMessagesClient']);
-$router->get('/messageClient/@id', [$welcomeController, 'messageClient']);
+$router->get('/listMessagesClient', [$ClientController, 'listMessagesClient']);
+$router->get('/messageClient/@id', [$ClientController, 'messageClient']);
 
 $router->get('/stat-admin', [$welcomeController, 'statAdmin']);
 $router->get('/list-agents', [$welcomeController, 'listAgents']);

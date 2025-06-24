@@ -243,41 +243,44 @@
 <div class="chat-container">
   <div class="chat-header">
     <i class="fas fa-arrow-left back-button" onclick="history.back()"></i>
-    <img src="https://i.pravatar.cc/45?img=2" alt="Destinataire">
-    <div class="name">Jean Rakoto</div>
+    <img src="https://i.pravatar.cc/45?u=<?= $agent ? $agent->getIdAgent() : 0 ?>" alt="Destinataire">
+    <div class="name"><?= $agent ? htmlspecialchars($agent->getNom() . ' ' . $agent->getPrenom()) : '' ?></div>
+    <!-- <button class="rate-button" onclick="sendRatingMessage()">
+      <i class="fas fa-star"></i> Envoyer note
+    </button> -->
   </div>
-
-  <!-- Zone des messages -->
   <div class="chat-messages" id="chatMessages">
-    <div id="ratingFormContainer" class="rating-form" style="display: none;">
-      <div style="text-align: center; font-weight: bold; color: #13325E;">Noter la conversation</div>
-      <div class="rating-stars-input">
-        <i class="fas fa-star" data-rating="1"></i>
-        <i class="fas fa-star" data-rating="2"></i>
-        <i class="fas fa-star" data-rating="3"></i>
-        <i class="fas fa-star" data-rating="4"></i>
-        <i class="fas fa-star" data-rating="5"></i>
-      </div>
-      <textarea id="ratingCommentInput" class="rating-comment" placeholder="Laissez un commentaire..." rows="3"></textarea>
-      <div class="rating-buttons">
-        <button class="cancel" onclick="cancelRating()">Annuler</button>
-        <button class="submit" onclick="submitRating()">Envoyer</button>
-      </div>
-    </div>
-    
-    <!-- L'évaluation sera affichée ici comme un message -->
-    <div id="ratingMessageContainer" style="display: none;">
-      <div class="user right">
-        <img src="https://i.pravatar.cc/45?img=2" alt="Vous">
-        <div class="message rating-message">
-          <div id="ratingStarsDisplay" class="rating-stars"></div>
-          <div id="ratingCommentDisplay"></div>
+    <?php if (!empty($messages)): ?>
+      <?php foreach ($messages as $msg): ?>
+        <?php
+          $isClient = ($msg['client_agent'] == 0); // 0 = client, 1 = agent
+          $avatar = $isClient
+            ? 'https://i.pravatar.cc/45?img=2'
+            : 'https://i.pravatar.cc/45?u=' . ($agent ? $agent->getIdAgent() : 0);
+          $showForward = !$isClient;
+        ?>
+        <div class="user <?= $isClient ? 'right' : 'left' ?>">
+          <img src="<?= $avatar ?>" alt="">
+          <div class="message">
+            <?= htmlspecialchars($msg['contenu'] ?? '') ?>
+            <?php if ($showForward): ?>
+              <!-- <button class="send-button" onclick="forwardMessage('<?= htmlspecialchars(addslashes($msg['contenu'] ?? '')) ?>')">
+                <i class="fas fa-share"></i>
+              </button> -->
+            <?php endif; ?>
+          </div>
         </div>
-      </div>
-    </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <div style="text-align:center;color:#888;">Aucun message pour cette conversation.</div>
+    <?php endif; ?>
   </div>
 
-  <!-- Zone de saisie -->
+    <form id="sendMessageForm" style="display:none;">
+        <input type="hidden" name="id_client" value="<?= $agent ? $agent->getIdAgent() : 0 ?>">
+        <input type="hidden" name="contenu" id="hiddenContenu">
+    </form>
+
   <div class="chat-box">
     <textarea id="messageInput" placeholder="Écrire un message..." rows="1"></textarea>
     <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
@@ -285,67 +288,82 @@
 </div>
 
 <script>
-  const messages = [
-    { user: 'user1', text: 'Salut, tu es dispo ce soir ?', avatar: 'https://i.pravatar.cc/45?img=1' },
-    { user: 'user2', text: 'Oui, je finis à 19h 😊', avatar: 'https://i.pravatar.cc/45?img=2' }
-  ];
-
   const chatMessages = document.getElementById('chatMessages');
   const messageInput = document.getElementById('messageInput');
-  const ratingFormContainer = document.getElementById('ratingFormContainer');
-  const ratingMessageContainer = document.getElementById('ratingMessageContainer');
-  const ratingStarsDisplay = document.getElementById('ratingStarsDisplay');
-  const ratingCommentDisplay = document.getElementById('ratingCommentDisplay');
-  let currentRating = 0;
-
-  function renderMessages() {
-    chatMessages.innerHTML = '';
-    messages.forEach(msg => {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `user ${msg.user === 'user2' ? 'right' : ''}`;
-      const messageClass = msg.isRating ? 'rating-message' : (msg.user === 'user2' ? 'right' : 'left');
-      msgDiv.innerHTML = `
-        <img src="${msg.avatar}" alt="${msg.user}">
-        <div class="message ${messageClass}">
-          ${msg.text}
-        </div>
-      `;
-      chatMessages.appendChild(msgDiv);
-    });
-    
-    // Afficher aléatoirement le formulaire de notation
-    if (Math.random() < 0.3 && ratingFormContainer.style.display === 'none' && ratingMessageContainer.style.display === 'none') {
-      showRatingForm();
-    }
-    
-    if (ratingMessageContainer.style.display !== 'none') {
-      chatMessages.appendChild(ratingMessageContainer);
-    } else if (ratingFormContainer.style.display !== 'none') {
-      chatMessages.appendChild(ratingFormContainer);
-    }
-    
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
 
   function sendMessage() {
     const text = messageInput.value.trim();
-    if (text !== '') {
-      messages.push({
-        user: 'user2',
-        text: text,
-        avatar: 'https://i.pravatar.cc/45?img=2'
+    if (text === '') return;
+
+    const formData = new FormData();
+    formData.append('id_agent', <?= $agent ? $agent->getIdAgent() : 0 ?>);
+    formData.append('contenu', text);
+
+    fetch('send-message-client', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'user right';
+            msgDiv.innerHTML = `
+                <img src="https://i.pravatar.cc/45?img=2" alt="">
+                <div class="message">${escapeHtml(text)}</div>
+            `;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+        } else {
+            
+            alert('Erreur lors de l\'envoi du message.');
+        }
+    })
+    .catch(() => {
+        alert('Erreur lors de l\'envoi du message.');
+    });
+  }
+
+  function escapeHtml(text) {
+      var div = document.createElement('div');
+      div.innerText = text;
+      return div.innerHTML;
+  }
+
+  function disableForwardButtons() {
+      document.querySelectorAll('.send-button').forEach(btn => {
+          btn.disabled = true;
+          btn.classList.add('disabled');
+          btn.title = "Discussion terminée";
       });
-      messageInput.value = '';
-      renderMessages();
-      messageInput.style.height = 'auto';
-    }
   }
 
-  function forwardMessage(text) {
-    alert('Message transféré: ' + text);
+  function sendRatingMessage() {
+      const idAgent = <?= $agent ? $agent->getIdAgent() : 0 ?>;
+      const formData = new FormData();
+      formData.append('id_agent', idAgent);
+
+      fetch('end-discussion-client', {
+          method: 'POST',
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          if(data.success) {
+              alert('Discussion terminée !');
+              document.querySelector('.chat-box textarea').disabled = true;
+              disableForwardButtons();
+          } else {
+              alert('Erreur lors de la terminaison de la discussion.');
+          }
+      })
+      .catch(() => {
+          alert('Erreur lors de la terminaison de la discussion.');
+      });
   }
 
-  // Entrée pour envoyer
   messageInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -353,73 +371,8 @@
     }
   });
 
-  // Auto-ajustement de la hauteur du textarea
   messageInput.addEventListener('input', function () {
     this.style.height = 'auto';
     this.style.height = this.scrollHeight + 'px';
   });
-
-//   Gestion de l'évaluation
-  function showRatingForm() {
-    ratingFormContainer.style.display = 'block';
-    ratingMessageContainer.style.display = 'none';
-    renderMessages();
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  function cancelRating() {
-    ratingFormContainer.style.display = 'none';
-    renderMessages();
-  }
-
-  function submitRating() {
-    const comment = document.getElementById('ratingCommentInput').value;
-    
-    if (currentRating === 0) {
-      alert('Veuillez sélectionner une note');
-      return;
-    }
-
-    // Afficher l'évaluation comme un message
-    ratingStarsDisplay.innerHTML = '★'.repeat(currentRating) + '☆'.repeat(5 - currentRating);
-    ratingCommentDisplay.textContent = comment || 'Aucun commentaire';
-    
-    ratingFormContainer.style.display = 'none';
-    ratingMessageContainer.style.display = 'block';
-    
-    renderMessages();
-    
-    // Réinitialiser le formulaire
-    document.getElementById('ratingCommentInput').value = '';
-    currentRating = 0;
-    updateStarRating();
-    
-    // Faire défiler vers le bas pour voir le message d'évaluation
-    setTimeout(() => {
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }, 100);
-  }
-
-  // Gestion des étoiles
-  document.querySelectorAll('.rating-stars-input i').forEach(star => {
-    star.addEventListener('click', function() {
-      currentRating = parseInt(this.getAttribute('data-rating'));
-      updateStarRating();
-    });
-  });
-
-  function updateStarRating() {
-    const stars = document.querySelectorAll('.rating-stars-input i');
-    stars.forEach(star => {
-      const starValue = parseInt(star.getAttribute('data-rating'));
-      if (starValue <= currentRating) {
-        star.classList.add('active');
-      } else {
-        star.classList.remove('active');
-      }
-    });
-  }
-
-  // Initialisation
-  renderMessages();
 </script>

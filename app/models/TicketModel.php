@@ -105,6 +105,7 @@ class TicketModel
                 $row['id_report'],
                 $row['date_creation'],
                 $row['id_statut']
+
             );
         }
         return $list;
