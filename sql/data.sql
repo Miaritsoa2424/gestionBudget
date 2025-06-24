@@ -236,13 +236,7 @@ INSERT INTO report_client (id_report, libelle, piece_jointe, date_report, note, 
 -- (1, 1, 1, TRUE, '2025-06-22 10:05:00', 'Bonjour, j-ai un problème de connexion.'),
 -- (2, 2, 1, FALSE, '2025-06-22 10:10:00', 'Merci pour votre retour rapide.');
 
-INSERT INTO importance (libelle) VALUES 
-('Très faible'),
-('Faible'),
-('Moyenne'),
-('Élevée'),
-('Critique');
-
+º
 
 select*from ticket;
 
