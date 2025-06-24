@@ -100,6 +100,8 @@ $router->get('/ticketStats/data', [$ticketController, 'getData']);
 $ticketController = new TicketController();
 $router->get('/ticket', [$ticketController, 'getTickets']);
 $router->get('/admin', [$ticketController, 'getTickets']);
+$router->post('/updateDureeTicket', [$ticketController, 'updateTicketDuration']);
+
 
 
 $welcomeController = new WelcomeController();
@@ -131,7 +133,8 @@ $router->post('/send-message-client', [$ClientController, 'sendMessageClient']);
 
 $ReportController = new ReportController();
 $router->post('/submit-report', [$ReportController, 'insertReport']);
-$router->get('/affilierTicket/@id', [$welcomeController, 'affilierTicket']);
+$router->get('/affilierTicket/@id', [$ticketController, 'affilierTicket']);
+$router->post('/doAffiliation', [$ticketController, 'doAffiliation']);
 
 
 

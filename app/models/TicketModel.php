@@ -131,4 +131,19 @@ class TicketModel
         }
         return null;   
     }
+    
+    public function update() {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("UPDATE ticket SET cout_horaire = :cout_horaire, sujet = :sujet, id_categorie = :id_categorie, id_agent = :id_agent, id_report = :id_report, date_creation = :date_creation, id_statut = :id_statut WHERE id_ticket = :id_ticket");
+        return $stmt->execute([
+            ':cout_horaire' => $this->coutHoraire,
+            ':sujet' => $this->sujet,
+            ':id_categorie' => $this->idCategorie,
+            ':id_agent' => $this->idAgent,
+            ':id_report' => $this->idReport,
+            ':date_creation' => $this->dateCreation,
+            ':id_statut' => $this->idStatut,
+            ':id_ticket' => $this->id
+        ]);
+    }
 }

@@ -6,15 +6,17 @@
                 <div class="email-header">
                     <img src="https://i.pravatar.cc/45?img=1" alt="Client" class="sender-avatar">
                     <div class="email-meta">
-                        <p class="sender">Jean Dupont</p>
-                        <p class="date">01/01/2024</p>
+                        <p class="sender"><?= $client->getNom().' '.$client->getPrenom()?></p>
+                        <p class="date">
+                            <?= date('Y-m-d', strtotime($ticket->getDateCreation())) ?>
+                        </p>
                     </div>
                 </div>
                 <div class="email-content">
-                    <h3 class="email-subject">Problème de connexion à l'application mobile - Urgent</h3>
-                    <p class="email-category">Catégorie: Support technique</p>
+                    <h3 class="email-subject"><?= $ticket->getSujet()?></h3>
+                    <p class="email-category">Catégorie: <?= $nomCategorie?></p>
                     <div class="email-body">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        <?= $description ?>
                     </div>
                 </div>
             </div>
@@ -27,53 +29,42 @@
                 <input type="text" id="agent_search" placeholder="Rechercher un agent...">
             </div>
             <div class="agents-list">
-                <div class="agent-card" data-id="1" data-name="Marie Martin">
-                    <img src="https://i.pravatar.cc/45?img=2" class="agent-image" alt="Marie">
-                    <span class="agent-name">Marie Martin</span>
+                <?php foreach ($agents as $agent): ?>
+                <div class="agent-card" data-id="<?= $agent->getIdAgent() ?>" data-name="<?= $agent->getNom() ?>">
+                    <img src="https://i.pravatar.cc/45?img=2" class="agent-image" alt="<?= $agent->getNom() ?>">
+                    <span class="agent-name"><?= $agent->getNom(). ' ' . $agent->getPrenom() ?></span>
                 </div>
-                <div class="agent-card" data-id="2" data-name="Pierre Durant">
-                    <img src="https://i.pravatar.cc/45?img=3" class="agent-image" alt="Pierre">
-                    <span class="agent-name">Pierre Durant</span>
-                </div>
-                <div class="agent-card" data-id="3" data-name="Sophie Bernard">
-                    <img src="https://i.pravatar.cc/45?img=4" class="agent-image" alt="Sophie">
-                    <span class="agent-name">Sophie Bernard</span>
-                </div>
-                <div class="agent-card" data-id="4" data-name="Paul Dubois">
-                    <img src="https://i.pravatar.cc/45?img=5" class="agent-image" alt="Paul">
-                    <span class="agent-name">Paul Dubois</span>
-                </div>
-                <div class="agent-card" data-id="5" data-name="Julie Martin">
-                    <img src="https://i.pravatar.cc/45?img=6" class="agent-image" alt="Julie">
-                    <span class="agent-name">Julie Martin</span>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
 
-    <div class="affiliation-form">
+    <form class="affiliation-form" action="<?php echo Flight::get('flight.base_url')?>/doAffiliation" method="post">
         <div class="form-group">
             <label>Agent sélectionné</label>
-            <select id="agent_select" required>
+            <select id="agent_select" name="agent_id" required>
                 <option value="">Sélectionner un agent</option>
-                <option value="1">Marie Martin</option>
-                <option value="2">Pierre Durant</option>
-                <option value="3">Sophie Bernard</option>
+                <?php foreach ($agents as $agent): ?>
+                    <option value="<?= $agent->getIdAgent() ?>">
+                        <?= $agent->getNom() . ' ' . $agent->getPrenom() ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
         <div class="form-group">
             <label for="duree">Durée (heures)</label>
-            <input type="number" id="duree" onchange="calculateTotal()">
+            <input type="number" id="duree" name="duree" onchange="calculateTotal()" required>
         </div>
         <div class="form-group">
             <label for="cout_horaire">Coût horaire (Ar)</label>
-            <input type="number" id="cout_horaire" onchange="calculateTotal()">
+            <input type="number" id="cout_horaire" name="cout_horaire" onchange="calculateTotal()" required>
         </div>
         <div class="total-section">
             <h4>Total: <span id="total">0</span> Ar</h4>
         </div>
-        <button class="submit-btn">Affilier le ticket</button>
-    </div>
+        <input type="hidden" name="ticket_id" value="<?= $ticket->getId() ?>">
+        <button class="submit-btn" type="submit">Affilier le ticket</button>
+    </form>
 </div>
 
 
@@ -88,9 +79,28 @@ function calculateTotal() {
 document.querySelectorAll('.agent-card').forEach(card => {
     card.addEventListener('click', () => {
         const agentId = card.dataset.id;
-        const agentName = card.dataset.name;
         const select = document.getElementById('agent_select');
         select.value = agentId;
     });
 });
+
+// Recherche dynamique des agents
+document.getElementById('agent_search').addEventListener('input', function() {
+    const search = this.value.toLowerCase();
+    document.querySelectorAll('.agent-card').forEach(card => {
+        const name = card.querySelector('.agent-name').textContent.toLowerCase();
+        if (name.includes(search)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
 </script>
+
+<?php if (!empty($successMessage)): ?>
+    <div class="alert alert-success"><?= htmlspecialchars($successMessage) ?></div>
+<?php endif; ?>
+<?php if (!empty($errorMessage)): ?>
+    <div class="alert alert-danger"><?= htmlspecialchars($errorMessage) ?></div>
+<?php endif; ?>

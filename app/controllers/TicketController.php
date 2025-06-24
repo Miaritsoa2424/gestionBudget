@@ -241,11 +241,118 @@ class TicketController {
 
         $data = [
             'title' => 'Affiliation Agent',
-            'page' => 'affiliation-agent',
+            'page' => 'affiliation-ticket',
             'client' => $client,
             'ticket' => $ticket,
-            'agents' => Agent::getAll()
+            'nomCategorie' => CategorieTicket::getCategorieById($ticket->getIdCategorie())->getNom(),
+            'description' => Report::getReportById($ticket->getIdReport())->getLibelle(),
+            'categories' => CategorieTicket::getAll(),
+            'priorites' => Importance::getAll(),
+            'agents' => Agent::getAgentDispo()
         ];
         Flight::render('templatedev', $data);
+    }
+
+
+    public function doAffiliation() {
+        $data = Flight::request()->data;
+
+        // Vérification des champs requis
+        if (empty($data['agent_id']) || empty($data['duree']) || empty($data['cout_horaire'])) {
+            // Affichage du formulaire avec message d'erreur
+            $ticket = TicketModel::getById($data['ticket_id']);
+            $client = $ticket ? Client::getClientById(Report::getReportById($ticket->getIdReport())->getIdClient()) : null;
+            $dataRender = [
+                'title' => 'Affiliation Agent',
+                'page' => 'affiliation-ticket',
+                'client' => $client,
+                'ticket' => $ticket,
+                'nomCategorie' => $ticket ? CategorieTicket::getCategorieById($ticket->getIdCategorie())->getNom() : '',
+                'description' => $ticket ? Report::getReportById($ticket->getIdReport())->getLibelle() : '',
+                'categories' => CategorieTicket::getAll(),
+                'priorites' => Importance::getAll(),
+                'agents' => Agent::getAgentDispo(),
+                'errorMessage' => 'Champs requis manquants.'
+            ];
+            Flight::render('templatedev', $dataRender);
+            return;
+        }
+
+        // Récupération du ticket
+        $ticket = TicketModel::getById($data['ticket_id']);
+        if (!$ticket) {
+            $dataRender = [
+                'title' => 'Affiliation Agent',
+                'page' => 'affiliation-ticket',
+                'errorMessage' => 'Ticket non trouvé.',
+                'categories' => CategorieTicket::getAll(),
+                'priorites' => Importance::getAll(),
+                'agents' => Agent::getAgentDispo()
+            ];
+            Flight::render('templatedev', $dataRender);
+            return;
+        }
+
+        $coutHoraire = $data['cout_horaire'];
+        $ticket->setCoutHoraire($coutHoraire);
+
+        // Création du mouvement de durée
+        $mvtDuree = new MvtDuree(null, $data['duree'], date('Y-m-d H:i:s'), $ticket->getId());
+        $mvtDuree->save();
+
+        // Mise à jour du statut du ticket
+        $ticket->setIdStatut(2);
+        $ticket->setIdAgent($data['agent_id']);
+        
+        if ($ticket->update()) {
+            $ticket = TicketModel::getById($data['ticket_id']);
+            $client = Client::getClientById(Report::getReportById($ticket->getIdReport())->getIdClient());
+
+            $dataRender = [
+                'title' => 'Affiliation Agent',
+                'page' => 'affiliation-ticket',
+                'client' => $client,
+                'ticket' => $ticket,
+                'nomCategorie' => CategorieTicket::getCategorieById($ticket->getIdCategorie())->getNom(),
+                'description' => Report::getReportById($ticket->getIdReport())->getLibelle(),
+                'categories' => CategorieTicket::getAll(),
+                'priorites' => Importance::getAll(),
+                'agents' => Agent::getAgentDispo(),
+                'successMessage' => 'Ticket affilié avec succès !'
+            ];
+            Flight::render('templatedev', $dataRender);
+        } else {
+            $dataRender = [
+                'title' => 'Affiliation Agent',
+                'page' => 'affiliation-ticket',
+                'client' => $client ?? null,
+                'ticket' => $ticket ?? null,
+                'categories' => CategorieTicket::getAll(),
+                'priorites' => Importance::getAll(),
+                'agents' => Agent::getAgentDispo(),
+                'errorMessage' => 'Erreur lors de l\'affiliation du ticket.'
+            ];
+            Flight::render('templatedev', $dataRender);}}
+
+    public function updateTicketDuration() {
+        $data = Flight::request()->data;
+        $idTicket = $data['id_ticket'] ?? null;
+        $duree = $data['duree'] ?? null;
+
+        if (!$idTicket || !$duree) {
+            Flight::json(['error' => 'ID du ticket ou durée manquante.'], 400);
+            return;
+        }
+
+        $date = date('Y-m-d H:i:s'); // Date actuelle
+        $mvtDuree = new MvtDuree(null, $duree, $date, $idTicket);
+        if ($mvtDuree->save()) {
+            $_SESSION['success_message'] = 'Durée mise à jour avec succès.';
+            Flight::redirect('/admin');
+        } else {
+            $_SESSION['error_message'] = 'Erreur lors de la mise à jour de la durée.';
+            Flight::redirect('/admin');
+
+        }
     }
 }
