@@ -99,6 +99,8 @@ $router->get('/ticketStats/data', [$ticketController, 'getData']);
 // New controller de Miaritsoa
 $ticketController = new TicketController();
 $router->get('/ticket', [$ticketController, 'getTickets']);
+$router->get('/admin', [$ticketController, 'getTickets']);
+
 
 $welcomeController = new WelcomeController();
 $router->get('/welcome', [$welcomeController, 'home']);
