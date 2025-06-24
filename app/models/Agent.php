@@ -56,8 +56,8 @@ class Agent {
     // Read one
     public static function getById($id_agent) {
         $conn = Flight::db();
-        $stmt = $conn->prepare("SELECT * FROM agent WHERE id_agent = ?");
-        $stmt->execute([$id_agent]);
+        $stmt = $conn->prepare("SELECT * FROM agent WHERE id_agent = :id_agent");
+        $stmt->execute([':id_agent' => $id_agent]);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
         if ($row) {
             return new Agent($row['id_agent'], $row['nom'], $row['prenom'], $row['email'], $row['password']);
