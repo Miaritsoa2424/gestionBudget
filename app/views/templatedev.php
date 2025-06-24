@@ -45,9 +45,7 @@
             <a href="<?= Flight::get('flight.base_url') ?>/stat-admin">
                 <i class="fas fa-chart-pie"></i> Statistiques
             </a>
-            <a href="<?= Flight::get('flight.base_url') ?>/stat-admin">
-                <i class="fas fa-sign-out-alt"></i> Deconnexion
-            </a>
+
         </div>
 
         <div class="content">
