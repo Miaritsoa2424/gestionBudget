@@ -64,9 +64,9 @@ class ReportController {
         ];
         // Redirection ou affichage selon le résultat
         if ($success) {
-            Flight::render('templateClient', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true]);
+            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true]);
         } else {
-            Flight::render('templateClient', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true]);
+            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true]);
         }
     }
 }
