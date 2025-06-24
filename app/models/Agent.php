@@ -78,4 +78,10 @@ class Agent {
         $stmt = $conn->prepare("DELETE FROM agent WHERE id_agent = ?");
         return $stmt->execute([$id_agent]);
     }
+
+    public static function getAgentDispo() {
+        
+    }
+
+
 }

@@ -38,8 +38,8 @@
                     <th>Libellé</th>
                     <th>Client <i class="fas fa-sort"></i></th>
                     <th>Date <i class="fas fa-sort"></i></th>
-                    <th>État <i class="fas fa-sort"></i></th>
-                    <th>Durée (Heure)</th>
+                    <th>Statut <i class="fas fa-sort"></i></th>
+                    <th>Durée</th>
                     <th>Priorité <i class="fas fa-sort"></i></th>
                     <th>Actions</th>
                 </tr>
@@ -52,9 +52,9 @@
                             <td><?= htmlspecialchars($ticket['sujet']) ?></td>
                             <td><?= htmlspecialchars($ticket['categorie']) ?></td>
                             <td class="libelle"><?= htmlspecialchars($ticket['libelle']) ?></td>
-                            <td><?= htmlspecialchars($ticket['client']) ?></td>
+                            <td><?= htmlspecialchars($ticket['client']->getNom()) . ' ' . htmlspecialchars($ticket['client']->getPrenom()) ?></td>
                             <td><?= htmlspecialchars($ticket['date']) ?></td>
-                            <td><span class="status-badge <?= strtolower($ticket['etat']) ?>"><?= ucfirst($ticket['etat']) ?></span></td>
+                            <td><span class="status-badge <?= strtolower($ticket['statut']) ?>"><?= ucfirst($ticket['statut']) ?></span></td>
                             <td><?= $ticket['duree'] ?? '0' ?> </td>
                             <td>
                                 <span class="priority <?= strtolower($ticket['priorite']) ?>">

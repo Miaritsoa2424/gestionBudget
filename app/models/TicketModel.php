@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use Flight;
 
 class TicketModel
 {
@@ -11,9 +12,10 @@ class TicketModel
     private $idAgent;
     private $idReport;
     private $dateCreation;
-    private $idEtat;
+    private $idStatut;
 
-    public function __construct($id = null, $coutHoraire = null, $sujet = null, $idCategorie = null, $idAgent = null, $idReport = null, $dateCreation = null, $idEtat = null)
+
+    public function __construct($id = null, $coutHoraire = null, $sujet = null, $idCategorie = null, $idAgent = null, $idReport = null, $dateCreation = null, $idStatut = null)
     {
         $this->id = $id;
         $this->coutHoraire = $coutHoraire;
@@ -22,7 +24,7 @@ class TicketModel
         $this->idAgent = $idAgent;
         $this->idReport = $idReport;
         $this->dateCreation = $dateCreation;
-        $this->idEtat = $idEtat;
+        $this->idStatut = $idStatut;
     }
 
     // Getters
@@ -53,8 +55,8 @@ class TicketModel
     public function getDateCreation() {
         return $this->dateCreation;
     }
-    public function getIdEtat() {
-        return $this->idEtat;
+    public function getIdStatut() {
+        return $this->idStatut;
     }
 
     // Setters
@@ -85,8 +87,8 @@ class TicketModel
     public function setDateCreation($dateCreation) {
         $this->dateCreation = $dateCreation;
     }
-    public function setIdEtat($idEtat) {
-        $this->idEtat = $idEtat;
+    public function setIdStatut($idStatut) {
+        $this->idStatut = $idStatut;
     }
     
     public static function getAll() {
@@ -102,9 +104,30 @@ class TicketModel
                 $row['id_agent'],
                 $row['id_report'],
                 $row['date_creation'],
-                $row['id_etat']
+                $row['id_statut']
             );
         }
         return $list;
+    }
+
+    public static function getById($id) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT * FROM ticket WHERE id_ticket = :id_ticket");
+        $stmt->execute([':id_ticket' => $id]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        
+        if ($row) {
+            return new TicketModel(
+                $row['id_ticket'],
+                $row['cout_horaire'],
+                $row['sujet'],
+                $row['id_categorie'],
+                $row['id_agent'],
+                $row['id_report'],
+                $row['date_creation'],
+                $row['id_statut']
+            );
+        }
+        return null;   
     }
 }
