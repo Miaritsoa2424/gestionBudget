@@ -238,5 +238,26 @@ class ClientController {
         }
     }
 
+    public function insertClient() {
+        $nom = Flight::request()->data->nom;
+        $email = Flight::request()->data->email;
+        $password = Flight::request()->data->password;
+        $prenom = Flight::request()->data->prenom;
+
+        // Vérification si le client existe déjà
+        if (Client::getByNom($nom)) {
+            Flight::json(['success' => false, 'message' => 'Le client existe déjà.']);
+            return;
+        }
+
+        // Création du nouveau client
+        $client = new Client(null, $nom, $prenom, $email, $password);
+        $client->save();
+
+        print_r($client);
+
+        Flight::json(['success' => true, 'message' => 'Client ajouté avec succès.']);
+    }
+
 }
 
