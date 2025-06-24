@@ -6,17 +6,17 @@
             <span class="close">&times;</span>
         </div>
         <div class="modal-body">
-            <form id="addClientForm">
+            <form id="addClientForm" action="add-client" method="post">
                 <div class="form-group">
-                    <label for="clientName">Nom du client</label>
+                    <label for="clientName">Nom</label>
                     <input type="text" id="clientName" required>
                 </div>
                 <div class="form-group">
-                    <label for="clientEmail">Email</label>
+                    <label for="clientEmail">Pr&eacute;nom</label>
                     <input type="email" id="clientEmail" required>
                 </div>
                 <div class="form-group">
-                    <label for="clientPhone">Téléphone</label>
+                    <label for="clientPhone">Email</label>
                     <input type="tel" id="clientPhone" required>
                 </div>
                 <div class="modal-footer">

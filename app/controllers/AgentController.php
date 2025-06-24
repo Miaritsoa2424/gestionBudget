@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Agent;
 use app\models\Client;
 use app\models\Message;
 use Flight;
@@ -57,6 +58,33 @@ class AgentController {
             'clients' => $clients
         ]);
     }
+
+    public function formLoginAgent()
+    {
+        Flight::render('login-agent');
+    }
+
+
+    public function loginAgent() {
+        $nom = Flight::request()->data->nom;
+        $mdp = Flight::request()->data->mdp;
+        // echo $nom;
+        // echo $mdp;
+
+        $agent = Agent::getByNom($nom);
+
+        if ($agent && ($mdp == $agent->getPassword())) {
+            // Authentification réussie
+            $_SESSION['id_client'] = $agent->getIdAgent();
+            $_SESSION['nom_client'] = $agent->getNom();
+
+            Flight::redirect('list-ticket-agent');
+        } else {
+            // Authentification échouée
+            Flight::render('login-agent', ['error' => 'Identifiants incorrects']);
+        }
+    }
+
     
     public function message() {
         $id_client = $_GET['client_id'] ?? null;
@@ -67,8 +95,8 @@ class AgentController {
 
         // Tu peux charger ici les infos du client, les messages, etc.
         $client = Client::getById($id_client);
-        // $messages = Message::getMessageByAgentClient($_SESSION['id_agent'], $id_client, 1);
-        $messages = Message::getMessageByAgentClient(1, $id_client);
+        $messages = Message::getMessageByAgentClient($_SESSION['id_agent'], $id_client, 1);
+        // $messages = Message::getMessageByAgentClient(1, $id_client);
 
         Flight::render('template-agent', [
             'title' => 'Message',

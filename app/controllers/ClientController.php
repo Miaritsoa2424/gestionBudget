@@ -238,5 +238,27 @@ class ClientController {
         }
     }
 
+    public function insertClient() {
+        $nom = $_POST['nom'] ?? null;
+        $prenom = $_POST['prenom'] ?? null;
+        $email = $_POST['email'] ?? null;
+        $password = $_POST['password'] ?? null;
+
+        if ($nom && $prenom && $email && $password) {
+            $success = true;
+            
+            $client = new Client(null, $nom, $prenom, $email);
+            $client->saveClient();
+
+            if ($success) {
+                Flight::redirect('list-client');
+            } else {
+                Flight::render('form-client', ['error' => 'Erreur lors de l\'ajout du client.']);
+            }
+        } else {
+            Flight::render('form-client', ['error' => 'Tous les champs sont obligatoires.']);
+        }
+    }
+
 }
 

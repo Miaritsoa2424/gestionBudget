@@ -109,12 +109,15 @@ $router->get('/welcome', [$welcomeController, 'home']);
 
 $AgentController = new AgentController();
 $router->get('/logout-agent', [$AgentController, 'deconnexion']);
+$router->get('/agent', [$AgentController, 'formLoginAgent']);
+$router->post('/agent-login', [$AgentController, 'loginAgent']);
 
 $ClientController = new ClientController();
 $router->get('/logout-client', [$ClientController, 'deconnexion']);
 $router->get('/list-client', [$ClientController, 'listClientFront']);
 $router->get('/client', [$ClientController, 'getFormulaireLoginClient']);
 $router->post('/client-login', [$ClientController, 'loginClient']);
+$router->post('/add-client', [$ClientController, 'insertClient']);
 
 $router->get('/detail-client/@id', [$ClientController, 'clientDetail']);
 $router->get('/detail-report/@id', [$ClientController, 'clientReportDetail']);
