@@ -111,6 +111,28 @@ class TicketModel
         return $list;
     }
 
+    public static function getAllTicketAgent($idAgent) {
+        $conn = \Flight::db();
+        $sql = "SELECT * FROM ticket WHERE id_agent = :id_agent";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':id_agent' => $idAgent]);
+        $list = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = new TicketModel(
+                $row['id_ticket'],
+                $row['cout_horaire'],
+                $row['sujet'],
+                $row['id_categorie'],
+                $row['id_agent'],
+                $row['id_report'],
+                $row['date_creation'],
+                $row['id_statut']
+
+            );
+        }
+        return $list;
+    }
+
     public static function getById($id) {
         $conn = Flight::db();
         $stmt = $conn->prepare("SELECT * FROM ticket WHERE id_ticket = :id_ticket");
