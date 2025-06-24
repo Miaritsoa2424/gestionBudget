@@ -131,6 +131,7 @@ class Client {
 
         return null; 
     }
+    
     public function save() {
         $conn = Flight::db();
         $stmt = $conn->prepare("INSERT INTO client (nom, prenom, email, password) VALUES (:nom, :prenom, :email, :password)");
