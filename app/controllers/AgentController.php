@@ -145,5 +145,18 @@ class AgentController {
         }
         exit;
     }
+
+    public function fichePaieAgent($id_agent) {
+        $tickets = Agent::getTicketsByAgent($id_agent);
+        $agent = Agent::getById($id_agent);
+        $nom = $agent ? $agent->getNom() . ' ' . $agent->getPrenom() : 'Inconnu';
+
+        Flight::render('templatedev', [
+            'page' => 'fiche-paie',
+            'title' => 'Fiche de Paie',
+            'tickets' => $tickets,
+            'nom' => $nom
+        ]);
+    }
 }
  

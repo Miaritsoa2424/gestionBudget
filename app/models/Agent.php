@@ -106,5 +106,23 @@ class Agent {
         return $agents;
     }
 
+    public static function getTicketsByAgent($id_agent) {
+        $db = Flight::db();
+        $sql = "
+            SELECT 
+                t.id_ticket,
+                t.sujet,
+                t.cout_horaire,
+                IFNULL(SUM(md.duree), 0) AS duree
+            FROM ticket t
+            LEFT JOIN mvt_duree md ON md.id_ticket = t.id_ticket
+            WHERE t.id_agent = :id_agent
+            GROUP BY t.id_ticket, t.sujet, t.cout_horaire
+        ";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id_agent' => $id_agent]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 
 }
