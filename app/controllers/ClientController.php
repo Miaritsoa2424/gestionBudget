@@ -257,6 +257,7 @@ class ClientController {
         print_r($client);
 
         Flight::json(['success' => true, 'message' => 'Client ajouté avec succès.']);
+
     }
 
 }
