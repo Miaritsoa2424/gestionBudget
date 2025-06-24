@@ -34,4 +34,20 @@ class CategorieTicket
         }
         return $categories;
     }
+
+    // Récupérer une catégorie par son ID
+    public static function getCategorieById($id)
+    {
+        $db = \Flight::db();
+        $stmt = $db->prepare("SELECT * FROM categorie_ticket WHERE id_categorie = :id");
+        $stmt->execute([':id' => $id]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row) {
+            return new CategorieTicket(
+                $row['id_categorie'],
+                $row['nom']
+            );
+        }
+        return null; // Retourne null si la catégorie n'existe pas
+    }
 }

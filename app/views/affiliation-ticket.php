@@ -22,6 +22,10 @@
 
         <div class="agents-section">
             <h2>Agents disponibles</h2>
+            <!-- Champ de recherche pour filtrer les agents -->
+            <div class="form-group">
+                <input type="text" id="agent_search" placeholder="Rechercher un agent...">
+            </div>
             <div class="agents-list">
                 <div class="agent-card" data-id="1" data-name="Marie Martin">
                     <img src="https://i.pravatar.cc/45?img=2" class="agent-image" alt="Marie">
