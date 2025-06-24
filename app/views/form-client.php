@@ -6,18 +6,24 @@
             <span class="close">&times;</span>
         </div>
         <div class="modal-body">
-            <form id="addClientForm" action="add-client" method="post">
+
+            <form id="addClientForm" action="<?php echo Flight::get('flight.base_url'); ?>/ajouterClient" method="post">
                 <div class="form-group">
-                    <label for="clientName">Nom</label>
-                    <input type="text" id="clientName" required>
+                    <label for="clientName">Nom du client</label>
+                    <input type="text" id="clientName" name="clientName" required>
                 </div>
                 <div class="form-group">
-                    <label for="clientEmail">Pr&eacute;nom</label>
-                    <input type="email" id="clientEmail" required>
+                    <label for="clientPhone">Prenom</label>
+                    <input type="text" id="clientPhone" name="clientPhone" required>
                 </div>
                 <div class="form-group">
-                    <label for="clientPhone">Email</label>
-                    <input type="tel" id="clientPhone" required>
+                    <label for="clientEmail">Email</label>
+                    <input type="email" id="clientEmail" name="clientEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientPassword">Mot de passe</label>
+                    <input type="password" id="clientPassword" name="clientPassword" required>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="cancelBtn">Annuler</button>

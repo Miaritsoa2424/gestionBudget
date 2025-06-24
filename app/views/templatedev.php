@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/detail-report.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/affiliation-agent.css">
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/affiliation-ticket.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/css/info-ticket.css">
+
 </head>
 
 <body>
