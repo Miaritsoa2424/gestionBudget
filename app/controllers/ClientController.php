@@ -254,10 +254,6 @@ class ClientController {
         $client = new Client(null, $nom, $prenom, $email, $password);
         $client->save();
 
-        print_r($client);
-
-        Flight::json(['success' => true, 'message' => 'Client ajouté avec succès.']);
-
         // Redirection vers la page de connexion ou une autre page
         Flight::render('templatedev', [
             'title' => 'Inscription réussie',
