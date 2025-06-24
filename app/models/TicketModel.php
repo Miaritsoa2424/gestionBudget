@@ -58,6 +58,13 @@ class TicketModel
     public function getIdStatut() {
         return $this->idStatut;
     }
+    public function getAgentAffecte() {
+        if ($this->idAgent) {
+            $agent = Agent::getById($this->idAgent);
+            return $agent ? $agent : null;
+        }
+        return null;
+    }
 
     // Setters
     public function setId($id)

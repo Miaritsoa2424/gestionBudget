@@ -4,6 +4,13 @@ namespace app\controllers;
 
 use app\models\ProductModel;
 use app\models\Agent;
+use app\models\Importance;
+use app\models\TicketModel;
+use app\models\Statut;
+use app\models\Report;
+use app\models\Client;
+use app\models\CategorieTicket;
+use app\models\MvtDuree;
 use Flight;
 
 class WelcomeController {
@@ -48,6 +55,33 @@ class WelcomeController {
         ];
         Flight::render('templatedev', $data);
         
+    }
+
+    public function getInfoTicket($idTicket) {
+        $ticket = TicketModel::getById($idTicket);
+        if (!$ticket) {
+            Flight::notFound();
+            return;
+        }
+
+        $data = [
+            'title' => 'Information Ticket',
+            'page' => 'info-ticket',
+            'ticket' => [
+                'id' => $ticket->getId(),
+                'sujet' => $ticket->getSujet(),
+                'description' => Report::getReportById($ticket->getIdReport())->getLibelle(),
+                'date_creation' => $ticket->getDateCreation(),
+                'statut' => Statut::getById($ticket->getIdStatut())->getNom(),
+                'agent_affecte' => $ticket->getAgentAffecte() ? $ticket->getAgentAffecte()->getNom() : 'Aucun',
+                'priorite' => Importance::getImportanceByIdTicket($ticket->getId())->getNom(),
+                'categorie' => CategorieTicket::getCategorieById($ticket->getIdCategorie())->getNom(),
+                'client' => Client::getById(Report::getReportById($ticket->getIdReport())->getIdClient()),
+                'duree' => MvtDuree::getLastDureeByIdTicket($ticket->getId())->getDuree(),
+                'cout_horaire' => $ticket->getCoutHoraire()
+            ]
+        ];
+        Flight::render('template-agent', $data);
     }
 
 

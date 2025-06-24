@@ -239,16 +239,27 @@ class ClientController {
     }
 
     public function insertClient() {
-        $nom = Flight::request()->data->nom;
-        $email = Flight::request()->data->email;
-        $password = Flight::request()->data->password;
-        $prenom = Flight::request()->data->prenom;
+        // Affiche toutes les données reçues pour vérification
+        $data = Flight::request()->data;
+        print_r($data); // ou var_dump($data);
+        
+
+        // Tu peux aussi logger dans un fichier si besoin :
+        // file_put_contents('debug_client.txt', print_r($data, true));
+
+        // Création du nouveau client
+        $nom = $data->nom;
+        $email = $data->email;
+        $password = $data->password;
+        $prenom = $data->prenom;
 
         // Vérification si le client existe déjà
         if (Client::getByNom($nom)) {
             Flight::json(['success' => false, 'message' => 'Le client existe déjà.']);
             return;
         }
+
+        
 
         // Création du nouveau client
         $client = new Client(null, $nom, $prenom, $email, $password);

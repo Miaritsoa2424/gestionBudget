@@ -1,0 +1,91 @@
+.ticket-info-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    padding: 32px 40px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #222;
+    position: relative;
+}
+.ticket-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.ticket-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 18px;
+    border: 3px solid #e0e7ff;
+    box-shadow: 0 2px 8px #e0e7ff;
+}
+.ticket-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #3b82f6;
+    margin: 0;
+}
+.ticket-meta {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+    font-size: 1.05rem;
+    color: #6b7280;
+}
+.ticket-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-right: 8px;
+}
+.badge-status {
+    background: #f1f5f9;
+    color: #2563eb;
+}
+.badge-priority {
+    background: #fef3c7;
+    color: #b45309;
+}
+.badge-category {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+.ticket-section {
+    margin-bottom: 18px;
+}
+.ticket-section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #6366f1;
+    margin-bottom: 6px;
+}
+.ticket-description {
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 1.05rem;
+    color: #374151;
+    margin-bottom: 0;
+}
+.ticket-footer {
+    text-align: right;
+    margin-top: 24px;
+}
+.ticket-footer .btn {
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.ticket-footer .btn:hover {
+    background: #2563eb;
+}
