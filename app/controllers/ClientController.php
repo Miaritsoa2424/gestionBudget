@@ -243,23 +243,11 @@ class ClientController {
         // Affiche toutes les données reçues pour vérification
         $data = Flight::request()->data;
         print_r($data); // ou var_dump($data);
-        
 
-        // Tu peux aussi logger dans un fichier si besoin :
-        // file_put_contents('debug_client.txt', print_r($data, true));
-
-        // Création du nouveau client
         $nom = $data->nom;
         $email = $data->email;
         $password = $data->password;
         $prenom = $data->prenom;
-
-        // Vérification si le client existe déjà
-        if (Client::getByNom($nom)) {
-            Flight::json(['success' => false, 'message' => 'Le client existe déjà.']);
-            return;
-        }
-
         
 
         // Création du nouveau client
@@ -270,6 +258,13 @@ class ClientController {
 
         Flight::json(['success' => true, 'message' => 'Client ajouté avec succès.']);
 
+        // Redirection vers la page de connexion ou une autre page
+        Flight::render('templatedev', [
+            'title' => 'Inscription réussie',
+            'page' => 'list-client',
+            'clients' => Client::getAll(),
+            'message' => 'Inscription réussie, vous pouvez maintenant vous connecter.'
+        ]);
     }
 
 }
