@@ -5,9 +5,9 @@
         <div class="filters-group">
             <select class="filter-select">
                 <option value="">Catégorie</option>
-                <option value="technique">Technique</option>
-                <option value="commercial">Commercial</option>
-                <option value="facturation">Facturation</option>
+                <?php foreach ($categories as $categorie): ?>
+                    <option value="<?= $categorie->getId() ?>"><?= htmlspecialchars($categorie->getNom()) ?></option>
+                <?php endforeach; ?>
             </select>
 
             <select class="filter-select">

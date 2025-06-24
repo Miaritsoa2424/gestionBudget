@@ -107,8 +107,9 @@ $AgentController = new AgentController();
 
 $ClientController = new ClientController();
 $router->get('/list-client', [$ClientController, 'listClientFront']);
-$router->get('/detail-client', [$ClientController, 'clientDetail']);
-$router->get('/detail-report/@id', [$ClientController, 'clientReportDetail']);
+
+$router->get('/detail-client/@id:[0-9]+', [$ClientController, 'clientDetail']);
+$router->get('/detail-report/@id:[0-9]+', [$ClientController, 'clientReportDetail']);
 
 $router->get('/report-client', [$ClientController, 'getFormulaireReportClient']);
 $router->get('/home', [$ClientController, 'getHomeCLient']);

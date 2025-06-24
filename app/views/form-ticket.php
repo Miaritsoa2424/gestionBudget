@@ -1,3 +1,27 @@
+<style>
+.status-messages {
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+</style>
 
 <div class="report-detail">
     <div class="content-wrapper">
@@ -34,7 +58,7 @@
                 <?php foreach($demoReport['attachments'] as $attachment): ?>
                 <div class="attachment">
                     <i class="fas fa-file"></i>
-                    <a href="<?= $attachment['url']; ?>" target="_blank">
+                    <a href="<?= Flight::get('flight.base_url') ?>/uploads/<?= $attachment['url']; ?>" target="_blank">
                         <?= $attachment['name']; ?>
                     </a>
                 </div>
@@ -42,24 +66,41 @@
             </div>
         </div>
 
-        <button class="btn btn-primary" onclick="openTicketForm()">Ticketage</button>
+        <button class="btn btn-primary" onclick="openTicketForm()" style="font-size: 16px;">Ticketage</button>
     </div>
 
     <!-- Formulaire de ticket -->
     <div class="ticket-form" id="ticketForm">
         <span class="close-ticket" onclick="closeTicketForm()">×</span>
         <center><h3 style="margin-bottom: 30px;">Nouveau Ticket</h3></center>
-        <form method="post" action="insertTicket">
+        
+        <div class="status-messages">
+            <?php if (isset($error)): ?>
+                <div class="alert alert-danger"><?= $error ?></div>
+            <?php endif; ?>
+            <?php if (isset($success)): ?>
+                <div class="alert alert-success">Le ticket a été créé avec succès!</div>
+            <?php endif; ?>
+        </div>
+
+        <form method="post" action="<?= Flight::get('flight.base_url') ?>/insertTicket">
             <div class="form-group">
                 <label>Importance</label>
-                <select class="form-control" name="priorite">
+                <select class="form-control" name="id_importance">
                     <option value="">-- Séléctionner une priorité --</option>
+                    <?php foreach ($demoReport['importance'] as $importance): ?>
+                        <option value="<?= $importance->getIdmportance(); ?>"><?= $importance->getNom(); ?></option>
+                    <?php endforeach; ?>
+                </select>
                 </select>
             </div>
             <div class="form-group">
                 <label>Categorie</label>
-                <select class="form-control" name="priorite">
+                <select class="form-control" name="id_categorie">
                     <option value="">-- Séléctionner une priorité --</option>
+                    <?php foreach ($demoReport['categories'] as $categorie): ?>
+                        <option value="<?= $categorie->getId(); ?>"><?= $categorie->getNom(); ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 
@@ -67,11 +108,9 @@
                 <label>Sujet</label>
                 <textarea name="sujet" class="form-control" rows="4"></textarea>
             </div>
-            <div class="cout form-group">
-                <label>Coût horaire estimé</label>
-                <input type="number" class="form-control" name="cout_horaire" placeholder="Ex: 1000">
-            </div>
-            <button type="submit" class="btn btn-primary">Créer le ticket</button>
+            <input type="hidden" name="id_report" value="<?= $demoReport['id_report']; ?>">
+            
+            <button type="submit" class="btn btn-primary" style="font-size: 16px;">Créer le ticket</button>
 
         </form>
     </div>
@@ -99,19 +138,14 @@ function closeTicketForm() {
     document.querySelector('.content-wrapper').classList.remove('shifted');
 }
 
-function success () {
-    alert('Ticket créé avec succès !');
-}
-
-function error () {
-    alert('Erreur lors de la création du ticket.');
-}
-
-<?php if (isset($error)): ?>
-    error();
-<?php endif; ?>
-<?php if (isset($success)): ?>
-    success();
-<?php endif; ?>
-
+// Attendre que le DOM soit chargé
+document.addEventListener('DOMContentLoaded', function() {
+    <?php if (isset($error)): ?>
+        error();
+        openTicketForm();
+    <?php endif; ?>
+    <?php if (isset($success)): ?>
+        success();
+    <?php endif; ?>
+});
 </script>

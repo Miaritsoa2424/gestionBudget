@@ -32,11 +32,11 @@
                         <td>
                             <div class="notification-bell">
                                 <i class="fas fa-bell"></i>
-                                <span class="notification-badge">5</span>
+                                <span class="notification-badge"><?= $client->getNotification() ?></span>
                             </div>
                         </td>
                         <td>
-                            <a href="detail-client" class="btn btn-info">Détails</a>
+                            <a href="detail-client/<?= $client->getId() ?>" class="btn btn-info">Détails</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

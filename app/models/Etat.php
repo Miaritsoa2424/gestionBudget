@@ -53,6 +53,14 @@ class Etat {
         return $results;
     }
 
+    public static function findEtatByIdTicket($idTicket) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT e.* FROM Etat e JOIN Ticket t ON e.idEtat = t.idEtat WHERE t.idTicket = :idTicket");
+        $stmt->execute(['idTicket' => $idTicket]);
+        $row = $stmt->fetch();
+        return $row ? new Etat($row['nom'], $row['idEtat']) : null;
+    }
+
     public static function findById($idEtat) {
         $conn = Flight::db();
         $stmt = $conn->prepare("SELECT * FROM Etat WHERE idEtat = :id");
