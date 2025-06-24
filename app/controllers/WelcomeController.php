@@ -52,6 +52,7 @@ class WelcomeController {
 
 
     public function homeClient(){
+        $agentDispo = Agent::getAll();
         $data = [
             'title' => 'Accueil Client',
             'page' => 'hero-section-client'

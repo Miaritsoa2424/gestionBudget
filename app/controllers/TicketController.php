@@ -14,7 +14,10 @@ use app\models\CategorieTicket;
 use app\models\MvtDuree;
 use Flight;
 use app\models\Statistique;
+
+use app\models\Statut;
 use app\models\TicketImportance;
+
 use app\models\TicketModel;
 
 class TicketController {
@@ -63,7 +66,7 @@ class TicketController {
             'page' => 'templateTicket',
             'pageContent' => 'ticketForm',
             'importances' => Importance::getAll(),
-            'etats' => Etat::getAll(),
+            'etats' => Statut::getAll(),
             'demandes' => Demande::getAll(),
             'departements' => Departement::getAllDepartement(),
             'typeDemandes' => TypeDemande::getAll()
@@ -190,7 +193,7 @@ class TicketController {
 
         $ticket2d = [];
         foreach ($tickets as $ticket) {
-            $ticket = [
+            $ticket1D = [
                 'id' => $ticket->getId(),
                 'sujet' => $ticket->getSujet(),
                 'categorie' => $ticket->getIdCategorie(),
@@ -198,10 +201,10 @@ class TicketController {
                 'client' => Client::getClientById(Report::getReportById($ticket->getIdReport())->getIdClient()),
                 'date' => $ticket->getDateCreation(),
                 'priorite' => "haute", // Assuming a static value for priority
-                'etat' => Etat::findById($ticket->getIdEtat())->getNom(),
-                'duree' => MvtDuree::getDureeByIdTicket($ticket->getId())['duree'] ?? '0'
+                'statut' => Statut::getById($ticket->getIdStatut())->getNom(),
+                'duree' => MvtDuree::getLastDureeByIdTicket($ticket->getId())->getDuree() ?? 0
             ];
-            $ticket2d[] = $ticket;
+            $ticket2d[] = $ticket1D;
         }
 
         $data = [
@@ -209,6 +212,25 @@ class TicketController {
             'page' => 'affiliation-agent',
             'tickets' => $ticket2d,
             'categories' => CategorieTicket::getAll(),
+        ];
+        Flight::render('templatedev', $data);
+    }
+
+    public function affilierTicket($id) {
+        $ticket = TicketModel::getById($id);
+        $client = Client::getClientById(Report::getReportById($ticket->getIdReport())->getIdClient());
+
+        if (!$ticket) {
+            Flight::redirect('/tickets');
+            return;
+        }
+
+        $data = [
+            'title' => 'Affiliation Agent',
+            'page' => 'affiliation-agent',
+            'client' => $client,
+            'ticket' => $ticket,
+            'agents' => Agent::getAll()
         ];
         Flight::render('templatedev', $data);
     }

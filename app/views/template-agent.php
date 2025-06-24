@@ -41,9 +41,6 @@
                 </a>
             </div>
 
-            <a>
-                <i class="fas fa-chart-pie"></i> Statistiques
-            </a>
 
             <a>
                 <i class="fa fa-sign-out-alt"></i> Deconnexion
