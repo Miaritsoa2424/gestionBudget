@@ -63,7 +63,7 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <button class="btn-affiliate">Affilier</button>
+                                    <button class="btn-affiliate" onclick="affilierTicket(<?= $ticket['id'] ?>)">Affilier</button>
                                     <button class="btn-modify" onclick="openModal(<?= $ticket['id'] ?>)">Modifier</button>
                                     <button class="btn-delete">Supprimer</button>
                                 </div>
@@ -140,5 +140,9 @@
             document.getElementById('modifyModal').style.display = 'none';
             document.getElementById('duration').value = '';
         }
+    }
+
+    function affilierTicket(ticketId) {
+        window.location.href = `affilierTicket/${ticketId}`;
     }
 </script>
