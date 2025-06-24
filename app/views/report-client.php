@@ -2,19 +2,15 @@
     <h2>Nouveau Rapport</h2>
     <?php if (isset($success) && $success): ?>
         <div class="alert alert-success" style="color: #155724; background: #d4edda; border: 1px solid #c3e6cb; padding: 10px; margin-bottom: 15px;">
-            Rapport envoyé avec succès !
+            Rapport envoyé avec succès ! <?= $donnees->getId() ?>
         </div>
     <?php elseif (isset($error) && $error): ?>
         <div class="alert alert-danger" style="color: #721c24; background: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px;">
-            Une erreur est survenue lors de l'envoi du rapport.
+            Une erreur est survenue lors de l'envoi <?= $donnees->getId(); $donnees->getLibelle() ?> du rapport. 
         </div>
     <?php endif; ?>
     
     <form class="report-form" action="submit-report" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="title">Titre</label>
-            <input type="text" id="title" name="title" required class="form-control">
-        </div>
 
         <div class="form-group">
             <label for="description">Description</label>
@@ -30,39 +26,12 @@
 
         <div class="form-actions">
             <!-- <button type="submit" class="btn-submit">Envoyer le rapport</button> -->
-            <button type="button" class="btn-submit" onclick="showLoginPopup()">Envoyer le rapport</button>
+            <button type="submit" class="btn-submit">Envoyer le rapport</button>
             <button type="reset" class="btn-reset">Réinitialiser</button>
         </div>
     </form>
 </div>
 
-<div id="loginPopup" class="login-popup-overlay" style="display:none;">
-    <div class="login-popup-content">
-        <span class="close-login-popup" onclick="closeLoginPopup()">&times;</span>
-        <?php
-            // Inclure le contenu de login.php SANS <html>, <head>, <body>
-            $base_url = Flight::get('flight.base_url');
-        ?>
-        <form action="client-login" method="POST">
-            <fieldset>
-                <h1>Veuillez vous connecter pour envoyer votre rapport</h1>
-                <label for="nom">Nom : </label>
-                <input type="text" name="nom" id="nom" placeholder="Ex: Marie">
-
-                <label for="mdp">Mot de passe : </label>
-                <input type="password" name="mdp" id="mdp" placeholder="************************">
-
-                <button type="submit">Se connecter</button>
-                <?php
-                    if (isset($erreur)) { ?>
-                        <div class="error">
-                            <?= $erreur; ?>
-                        </div>
-                    <?php } ?>
-            </fieldset>
-        </form>
-    </div>
-</div>
 
 <style>
 .login-popup-overlay {
@@ -121,12 +90,6 @@
 </style>
 
 <script>
-    function showLoginPopup() {
-        document.getElementById('loginPopup').style.display = 'flex';
-    }
-    function closeLoginPopup() {
-        document.getElementById('loginPopup').style.display = 'none';
-    }
 
     function handleFiles(files) {
         const previewContainer = document.getElementById('preview-container');

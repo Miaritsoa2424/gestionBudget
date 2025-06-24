@@ -57,7 +57,6 @@
     </style>
 </head>
 <body>
-
 <div class="dashboard-container">
     <h2 class="dashboard-title">Dashboard Administrateur</h2>
     
@@ -75,12 +74,16 @@
                             <th>Nombre de tickets</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
-                        <tr><td>Client A</td><td>45</td></tr>
-                        <tr><td>Client B</td><td>38</td></tr>
-                        <tr><td>Client C</td><td>32</td></tr>
-                        <tr><td>Client D</td><td>28</td></tr>
-                        <tr><td>Client E</td><td>25</td></tr>
+                    <tbody>
+                        <?php foreach($topClients as $client): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($client['nom'] . ' ' . $client['prenom']) ?></td>
+                            <td><?= (int)$client['nb_tickets'] ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                        <?php if(empty($topClients)): ?>
+                        <tr><td colspan="2">Aucun client</td></tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -113,9 +116,9 @@
             </div>
             <div class="card-body">
                 <div class="budget-info">
-                    <h5>Budget total: 50 000.00 €</h5>
-                    <h5>Dépenses: 32 450.00 €</h5>
-                    <h5>Reste: 17 550.00 €</h5>
+                    <h5>Budget total: <?= number_format($budget['total'], 2, ',', ' ') ?> €</h5>
+                    <h5>Dépenses: <?= number_format($budget['depense'], 2, ',', ' ') ?> €</h5>
+                    <h5>Reste: <?= number_format($budget['reste'], 2, ',', ' ') ?> €</h5>
                 </div>
                 <div class="budget-chart-container">
                     <canvas id="budgetChart"></canvas>
@@ -127,15 +130,20 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Données statiques pour les graphiques
+// Données dynamiques PHP -> JS
 const timeData = {
-    categories: ['Bug', 'Feature', 'Support', 'Maintenance', 'Urgence'],
-    times: [24, 48, 12, 36, 8]
+    categories: <?= json_encode(array_column($timeByCategory, 'categorie')) ?>,
+    times: <?= json_encode(array_map('floatval', array_column($timeByCategory, 'temps_moyen'))) ?>
 };
 
 const satisfactionData = {
-    agents: ['Agent 1', 'Agent 2', 'Agent 3', 'Agent 4'],
-    ratings: [4.5, 4.2, 4.8, 4.1]
+    agents: <?= json_encode(array_map(function($a){ return $a['nom'].' '.$a['prenom']; }, $satisfactionByAgent)) ?>,
+    ratings: <?= json_encode(array_map('floatval', array_column($satisfactionByAgent, 'satisfaction'))) ?>
+};
+
+const budgetData = {
+    depense: <?= (float)$budget['depense'] ?>,
+    reste: <?= (float)$budget['reste'] ?>
 };
 
 // Graphique temps par catégorie
@@ -170,7 +178,7 @@ new Chart(document.getElementById('budgetChart'), {
     data: {
         labels: ['Dépensé', 'Reste'],
         datasets: [{
-            data: [32450, 17550],
+            data: [budgetData.depense, budgetData.reste],
             backgroundColor: ['#ff6384', '#36a2eb']
         }]
     },

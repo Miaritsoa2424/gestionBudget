@@ -83,6 +83,7 @@ class MvtDuree
     public function save()
     {
         $db = \Flight::db();
+
         $stmt = $db->prepare("INSERT INTO mvt_duree (duree, date_duree, id_ticket) VALUES (:duree, :date_duree, :id_ticket)");
         $stmt->execute([
             ':duree' => $this->duree,
@@ -91,5 +92,32 @@ class MvtDuree
         ]);
         $this->id = $db->lastInsertId();
         return $this->id;
+
+        // Force current datetime
+        $this->dateDuree = date('Y-m-d H:i:s');
+        
+        if ($this->id === null) {
+            // Insert new record
+            $stmt = $db->prepare("INSERT INTO mvt_duree (duree, date_duree, id_ticket) VALUES (:duree, :date_duree, :id_ticket)");
+            $result = $stmt->execute([
+                ':duree' => $this->duree,
+                ':date_duree' => $this->dateDuree,
+                ':id_ticket' => $this->idTicket
+            ]);
+            if ($result) {
+                $this->id = $db->lastInsertId();
+            }
+            return $result;
+        } else {
+            // Update existing record
+            $stmt = $db->prepare("UPDATE mvt_duree SET duree = :duree, date_duree = :date_duree, id_ticket = :id_ticket WHERE id_mvt_duree = :id");
+            return $stmt->execute([
+                ':id' => $this->id,
+                ':duree' => $this->duree,
+                ':date_duree' => $this->dateDuree,
+                ':id_ticket' => $this->idTicket
+            ]);
+        }
+
     }
 }

@@ -106,6 +106,11 @@
         alert('Erreur lors de l\'envoi du message.');
     });
   }
+
+  // function forwardMessage(text) {
+  //   alert('Transfert du message : ' + escapeHtml(text));
+  // }
+  
   function forwardMessage(text) {
       const idClient = <?= $client ? $client->getId() : 0 ?>;
       const formData = new FormData();

@@ -89,7 +89,7 @@
                 <select class="form-control" name="id_importance">
                     <option value="">-- Séléctionner une priorité --</option>
                     <?php foreach ($demoReport['importance'] as $importance): ?>
-                        <option value="<?= $importance->getIdmportance(); ?>"><?= $importance->getNom(); ?></option>
+                        <option value="<?= $importance->getIdImportance(); ?>"><?= $importance->getNom(); ?></option>
                     <?php endforeach; ?>
                 </select>
                 </select>

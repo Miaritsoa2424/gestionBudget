@@ -99,21 +99,28 @@ $router->get('/ticketStats/data', [$ticketController, 'getData']);
 // New controller de Miaritsoa
 $ticketController = new TicketController();
 $router->get('/ticket', [$ticketController, 'getTickets']);
+$router->get('/admin', [$ticketController, 'getTickets']);
+$router->post('/updateDureeTicket', [$ticketController, 'updateTicketDuration']);
+
+
 
 $welcomeController = new WelcomeController();
 $router->get('/welcome', [$welcomeController, 'home']);
 
 $AgentController = new AgentController();
+$router->get('/logout-agent', [$AgentController, 'deconnexion']);
 
 $ClientController = new ClientController();
+$router->get('/logout-client', [$ClientController, 'deconnexion']);
 $router->get('/list-client', [$ClientController, 'listClientFront']);
+$router->get('/client', [$ClientController, 'getFormulaireLoginClient']);
+$router->post('/client-login', [$ClientController, 'loginClient']);
 
 $router->get('/detail-client/@id', [$ClientController, 'clientDetail']);
 $router->get('/detail-report/@id', [$ClientController, 'clientReportDetail']);
 
 $router->get('/report-client', [$ClientController, 'getFormulaireReportClient']);
 $router->get('/home', [$ClientController, 'getHomeCLient']);
-$router->post('/client-login', [$ClientController, 'clientLogin']);
 
 $router->get('/message', [$AgentController, 'message']);
 $router->get('/messageClient', [$ClientController, 'messageClient']);
@@ -134,7 +141,7 @@ $router->get('/homeClient', [$welcomeController, 'homeClient']);
 $router->get('/listMessagesClient', [$ClientController, 'listMessagesClient']);
 $router->get('/messageClient/@id', [$ClientController, 'messageClient']);
 
-$router->get('/stat-admin', [$welcomeController, 'statAdmin']);
+$router->get('/stat-admin', [$StatController, 'dashboard']);
 $router->get('/list-agents', [$welcomeController, 'listAgents']);
 $router->get('/fiche-paie/@id_agent', [$welcomeController, 'fichePaie']);
 

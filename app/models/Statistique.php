@@ -193,5 +193,58 @@ class Statistique {
         return $result->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    // Top 5 clients par nombre de tickets
+    public function getTopClientsByTickets() {
+        $sql = "
+            SELECT c.nom, c.prenom, COUNT(t.id_ticket) as nb_tickets
+            FROM client c
+            JOIN report_client rc ON rc.id_client = c.id_client
+            JOIN ticket t ON t.id_report = rc.id_report
+            GROUP BY c.id_client
+            ORDER BY nb_tickets DESC
+            LIMIT 5
+        ";
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // Satisfaction client par agent (moyenne des notes)
+    public function getSatisfactionByAgent() {
+        $sql = "
+            SELECT a.nom, a.prenom, AVG(rc.note) as satisfaction
+            FROM agent a
+            JOIN ticket t ON t.id_agent = a.id_agent
+            JOIN report_client rc ON rc.id_report = t.id_report
+            WHERE rc.note IS NOT NULL
+            GROUP BY a.id_agent
+        ";
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // Temps de traitement moyen par catégorie
+    public function getTimeByCategory() {
+        $sql = "
+            SELECT ct.nom as categorie, AVG(md.duree) as temps_moyen
+            FROM categorie_ticket ct
+            JOIN ticket t ON t.id_categorie = ct.id_categorie
+            JOIN mvt_duree md ON md.id_ticket = t.id_ticket
+            GROUP BY ct.id_categorie
+        ";
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // Budget prévisionnel (total, dépensé, reste)
+    public function getBudgetPrevisionnel() {
+        // Total = somme des prévisions, Dépensé = somme des réalisations, Reste = Total - Dépensé
+        $sqlTotal = "SELECT SUM(montant) as total FROM Valeur WHERE previsionOuRealisation = 0";
+        $sqlDepense = "SELECT SUM(montant) as depense FROM Valeur WHERE previsionOuRealisation = 1";
+        $total = $this->db->query($sqlTotal)->fetch(\PDO::FETCH_ASSOC)['total'] ?? 0;
+        $depense = $this->db->query($sqlDepense)->fetch(\PDO::FETCH_ASSOC)['depense'] ?? 0;
+        $reste = $total - $depense;
+        return [
+            'total' => $total,
+            'depense' => $depense,
+            'reste' => $reste
+        ];
+    }
 }
 ?>

@@ -14,6 +14,7 @@ use app\models\CategorieTicket;
 use app\models\MvtDuree;
 use Flight;
 use app\models\Statistique;
+use app\models\StatutTicket;
 
 use app\models\Statut;
 use app\models\TicketImportance;
@@ -167,6 +168,9 @@ class TicketController {
             // Insertion dans ticket_importance
             $importance = new TicketImportance(null, $idTicket, $data['id_importance']);
             $importance->save();
+            Report::reportToLu($data['id_report']);
+
+            StatutTicket::create($idTicket,1);
     
             $donnees = [
                 'title' => 'Détail du Report',
@@ -249,6 +253,7 @@ class TicketController {
         Flight::render('templatedev', $data);
     }
 
+
     public function doAffiliation() {
         $data = Flight::request()->data;
 
@@ -328,6 +333,26 @@ class TicketController {
                 'errorMessage' => 'Erreur lors de l\'affiliation du ticket.'
             ];
             Flight::render('templatedev', $dataRender);
+
+    public function updateTicketDuration() {
+        $data = Flight::request()->data;
+        $idTicket = $data['id_ticket'] ?? null;
+        $duree = $data['duree'] ?? null;
+
+        if (!$idTicket || !$duree) {
+            Flight::json(['error' => 'ID du ticket ou durée manquante.'], 400);
+            return;
+        }
+
+        $date = date('Y-m-d H:i:s'); // Date actuelle
+        $mvtDuree = new MvtDuree(null, $duree, $date, $idTicket);
+        if ($mvtDuree->save()) {
+            $_SESSION['success_message'] = 'Durée mise à jour avec succès.';
+            Flight::redirect('/admin');
+        } else {
+            $_SESSION['error_message'] = 'Erreur lors de la mise à jour de la durée.';
+            Flight::redirect('/admin');
+
         }
     }
 }

@@ -36,9 +36,10 @@ class ClientController {
 
     public function deconnexion(){
         session_destroy();
-        Flight::clear('idDept');
-        Flight::render('login', []);   
+        Flight::clear('id_client');
+        Flight::render('login-client', []);   
     }
+    
     public function listClientFront() {
         $data = [
             'title' => 'Liste des Clients',
@@ -140,29 +141,10 @@ class ClientController {
         ];
         Flight::render('template-client', $data);
     }
-    
-
-    public function clientLogin() {
-        $nom = Flight::request()->data->nom;
-        $mdp = Flight::request()->data->mdp;
-
-        $client = Client::getByNom($nom);
-
-        if ($client && ($mdp == $client['mdp'])) {
-            // Authentification réussie
-            $_SESSION['idClient'] = $client['id_client'];
-            $_SESSION['nomClient'] = $client['nom'];
-
-            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true]);
-        } else {
-           
-            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true]);
-        }
-    }
 
     public function listMessagesClient() {
         // Supposons que l'id du client est stocké en session
-        $id_client = $_SESSION['idClient'] ?? 1;
+        $id_client = $_SESSION['id_client'];
         if (!$id_client) {
             Flight::redirect('login');
             return;
@@ -174,13 +156,13 @@ class ClientController {
                 JOIN report_client rc ON rc.id_report = t.id_report
                 JOIN agent a ON a.id_agent = t.id_agent
                 JOIN client c ON c.id_client = rc.id_client
-                WHERE c.id_client = 1";
+                WHERE c.id_client = :id_client";
                 // -- WHERE c.id_client = :id_client";
 
 
         $stmt = $db->prepare($sql);
-        // $stmt->execute([':id_client' => $id_client]);
-        $stmt->execute();
+        $stmt->execute([':id_client' => $id_client]);
+        // $stmt->execute();
         $agents = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         Flight::render('template-client', [
@@ -230,5 +212,31 @@ class ClientController {
             Flight::json(['success' => false]);
         }
     }
+
+    public function getFormulaireLoginClient()
+    {
+        Flight::render('login-client');
+    }
+
+    public function loginClient() {
+        $nom = Flight::request()->data->nom;
+        $mdp = Flight::request()->data->mdp;
+        // echo $nom;
+        // echo $mdp;
+
+        $client = Client::getByNom($nom);
+
+        if ($client && ($mdp == $client->getPwd())) {
+            // Authentification réussie
+            $_SESSION['id_client'] = $client->getId();
+            $_SESSION['nom_client'] = $client->getNom();
+
+            Flight::redirect('homeClient');
+        } else {
+            // Authentification échouée
+            Flight::render('login-client', ['error' => 'Identifiants incorrects']);
+        }
+    }
+
 }
 

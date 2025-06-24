@@ -9,8 +9,9 @@
            ✓ Suivi personnalisé<br>
            ✓ Réponse sous 24h</p>
         <button class="report-btn">
-            <i class="fas fa-paper-plane"></i>
-            Envoyer un report
+            <a href="<?= Flight::get('flight.base_url') ?>/report-client" style="text-decoration: none; color: white;">
+            <i class="fas fa-paper-plane"></i>    
+            Envoyer un report</a>
         </button>
     </div>
     <div class="hero-image">
