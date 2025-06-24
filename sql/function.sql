@@ -109,3 +109,7 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+select t.id_ticket from ticket as t join report_client as rc 
+    on t.id_report = rc.id_report where t.id_report = 1; 

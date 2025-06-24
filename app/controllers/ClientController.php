@@ -6,6 +6,8 @@ namespace app\controllers;
 use app\models\Client;
 use app\models\Report;
 use app\models\Agent;
+use app\models\CategorieTicket;
+use app\models\Importance;
 use Flight;
 
 class ClientController {
@@ -100,14 +102,17 @@ class ClientController {
             'client' => [
                 'nom' => $client->getNom(),
                 'prenom' => $client->getPrenom(),
-                'email' => $client->getEmail()
+                'email' => $client->getEmail()             
             ],
+            'importance' => Importance::getAll(),
+            'categories' => CategorieTicket::getAll(), 
             'date' => $report->getDateReport(),
             'statut' => $report->getStatutLibelle(),
             'message' => $report->getLibelle(),
+            'id_report' => $id_report,
             'attachments' => [
-                ['name' => $report->getPieceJointe(), 'url' => '#']
-            ]
+                ['name' => $report->getPieceJointe(), 'url' => $report->getPieceJointe()]
+                ]
         ];
         $donnees = [
             'title' => 'Détail du Report',

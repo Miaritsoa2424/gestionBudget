@@ -219,3 +219,11 @@ INSERT INTO statut_ticket (id_ticket, id_status, date_status) VALUES
 (2, 1, '2025-06-21'),
 (2, 3, '2025-06-22');
 
+INSERT INTO importance (libelle) VALUES 
+('Très faible'),
+('Faible'),
+('Moyenne'),
+('Élevée'),
+('Critique');
+
+

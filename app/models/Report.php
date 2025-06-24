@@ -197,4 +197,14 @@ class Report
         }
         return $reports;
     }
+
+    public static function checkReportTicketer($id_report){
+        $sql = "select count(t.id_ticket) from ticket as t join report_client as rc on t.id_report = rc.id_report where t.id_report = :id_report;";
+        $db = Flight::db();
+        $stmt = $db->prepare($sql);
+        $stmt->execute([':id_report' => $id_report]);
+        $count = $stmt->fetchColumn();
+
+        return $count > 0; // Retourne true si au moins un ticket existe pour ce report
+    }
 }

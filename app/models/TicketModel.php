@@ -101,7 +101,7 @@ class TicketModel
                 $row['id_categorie'],
                 $row['id_agent'],
                 $row['id_report'],
-                $row['date_creation'],
+                $row['dateCreation'],
                 $row['id_etat']
             );
         }

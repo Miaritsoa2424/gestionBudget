@@ -165,18 +165,19 @@ ALTER TABLE ticket
 MODIFY COLUMN id_agent INT;
 
 
-
+-- Mbola tsy hay ny tena marina
 ALTER TABLE report_client ADD COLUMN statut INTEGER DEFAULT 0 NOT NULL;
-ALTER TABLE report_client MODIFY COLUMN statut INTEGER DEFAULT 0 NOT NULL;
+-- ALTER TABLE report_client DROP COLUMN status_report;
+-- ALTER TABLE report_client MODIFY COLUMN statut INTEGER DEFAULT 0 NOT NULL;
 
 ALTER TABLE ticket ADD COLUMN id_etat INTEGER DEFAULT 0 NOT NULL;
-ALTER TABLE ticket CHANGE COLUMN etat id_etat INTEGER DEFAULT 0 NOT NULL;
+-- ALTER TABLE ticket CHANGE COLUMN etat id_etat INTEGER DEFAULT 0 NOT NULL;
 
 
 ALTER TABLE ticket ADD COLUMN dateCreation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
-ALTER TABLE report_client 
- ADD COLUMN status_report INT DEFAULT 0;
+-- ALTER TABLE report_client 
+--  ADD COLUMN status_report INT DEFAULT 0;
 
 CREATE TABLE importance(
     id_importance INT PRIMARY KEY auto_increment,
