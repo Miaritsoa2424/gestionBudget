@@ -100,6 +100,8 @@ $router->get('/ticketStats/data', [$ticketController, 'getData']);
 $ticketController = new TicketController();
 $router->get('/ticket', [$ticketController, 'getTickets']);
 $router->get('/admin', [$ticketController, 'getTickets']);
+$router->post('/updateDureeTicket', [$ticketController, 'updateTicketDuration']);
+
 
 
 $welcomeController = new WelcomeController();

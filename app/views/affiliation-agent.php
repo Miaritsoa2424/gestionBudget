@@ -1,4 +1,39 @@
+<style>
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+</style>
+
 <div class="tickets-container">
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i> <?= $_SESSION['success_message'] ?>
+            <?php unset($_SESSION['success_message']); ?>
+        </div>
+    <?php endif; ?>
+    
+    <?php if (isset($_SESSION['error_message'])): ?>
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i> <?= $_SESSION['error_message'] ?>
+            <?php unset($_SESSION['error_message']); ?>
+        </div>
+    <?php endif; ?>
+
     <!-- Filtres -->
     <h1><?= $title ?></h1>
     <div class="filters-section">
@@ -83,14 +118,17 @@
 <!-- Modal pour la modification de la durée -->
 <div id="modifyModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Modifier la durée</h2>
-        <div class="form-group">
-            <p>Durée actuelle : <span id="currentDuration">0</span> h</p>
-            <label for="duration">Nouvelle durée (en heures)</label>
-            <input type="number" id="duration" min="1" step="0.5" class="form-control">
-        </div>
-        <button onclick="saveDuration()" class="btn-save">Enregistrer</button>
+        <form id="updateDureeForm" action="/gestionBudget/updateDureeTicket" method="post" onsubmit="return validateForm()">
+            <span class="close">&times;</span>
+            <h2>Modifier la durée du ticket <span id="ticketIdDisplay"></span></h2>
+            <div class="form-group">
+                <p>Durée actuelle : <span id="currentDuration">0</span> h</p>
+                <label for="duree">Nouvelle durée (en heures)</label>
+                <input type="number" id="duree" name="duree" min="0.5" step="0.5" class="form-control" required>
+                <input type="hidden" name="id_ticket" id="id_ticket" value="">
+            </div>
+            <button type="submit" class="btn-save">Enregistrer</button>
+        </form>
     </div>
 </div>
 
@@ -154,12 +192,32 @@
     // Modal modification durée
     let currentTicketId = null;
 
+    function validateForm() {
+        const ticketId = document.getElementById('id_ticket').value;
+        const duree = document.getElementById('duree').value;
+        
+        if (!ticketId || !duree) {
+            alert('Le ID du ticket et la durée sont obligatoires');
+            return false;
+        }
+        return true;
+    }
+
     function openModal(ticketId) {
-        currentTicketId = ticketId;
+        if (!ticketId) return;
+        
         const modal = document.getElementById('modifyModal');
         const row = document.querySelector(`tr[data-ticket-id="${ticketId}"]`);
-        const currentDuration = row.querySelector('td:nth-child(8)').textContent.split(' ')[0];
+        if (!row) return;
+        
+        const currentDuration = row.querySelector('td:nth-child(8)').textContent.trim().split(' ')[0];
+        
+        // Mettre à jour l'ID du ticket dans le formulaire
+        document.getElementById('id_ticket').value = ticketId;
+        document.getElementById('ticketIdDisplay').textContent = '#' + ticketId;
         document.getElementById('currentDuration').textContent = currentDuration;
+        document.getElementById('duree').value = currentDuration;
+        
         modal.style.display = 'block';
     }
 
@@ -175,16 +233,6 @@
             modal.style.display = 'none';
         }
     });
-
-    function saveDuration() {
-        const duration = document.getElementById('duration').value;
-        if (duration && currentTicketId) {
-            // Ici, ajoutez votre logique pour sauvegarder la durée
-            console.log(`Ticket ${currentTicketId}: ${duration} heures`);
-            document.getElementById('modifyModal').style.display = 'none';
-            document.getElementById('duration').value = '';
-        }
-    }
 
     function affilierTicket(ticketId) {
         window.location.href = `affilierTicket/${ticketId}`;

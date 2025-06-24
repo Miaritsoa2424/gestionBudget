@@ -248,4 +248,24 @@ class TicketController {
         ];
         Flight::render('templatedev', $data);
     }
+    public function updateTicketDuration() {
+        $data = Flight::request()->data;
+        $idTicket = $data['id_ticket'] ?? null;
+        $duree = $data['duree'] ?? null;
+
+        if (!$idTicket || !$duree) {
+            Flight::json(['error' => 'ID du ticket ou durée manquante.'], 400);
+            return;
+        }
+
+        $date = date('Y-m-d H:i:s'); // Date actuelle
+        $mvtDuree = new MvtDuree(null, $duree, $date, $idTicket);
+        if ($mvtDuree->save()) {
+            $_SESSION['success_message'] = 'Durée mise à jour avec succès.';
+            Flight::redirect('/admin');
+        } else {
+            $_SESSION['error_message'] = 'Erreur lors de la mise à jour de la durée.';
+            Flight::redirect('/admin');
+        }
+    }
 }
