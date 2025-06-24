@@ -198,13 +198,13 @@ ALTER TABLE message
  ADD COLUMN contenu VARCHAR(1000);
 
 
-ALTER TABLE report_client
-ADD CONSTRAINT fk_report_statut
-FOREIGN KEY (statut) REFERENCES statut(id_status);
+-- ALTER TABLE report_client
+-- ADD CONSTRAINT fk_report_statut
+-- FOREIGN KEY (statut) REFERENCES statut(id_status);
 
-ALTER TABLE ticket
-ADD CONSTRAINT fk_ticket_statut
-FOREIGN KEY (id_statut) REFERENCES statut(id_status);
+-- ALTER TABLE ticket
+-- ADD CONSTRAINT fk_ticket_statut
+-- FOREIGN KEY (id_statut) REFERENCES statut(id_status);
 
 -- Pour MySQL
 -- ALTER TABLE statut 
