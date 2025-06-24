@@ -50,4 +50,19 @@ class CategorieTicket
         }
         return null; // Retourne null si la catégorie n'existe pas
     }
+
+    public static function getCategorieByName($nom)
+    {
+        $db = \Flight::db();
+        $stmt = $db->prepare("SELECT * FROM categorie_ticket WHERE nom = :nom");
+        $stmt->execute([':nom' => $nom]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row) {
+            return new CategorieTicket(
+                $row['id_categorie'],
+                $row['nom']
+            );
+        }
+        return null; // Retourne null si la catégorie n'existe pas
+    }
 }
