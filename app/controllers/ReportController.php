@@ -21,9 +21,11 @@ class ReportController {
 
         if (isset($_SESSION['id_client'])) {
             $id_client = $_SESSION['id_client'] ?? null; // À adapter selon votre gestion de session
+            // $id_client = $_SESSION['id_client'] ?? 1; // À adapter selon votre gestion de session
         }
         if (isset($_POST['id_client'])) {
             $id_client = $_POST['id_client'];
+            // $id_client = 1;
         } else {
             $id_client = null; // Si l'id client n'est pas fourni, on le met à null
         }

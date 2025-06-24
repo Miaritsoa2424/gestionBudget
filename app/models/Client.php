@@ -77,8 +77,8 @@ class Client {
     public static function getByNom($nom) {
         $conn = Flight::db();
         $stmt = $conn->prepare("SELECT * FROM client WHERE nom = :nom");
-        $stmt->bindParam(':nom', $nom);
-        $stmt->execute();
+
+        $stmt->execute([':nom' => $nom]);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
         if ($row) {
             return new Client(

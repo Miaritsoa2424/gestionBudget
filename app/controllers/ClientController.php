@@ -148,10 +148,11 @@ class ClientController {
 
         $client = Client::getByNom($nom);
 
-        if ($client && ($mdp == $client['mdp'])) {
+        if ($client && ($mdp == $client->getPwd())) {
             // Authentification réussie
-            $_SESSION['idClient'] = $client['id_client'];
-            $_SESSION['nomClient'] = $client['nom'];
+            $_SESSION['id_client'] = $client->getId();
+            $_SESSION['nom_client'] = $client->getNom();
+
 
             Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true]);
         } else {
