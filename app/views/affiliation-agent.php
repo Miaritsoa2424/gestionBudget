@@ -9,7 +9,6 @@
                 <?php
 
         use app\models\CategorieTicket;
-        use app\models\TicketModel;
 
  foreach ($categories as $categorie): ?>
                     <option value="<?= $categorie->getId() ?>"><?= htmlspecialchars($categorie->getNom()) ?></option>
