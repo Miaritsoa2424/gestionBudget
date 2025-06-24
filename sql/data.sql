@@ -244,4 +244,7 @@ INSERT INTO importance (libelle) VALUES
 ('Critique');
 
 
+select*from ticket;
+
+
 
