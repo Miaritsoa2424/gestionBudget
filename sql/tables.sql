@@ -184,3 +184,6 @@ CREATE TABLE ticket_importance(
 
 ALTER TABLE message 
  ADD COLUMN contenu VARCHAR(1000);
+
+ALTER TABLE message
+ADD COLUMN discu_termine INT DEFAULT 0;

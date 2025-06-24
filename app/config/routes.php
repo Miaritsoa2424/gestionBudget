@@ -118,7 +118,8 @@ $router->get('/message', [$AgentController, 'message']);
 $router->get('/agent', [$welcomeController, 'message']);
 
 $router->get('/listMessages', [$AgentController, 'listMessages']);
-
+$router->post('/send-message', [$AgentController, 'sendMessage']);
+$router->post('/end-discussion', [$AgentController, 'endDiscussion']);
 
 $ReportController = new ReportController();
 $router->post('/submit-report', [$ReportController, 'insertReport']);
