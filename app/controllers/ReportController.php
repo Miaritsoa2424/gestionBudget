@@ -80,5 +80,51 @@ class ReportController {
             Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true, 'donnees' => $report]);
         }
     }
+
+    public function submitRating() {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id_client = $_SESSION['id_client'] ?? null;
+        $id_agent = $data['id_agent'] ?? null;
+        $note = $data['note'] ?? null;
+        $commentaire = $data['commentaire'] ?? null;
+
+        if (!$id_client || !$id_agent || !$note) {
+            Flight::json(['success' => false, 'error' => 'Paramètres manquants']);
+            return;
+        }
+
+        // Récupérer le dernier report_client lié à ce client et cet agent
+        $db = Flight::db();
+        $sql = "SELECT rc.id_report
+                FROM report_client rc
+                JOIN ticket t ON t.id_report = rc.id_report
+                WHERE rc.id_client = :id_client AND t.id_agent = :id_agent
+                ORDER BY rc.date_report DESC
+                LIMIT 1";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'id_client' => $id_client, 
+            'id_agent' => $id_agent
+        ]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            Flight::json(['success' => false, 'error' => 'Aucun rapport trouvé']);
+            return;
+        }
+
+        $id_report = $row['id_report'];
+
+        // Mettre à jour la note, date_note et commentaire
+        $sql2 = "UPDATE report_client SET note = :note, date_note = NOW(), commentaire = :comm WHERE id_report = :id_report";
+        $stmt2 = $db->prepare($sql2);
+        $ok = $stmt2->execute([
+            ':note' => $note, 
+            ':comm' => $commentaire, 
+            ':id_report' => $id_report
+        ]);
+
+        Flight::json(['success' => $ok]);
+    }
 }
 
