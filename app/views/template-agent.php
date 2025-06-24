@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="nav-item">
-                <a>
+                <a href="list-">
                     <i class="fa fa-message"></i> Discussions
                 </a>
             </div>

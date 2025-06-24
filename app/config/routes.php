@@ -15,6 +15,7 @@ use app\controllers\DepartementController;
 use app\controllers\StatistiqueController;
 use app\controllers\ModifDeptController;
 use app\controllers\TicketController;
+use app\controllers\AgentController;
 
 /** 
  * @var Router $router 
@@ -102,6 +103,8 @@ $router->get('/ticket', [$ticketController, 'getTickets']);
 $welcomeController = new WelcomeController();
 $router->get('/welcome', [$welcomeController, 'home']);
 
+$AgentController = new AgentController();
+
 $ClientController = new ClientController();
 $router->get('/list-client', [$ClientController, 'listClientFront']);
 $router->get('/detail-client', [$ClientController, 'clientDetail']);
@@ -111,9 +114,9 @@ $router->get('/report-client', [$ClientController, 'getFormulaireReportClient'])
 $router->get('/home', [$ClientController, 'getHomeCLient']);
 $router->post('/client-login', [$ClientController, 'clientLogin']);
 
-$router->get('/message', [$welcomeController, 'message']);
+$router->get('/message', [$AgentController, 'message']);
 $router->get('/agent', [$welcomeController, 'message']);
-$router->get('/listMessages', [$welcomeController, 'listMessages']);
+$router->get('/listMessages', [$AgentController, 'listMessages']);
 
 
 $ReportController = new ReportController();
