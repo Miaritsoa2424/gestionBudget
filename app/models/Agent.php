@@ -65,6 +65,18 @@ class Agent {
         return null;
     }
 
+    public static function getByNom($nom) {
+        $conn = Flight::db();
+        $stmt = $conn->prepare("SELECT * FROM agent WHERE nom = :nom");
+        $stmt->execute([':nom' => $nom]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row) {
+            return new Agent($row['id_agent'], $row['nom'], $row['prenom'], $row['email'], $row['password']);
+        }
+        return null;
+    }
+
+
     // Update
     public function update() {
         $conn = Flight::db();

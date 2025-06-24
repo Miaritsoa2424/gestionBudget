@@ -109,6 +109,8 @@ $router->get('/welcome', [$welcomeController, 'home']);
 
 $AgentController = new AgentController();
 $router->get('/logout-agent', [$AgentController, 'deconnexion']);
+$router->get('/agent', [$AgentController, 'formLoginAgent']);
+$router->post('/agent-login', [$AgentController, 'loginAgent']);
 
 $ClientController = new ClientController();
 $router->get('/logout-client', [$ClientController, 'deconnexion']);
