@@ -19,13 +19,10 @@
         <ul class="nav-links" >
             <li><a href="<?= Flight::get('flight.base_url') ?>/homeClient"><i class="fas fa-home"></i> Accueil</a></li>
             <li class="active"><a href="report-client"><i class="fas fa-file-alt "></i> Rapport</a></li>
-            <li><a href="<?= Flight::get('flight.base_url') ?>/listMessagesClient"><i class="fas fa-comments"></i> Discussion</a></li>
-            <li>
-                <a href="<?= Flight::get('flight.base_url') ?>/client/notifications">
-                    <i class="fas fa-bell"></i> Notifications
-                    <span class="notification-badge">0</span>
-                </a>
-            </li>
+            <li><a href="<?= Flight::get('flight.base_url') ?>/listMessagesClient"><i class="fas fa-comments"></i> Discussion
+            <span class="notification-badge">0</span>
+            </a></li>
+            
             <li><a href="<?= Flight::get('flight.base_url') ?>/logout-client"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
         </ul>
     </nav>
