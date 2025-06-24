@@ -7,50 +7,7 @@
     <div class="filters">
         <input type="text" placeholder="🔍" id="global-search">
         <button class="clear-btn" type="button">✖</button>
-        <input type="text" placeholder="Réf." id="filter-ref">
 
-        <!-- Auteur (Clients) -->
-        <select id="filter-auteur">
-            <option value="">Auteur</option>
-            <?php foreach ($clients as $client): ?>
-                <option value="<?= htmlspecialchars($client->getNom()).' '.htmlspecialchars($client->getPrenom()) ?>"><?= htmlspecialchars($client->getNom()).' '.htmlspecialchars($client->getPrenom()) ?></option>
-            <?php endforeach; ?>
-        </select>
-
-        <input type="text" placeholder="Sujet" id="filter-sujet">
-
-        <!-- Type -->
-        <select id="filter-type">
-            <option value="">Type</option>
-            <option value="Bug">Bug</option>
-            <option value="Feature">Feature</option>
-            <option value="Support">Support</option>
-        </select>
-
-        <!-- Sévérité -->
-        <select id="filter-severite">
-            <option value="">Sévérité</option>
-            <option value="Critique">Critique</option>
-            <option value="Haute">Haute</option>
-            <option value="Moyenne">Moyenne</option>
-            <option value="Basse">Basse</option>
-        </select>
-
-        <input type="text" placeholder="Tiers" id="filter-tiers">
-
-        <div class="date-range">
-            <input type="date" placeholder="Du" id="filter-date-du">
-            <input type="date" placeholder="au" id="filter-date-au">
-        </div>
-
-        <!-- État -->
-        <select id="filter-etat">
-            <option value="">-- Ouvert (tout)</option>
-            <option value="Nouveau">Nouveau</option>
-            <option value="En cours">En cours</option>
-            <option value="Résolu">Résolu</option>
-            <option value="Fermé">Fermé</option>
-        </select>
     </div>
 
     <table class="results-table">

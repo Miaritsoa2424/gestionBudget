@@ -67,7 +67,9 @@
                                 </span>
                             </td>
                             <td>
+
                                 <a href="<?= Flight::get('flight.base_url') ?>/detail-report/<?= $report['id']?>" class="btn btn-sm btn-info">Voir</a>
+
                             </td>
                         </tr>
                         <?php endforeach; ?>

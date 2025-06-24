@@ -45,7 +45,6 @@ CREATE TABLE Valeur (
     FOREIGN KEY (idDept) REFERENCES Dept(idDept)
 );
 
-
 CREATE TABLE soldeInitial (
     idSolde INT PRIMARY KEY AUTO_INCREMENT,
     idDept INT NOT NULL,
@@ -60,7 +59,6 @@ CREATE TABLE produit (
     prix DECIMAL(15,2) NOT NULL,
     stock INT NOT NULL CHECK (stock >= 0)
 );
-
 
 CREATE TABLE vente (
     idVente INT PRIMARY KEY AUTO_INCREMENT,
@@ -167,6 +165,7 @@ ALTER TABLE ticket
 MODIFY COLUMN id_agent INT;
 
 
+
 ALTER TABLE report_client ADD COLUMN statut INTEGER DEFAULT 0 NOT NULL;
 ALTER TABLE report_client MODIFY COLUMN statut INTEGER DEFAULT 0 NOT NULL;
 
@@ -175,3 +174,25 @@ ALTER TABLE ticket CHANGE COLUMN etat id_etat INTEGER DEFAULT 0 NOT NULL;
 
 
 ALTER TABLE ticket ADD COLUMN dateCreation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE report_client 
+ ADD COLUMN status_report INT DEFAULT 0;
+
+CREATE TABLE importance(
+    id_importance INT PRIMARY KEY auto_increment,
+    libelle VARCHAR(50)
+);
+
+CREATE TABLE ticket_importance(
+    id INT PRIMARY KEY auto_increment,
+    id_ticket INT NOT NULL,
+    id_importance INT NOT NULL,
+    FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
+    FOREIGN KEY(id_importance) REFERENCES importance(id_importance)
+);
+
+-- Update 24/06/2025
+
+ALTER TABLE message 
+ ADD COLUMN contenu VARCHAR(1000);
+

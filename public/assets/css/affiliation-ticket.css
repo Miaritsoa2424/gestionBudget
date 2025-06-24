@@ -1,0 +1,137 @@
+.affiliation-ticket {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.affiliation-ticket .affiliation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 5vh;
+}
+.affiliation-ticket .affiliation-form {
+  font: sans-serif;
+  font-size: 16px;
+}
+.affiliation-ticket .ticket-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.affiliation-ticket .email-style {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+}
+.affiliation-ticket .email-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+.affiliation-ticket .sender-avatar {
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+.affiliation-ticket .email-meta .sender {
+  font-weight: bold;
+  margin: 0;
+}
+.affiliation-ticket .email-meta .date {
+  color: #666;
+  margin: 0;
+}
+.affiliation-ticket .email-subject {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+.affiliation-ticket .email-category {
+  color: #666;
+  font-style: italic;
+}
+.affiliation-ticket .email-body {
+  padding: 1rem 0;
+  line-height: 1.6;
+}
+.affiliation-ticket .agents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 350px; /* Hauteur pour environ 4 agents */
+  overflow-y: auto;
+  padding-right: 10px; /* Espace pour la scrollbar */
+}
+.affiliation-ticket .agents-list::-webkit-scrollbar {
+  width: 6px;
+}
+.affiliation-ticket .agents-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+.affiliation-ticket .agents-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+.affiliation-ticket .agents-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.affiliation-ticket .agent-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.affiliation-ticket .agent-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.affiliation-ticket .agent-name {
+  flex-grow: 1;
+}
+.affiliation-ticket .calculation-section {
+  margin-top: 2rem;
+}
+.affiliation-ticket .form-group {
+  margin-bottom: 1rem;
+}
+.affiliation-ticket .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.affiliation-ticket .form-group input, .affiliation-ticket .form-group select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.affiliation-ticket .total-section {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+.affiliation-ticket .submit-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-size: 16px;
+}
+.affiliation-ticket .submit-btn:hover {
+  background: #0056b3;
+}
+@media (max-width: 768px) {
+  .affiliation-ticket .affiliation-grid {
+    grid-template-columns: 1fr;
+  }
+}/*# sourceMappingURL=affiliation-ticket.css.map */

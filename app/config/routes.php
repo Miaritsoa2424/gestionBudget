@@ -1,6 +1,6 @@
 <?php
 
-use app\controllers\StatController;
+use app\controllers\ReportController;
 use app\controllers\FormController;
 use app\controllers\ValeurController;
 use app\controllers\ValidationController;
@@ -15,6 +15,7 @@ use app\controllers\DepartementController;
 use app\controllers\StatistiqueController;
 use app\controllers\ModifDeptController;
 use app\controllers\TicketController;
+use app\controllers\AgentController;
 
 /** 
  * @var Router $router 
@@ -102,11 +103,40 @@ $router->get('/ticket', [$ticketController, 'getTickets']);
 $welcomeController = new WelcomeController();
 $router->get('/welcome', [$welcomeController, 'home']);
 
+$AgentController = new AgentController();
+
 $ClientController = new ClientController();
 $router->get('/list-client', [$ClientController, 'listClientFront']);
+
 $router->get('/detail-client/@id:[0-9]+', [$ClientController, 'clientDetail']);
 $router->get('/detail-report/@id:[0-9]+', [$ClientController, 'clientReportDetail']);
+
 $router->get('/report-client', [$ClientController, 'getFormulaireReportClient']);
 $router->get('/home', [$ClientController, 'getHomeCLient']);
+$router->post('/client-login', [$ClientController, 'clientLogin']);
+
+$router->get('/message', [$AgentController, 'message']);
+$router->get('/agent', [$welcomeController, 'message']);
+
+$router->get('/listMessages', [$AgentController, 'listMessages']);
+
+
+$ReportController = new ReportController();
+$router->post('/submit-report', [$ReportController, 'insertReport']);
+$router->get('/affilierTicket/@id', [$welcomeController, 'affilierTicket']);
+
+
+$router->get('/homeClient', [$welcomeController, 'homeClient']);
+$router->get('/listMessagesClient', [$welcomeController, 'listMessagesClient']);
+$router->get('/messageClient/@id', [$welcomeController, 'messageClient']);
+
+$router->get('/stat-admin', [$welcomeController, 'statAdmin']);
+$router->get('/list-agents', [$welcomeController, 'listAgents']);
+$router->get('/fiche-paie/@id_agent', [$welcomeController, 'fichePaie']);
+
+
+
+
+
 
 
