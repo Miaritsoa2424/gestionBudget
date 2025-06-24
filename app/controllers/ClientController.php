@@ -141,26 +141,6 @@ class ClientController {
         ];
         Flight::render('template-client', $data);
     }
-    
-
-    public function clientLogin() {
-        $nom = Flight::request()->data->nom;
-        $mdp = Flight::request()->data->mdp;
-
-        $client = Client::getByNom($nom);
-
-        if ($client && ($mdp == $client->getPwd())) {
-            // Authentification réussie
-            $_SESSION['id_client'] = $client->getId();
-            $_SESSION['nom_client'] = $client->getNom();
-
-
-            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true]);
-        } else {
-           
-            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true]);
-        }
-    }
 
     public function listMessagesClient() {
         // Supposons que l'id du client est stocké en session
@@ -230,6 +210,31 @@ class ClientController {
             Flight::json(['success' => true]);
         } else {
             Flight::json(['success' => false]);
+        }
+    }
+
+    public function getFormulaireLoginClient()
+    {
+        Flight::render('login-client');
+    }
+
+    public function loginClient() {
+        $nom = Flight::request()->data->nom;
+        $mdp = Flight::request()->data->mdp;
+        // echo $nom;
+        // echo $mdp;
+
+        $client = Client::getByNom($nom);
+
+        if ($client && ($mdp == $client->getPwd())) {
+            // Authentification réussie
+            $_SESSION['id_client'] = $client->getId();
+            $_SESSION['nom_client'] = $client->getNom();
+
+            Flight::redirect('homeClient');
+        } else {
+            // Authentification échouée
+            Flight::render('login-client', ['error' => 'Identifiants incorrects']);
         }
     }
 }

@@ -109,13 +109,14 @@ $router->get('/logout-agent', [$AgentController, 'deconnexion']);
 $ClientController = new ClientController();
 $router->get('/logout-client', [$ClientController, 'deconnexion']);
 $router->get('/list-client', [$ClientController, 'listClientFront']);
+$router->get('/client', [$ClientController, 'getFormulaireLoginClient']);
+$router->post('/client-login', [$ClientController, 'loginClient']);
 
 $router->get('/detail-client/@id', [$ClientController, 'clientDetail']);
 $router->get('/detail-report/@id', [$ClientController, 'clientReportDetail']);
 
 $router->get('/report-client', [$ClientController, 'getFormulaireReportClient']);
 $router->get('/home', [$ClientController, 'getHomeCLient']);
-$router->post('/client-login', [$ClientController, 'clientLogin']);
 
 $router->get('/message', [$AgentController, 'message']);
 $router->get('/messageClient', [$ClientController, 'messageClient']);
