@@ -23,10 +23,7 @@ class ReportController {
             $id_client = $_SESSION['id_client'] ?? null; // À adapter selon votre gestion de session
             // $id_client = $_SESSION['id_client'] ?? 1; // À adapter selon votre gestion de session
         }
-        if (isset($_POST['id_client'])) {
-            $id_client = $_POST['id_client'];
-            // $id_client = 1;
-        } else {
+       else {
             $id_client = null; // Si l'id client n'est pas fourni, on le met à null
         }
         // $id_client = 1;
@@ -52,13 +49,24 @@ class ReportController {
             date('Y-m-d H:i:s'),
             null, // note
             null, // date_note
-            null  // commentaire
+            null,  // commentaire,
+            0,
+            $id_client
         );
 
         // Sauvegarde du rapport
-        $success = false;
-        if ($id_client && $report->saveReport($id_client)) {
-            $success = true;
+        if (!$id_client) {
+            die('Erreur : id_client manquant');
+        }
+
+        // ...reste du code...
+        try {
+            $success = false;
+            if ($id_client && $report->saveReport($id_client)) {
+                $success = true;
+            }
+        } catch (\PDOException $e) {
+            die('Erreur SQL : ' . $e->getMessage());
         }
 
         $data = [
@@ -67,9 +75,9 @@ class ReportController {
         ];
         // Redirection ou affichage selon le résultat
         if ($success) {
-            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true]);
+            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'success' => true, 'donnees' => $report]);
         } else {
-            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true]);
+            Flight::render('template-client', ['title' => 'Rapport client', 'page' => 'report-client', 'error' => true, 'donnees' => $report]);
         }
     }
 }

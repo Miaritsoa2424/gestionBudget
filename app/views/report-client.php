@@ -2,11 +2,11 @@
     <h2>Nouveau Rapport</h2>
     <?php if (isset($success) && $success): ?>
         <div class="alert alert-success" style="color: #155724; background: #d4edda; border: 1px solid #c3e6cb; padding: 10px; margin-bottom: 15px;">
-            Rapport envoyé avec succès ! 
+            Rapport envoyé avec succès ! <?= $donnees->getId() ?>
         </div>
     <?php elseif (isset($error) && $error): ?>
         <div class="alert alert-danger" style="color: #721c24; background: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px;">
-            Une erreur est survenue lors de l'envoi du rapport. 
+            Une erreur est survenue lors de l'envoi <?= $donnees->getId(); $donnees->getLibelle() ?> du rapport. 
         </div>
     <?php endif; ?>
     
