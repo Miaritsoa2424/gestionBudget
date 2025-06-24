@@ -79,4 +79,17 @@ class MvtDuree
         }
         return null;
     }
+
+    public function save()
+    {
+        $db = \Flight::db();
+        $stmt = $db->prepare("INSERT INTO mvt_duree (duree, date_duree, id_ticket) VALUES (:duree, :date_duree, :id_ticket)");
+        $stmt->execute([
+            ':duree' => $this->duree,
+            ':date_duree' => $this->dateDuree,
+            ':id_ticket' => $this->idTicket
+        ]);
+        $this->id = $db->lastInsertId();
+        return $this->id;
+    }
 }
