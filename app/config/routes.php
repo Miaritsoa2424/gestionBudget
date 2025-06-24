@@ -111,8 +111,8 @@ $AgentController = new AgentController();
 $router->get('/logout-agent', [$AgentController, 'deconnexion']);
 $router->get('/agent', [$AgentController, 'formLoginAgent']);
 $router->post('/agent-login', [$AgentController, 'loginAgent']);
-$router->get('/fiche-paie/@id_agent', [$AgentController, 'fichePaieAgent']);
-
+$router->get('/fiche-paie/@id', [$AgentController, 'fichePaie']);
+    
 
 $ClientController = new ClientController();
 $router->get('/logout-client', [$ClientController, 'deconnexion']);
@@ -148,7 +148,7 @@ $router->get('/listMessagesClient', [$ClientController, 'listMessagesClient']);
 $router->get('/messageClient/@id', [$ClientController, 'messageClient']);
 
 $router->get('/stat-admin', [$StatController, 'dashboard']);
-$router->get('/list-agents', [$welcomeController, 'listAgents']);
+$router->get('/list-agents', [$AgentController, 'listAgents']);
 
 $router->get('/list-ticket-agent', [$ticketController, 'getTicketsAgent']);
 
