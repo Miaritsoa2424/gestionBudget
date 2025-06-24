@@ -207,8 +207,8 @@ ADD CONSTRAINT fk_ticket_statut
 FOREIGN KEY (id_statut) REFERENCES statut(id_status);
 
 -- Pour MySQL
-ALTER TABLE statut 
-CHANGE COLUMN id_status id_statut INT AUTO_INCREMENT;
+-- ALTER TABLE statut 
+-- CHANGE COLUMN id_status id_statut INT AUTO_INCREMENT;
 
 
 -- Modification de la colonne id_agent pour qu'elle soit NULL par défaut
@@ -216,8 +216,8 @@ ALTER TABLE ticket
 MODIFY COLUMN id_agent INT DEFAULT NULL;
 
 
-ALTER TABLE statut
-CHANGE COLUMN nom libelle VARCHAR(50);
+-- ALTER TABLE statut
+-- CHANGE COLUMN nom libelle VARCHAR(50);
 
 
 ALTER TABLE message
