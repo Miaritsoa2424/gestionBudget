@@ -92,13 +92,23 @@ class Agent {
     }
 
     public static function getAgentDispo() {
-        // ici on cherchera les agents dont leur nombre de ticket est inferieur a la moyenne des nombres de ticket
+        // On ne compte que les tickets dont le statut est 3
         $conn = Flight::db();
-        $stmt = $conn->query("SELECT a.id_agent, a.nom, a.prenom, COUNT(t.id_ticket) AS nb_tickets
-                              FROM agent a
-                              LEFT JOIN ticket t ON a.id_agent = t.id_agent
-                              GROUP BY a.id_agent
-                              HAVING nb_tickets < (SELECT AVG(nb_tickets) FROM (SELECT COUNT(id_ticket) AS nb_tickets FROM ticket GROUP BY id_agent) AS sub) order by nb_tickets ASC");
+        $stmt = $conn->query("
+            SELECT a.id_agent, a.nom, a.prenom, COUNT(t.id_ticket) AS nb_tickets
+            FROM agent a
+            LEFT JOIN ticket t ON a.id_agent = t.id_agent AND t.id_statut = 2
+            GROUP BY a.id_agent
+            HAVING nb_tickets < (
+                SELECT AVG(nb_tickets) FROM (
+                    SELECT COUNT(id_ticket) AS nb_tickets 
+                    FROM ticket 
+                    WHERE id_statut = 2
+                    GROUP BY id_agent
+                ) AS sub
+            )
+            ORDER BY nb_tickets ASC
+        ");
         $agents = [];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $agents[] = new Agent($row['id_agent'], $row['nom'], $row['prenom']);
