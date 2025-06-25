@@ -141,9 +141,9 @@ CREATE TABLE ticket(
    FOREIGN KEY(id_report) REFERENCES report_client(id_report)
 );
 
-SELECT (mvt.duree*ticket.cout_horaire) from ticket 
-    JOIN (select duree from mvt_duree JOIN ticket as t on mvt_duree.id_ticket=t.id_ticket where id_report = 1 ORDER BY nvt_duree.id_mvt_duree desc limit 1) as mvt
-    where ticket.id_report = 1;
+-- SELECT (mvt.duree*ticket.cout_horaire) from ticket 
+--     JOIN (select duree from mvt_duree JOIN ticket as t on mvt_duree.id_ticket=t.id_ticket where id_report = 1 ORDER BY mvt_duree.id_mvt_duree desc limit 1) as mvt
+--     where ticket.id_report = 1;
 
 CREATE TABLE mvt_duree(
    id_mvt_duree INT auto_increment,
