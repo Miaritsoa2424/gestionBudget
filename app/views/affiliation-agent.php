@@ -96,10 +96,10 @@
                             <td><?= htmlspecialchars($ticket['client']->getNom()) . ' ' . htmlspecialchars($ticket['client']->getPrenom()) ?></td>
                             <td><?= htmlspecialchars($ticket['date']) ?></td>
                             <td><span class="status-badge <?= strtolower($ticket['statut']) ?>"><?= ucfirst($ticket['statut']) ?></span></td>
-                            <td><?= $ticket['duree'] ?? '0' ?> </td>
+                            <td><?= $ticket['duree'] ?? '0' ?>h </td>
                             <td>
                                 <span class="priority <?= strtolower($ticket['priorite']) ?>">
-                                    <?= ucfirst($ticket['priorite']) ?>
+                                    <?= ucfirst($ticket['priorite'])?>
                                 </span>
                             </td>
                             <td>
@@ -450,5 +450,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     console.log('Système de filtrage des tickets initialisé');
+
+    document.getElementById('updateDureeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        fetch('/gestionBudget/updateDureeTicket', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.error) {
+                // Met à jour le DOM si besoin
+                document.getElementById('modifyModal').style.display = 'none';
+                location.reload(); // Ou mets à jour la ligne concernée
+            } else {
+                alert(data.error);
+            }
+        });
+    });
 });
 </script>

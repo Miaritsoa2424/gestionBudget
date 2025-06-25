@@ -97,7 +97,7 @@
             <div class="form-group">
                 <label>Categorie</label>
                 <select class="form-control" name="id_categorie">
-                    <option value="">-- Séléctionner une priorité --</option>
+                    <option value="">-- Séléctionner une cat&eacute;gorie --</option>
                     <?php foreach ($demoReport['categories'] as $categorie): ?>
                         <option value="<?= $categorie->getId(); ?>"><?= $categorie->getNom(); ?></option>
                     <?php endforeach; ?>
