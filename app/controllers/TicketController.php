@@ -228,7 +228,8 @@ class TicketController {
             'page' => 'affiliation-agent',
             'tickets' => $ticket2d,
             'categories' => CategorieTicket::getAll(),
-            'priorites' => Importance::getAll()
+            'priorites' => Importance::getAll(),
+            'statuts' => Statut::getAll()
         ];
         Flight::render('templatedev', $data);
     }
@@ -265,7 +266,8 @@ class TicketController {
             'page' => 'tickets-agent',
             'tickets' => $ticket2d,
             'categories' => CategorieTicket::getAll(),
-            'priorites' => Importance::getAll()
+            'priorites' => Importance::getAll(),
+            'statuts' => Statut::getAll()
         ];
         Flight::render('template-agent', $data);
     }
@@ -318,7 +320,7 @@ class TicketController {
             return;
         }
 
-        
+
         // Récupération du ticket
         $ticket = TicketModel::getById($data['ticket_id']);
         if (!$ticket) {
