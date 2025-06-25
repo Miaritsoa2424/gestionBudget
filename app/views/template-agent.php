@@ -26,6 +26,15 @@
     <div class="container">
         <div class="sidebar">
             <h3><i style="color: #0A6CF6;" class="fas fa-ticket-alt"></i> Tickets(Agent)</h3>
+            <div class="nav-item">
+                <a class="active nav-link">
+                    <i class="fas fa-plus-circle"></i> Ticket
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="sub-menu">
+                    <a href="<?= Flight::get('flight.base_url') ?>/agent"><i class="fas fa-list"></i>Liste Ticket </a>
+                </div>
+            </div>
             
             <div class="nav-item">
                 <a href="<?= Flight::get('flight.base_url') ?>/listMessages">

@@ -175,6 +175,7 @@ class AgentController {
             AND MONTH(ticket.date_creation) = ?
             AND YEAR(ticket.date_creation) = ?
             ORDER BY ticket.date_creation DESC
+            LIMIT 1
         ");
         $stmtTickets->execute([$id_agent, $month, $year]);
         $tickets = $stmtTickets->fetchAll(\PDO::FETCH_ASSOC);

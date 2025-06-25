@@ -202,9 +202,9 @@ INSERT INTO agent (id_agent, nom, prenom, email, password) VALUES
 (2, 'Leroy', 'Sophie', 'sophie.leroy@email.com', 'agent456');
 
 
-INSERT INTO report_client (id_report, libelle, piece_jointe, date_report, note, date_note, commentaire, id_client, statut) VALUES
-(1, 'Problème de connexion', 'screenshot1.png', '2025-06-22 10:00:00', 4, '2025-06-22', 'Connexion impossible ce matin.', 1, 1),
-(2, 'Demande de devis', NULL, '2025-06-21 09:30:00', 5, '2025-06-21', 'Merci pour la rapidité.', 2, 0);
+-- INSERT INTO report_client (id_report, libelle, piece_jointe, date_report, note, date_note, commentaire, id_client, statut) VALUES
+-- (1, 'Problème de connexion', 'screenshot1.png', '2025-06-22 10:00:00', 4, '2025-06-22', 'Connexion impossible ce matin.', 1, 1),
+-- (2, 'Demande de devis', NULL, '2025-06-21 09:30:00', 5, '2025-06-21', 'Merci pour la rapidité.', 2, 0);
 
 
 
