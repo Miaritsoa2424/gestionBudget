@@ -14,6 +14,7 @@ use app\models\Crm;
 use app\models\Valeur;
 use app\models\CategorieTicket;
 use app\models\MvtDuree;
+use app\models\Solde;
 use Flight;
 use app\models\Statistique;
 use app\models\StatutTicket;
@@ -319,25 +320,6 @@ class TicketController {
             return;
         }
 
-        $sql = "
-                SELECT (mvt.duree*ticket.cout_horaire) from ticket 
-                JOIN (select duree from mvt_duree where id_ticket = :idTicket ORDER BY mvt_duree.id_mvt_duree desc limit 1) as mvt
-                where ticket.id_ticket = :idTicket2;";
-        $stmt = Flight::db()->prepare($sql);
-        $stmt->execute([':idTicket' => $data['ticket_id'], ':idTicket2' => $data['ticket_id']]);
-        $montant = (float) $stmt->fetchColumn();
-        $date = date('Y-m-d H:i:s'); // Date actuelle
-        $nomRubrique = 'Satisfaction client';
-
-        $date = date('Y-m-d'); // Date actuelle
-        $sommeCRM = Crm::getResteCRMValue(6, $date);
-        $validation = 0; // Par défaut, on ne valide pas
-            if ($sommeCRM > $montant) {
-                $validation = 1;
-            }
-        
-        $valeur = new Valeur(0, $nomRubrique, 8, 1, $montant, $date, $validation, 6);
-        $valeur->insert();
 
         // Récupération du ticket
         $ticket = TicketModel::getById($data['ticket_id']);
@@ -381,6 +363,33 @@ class TicketController {
                 'agents' => Agent::getAgentDispo(),
                 'successMessage' => 'Ticket affilié avec succès !'
             ];
+
+            $sql = "
+                SELECT (mvt.duree*ticket.cout_horaire) as value from ticket 
+                JOIN (select duree from  mvt_duree where id_ticket = :idTicket ORDER BY mvt_duree.id_mvt_duree desc limit 1) as mvt
+                where ticket.id_ticket = :idTicket2;";
+        $stmt = Flight::db()->prepare($sql);
+        $stmt->execute([':idTicket' => $data['ticket_id'], ':idTicket2' => $data['ticket_id']]);
+
+        
+        $montant = $stmt->fetchColumn();
+
+        $date = date('Y-m-d'); // Date actuelle
+        $nomRubrique = 'Satisfaction client';
+
+        // $date = date('Y-m-d H:i:s'); // Date actuelle
+        $solde = new Solde();
+        $sommeCRM = $solde->getSoldeInitial(6)['montant'] - (float)Crm::getResteTicketsValue(6, $date);
+        $validation = 0; // Par défaut, on ne valide pas
+            if ($sommeCRM > $montant) {
+                $validation = 1;
+            }
+        
+        $valeur = new Valeur(0, $nomRubrique, 8, 1, $montant, $date, $validation, 6);
+        $valeur->insert();
+
+
+
             Flight::render('templatedev', $dataRender);
         } else {
             $dataRender = [
@@ -393,7 +402,8 @@ class TicketController {
                 'agents' => Agent::getAgentDispo(),
                 'errorMessage' => 'Erreur lors de l\'affiliation du ticket.'
             ];
-            Flight::render('templatedev', $dataRender);}}
+            Flight::render('templatedev', $dataRender);}
+        }
 
     public function updateTicketDuration() {
         $data = Flight::request()->data;

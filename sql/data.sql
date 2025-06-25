@@ -248,13 +248,13 @@ INSERT INTO Dept (nomDept, mdp) VALUES
 ('Commercial', 'mdp123');
 
 INSERT INTO Categorie (nomCategorie, recetteOuDepense) VALUES 
-('Commerciale', 0);  -- Dépense
+('Tickets', 0);  -- Dépense
 
 INSERT INTO Type (idCategorie, nomType) VALUES 
 (8, 'Tickets');
 
 INSERT INTO soldeInitial (idDept, montant, dateInsertion) VALUES
-(6, 1000000.00, '2025-01-01'); -- Solde initial pour le département Finance
+(6, 1000000.00, '2025-06-06'); -- Solde initial pour le département Finance
 
 
 INSERT INTO Droit (idDeptPere, idDeptFils) VALUES (
@@ -263,7 +263,7 @@ INSERT INTO Droit (idDeptPere, idDeptFils) VALUES (
 ;
 
 
-select*from ticket;
+-- select*from ticket;
 
 
 
