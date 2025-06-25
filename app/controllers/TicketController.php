@@ -109,7 +109,7 @@ class TicketController {
     public function insertTicket() {
         $data = Flight::request()->data;
     
-        $clients = Client::getClientReportDetail(1);
+        $clients = Client::getClientReportDetail($data['id_report']);
     
         $demoReport = [
             'client' => [
