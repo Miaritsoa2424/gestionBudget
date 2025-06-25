@@ -16,6 +16,7 @@
             <i class="fas fa-ticket-alt"></i>
             <span>Support Client</span>
         </div>
+        
         <ul class="nav-links" >
             <li><a href="<?= Flight::get('flight.base_url') ?>/homeClient"><i class="fas fa-home"></i> Accueil</a></li>
             <li class="active"><a href="report-client"><i class="fas fa-file-alt "></i> Rapport</a></li>
