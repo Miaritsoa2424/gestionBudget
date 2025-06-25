@@ -36,11 +36,11 @@ class Statistique {
      */
     public function getTopCustomers() {
         $query = "
-            SELECT c.idClient, c.nomClient, SUM(v.quantite * p.prix) as total_achats
+            SELECT c.id_client, c.nom, SUM(v.quantite * p.prix) as total_achats
             FROM client c
-            JOIN vente v ON c.idClient = v.idClient
+            JOIN vente v ON c.id_client = v.idClient
             JOIN produit p ON v.idProduit = p.idProduit
-            GROUP BY c.idClient
+            GROUP BY c.id_client
             ORDER BY total_achats DESC
             LIMIT 5
         ";

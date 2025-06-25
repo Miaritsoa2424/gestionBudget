@@ -67,7 +67,7 @@ CREATE TABLE vente (
     dateVente DATE NOT NULL,
     quantite INT NOT NULL CHECK (quantite > 0),
     FOREIGN KEY (idProduit) REFERENCES produit(idProduit),
-    FOREIGN KEY (idClient) REFERENCES client(idClient)
+    FOREIGN KEY (idClient) REFERENCES client(id_client)
 );
 
 CREATE TABLE Crm(
@@ -140,6 +140,10 @@ CREATE TABLE ticket(
    FOREIGN KEY(id_agent) REFERENCES agent(id_agent),
    FOREIGN KEY(id_report) REFERENCES report_client(id_report)
 );
+
+SELECT (mvt.duree*ticket.cout_horaire) from ticket 
+    JOIN (select duree from mvt_duree JOIN ticket as t on mvt_duree.id_ticket=t.id_ticket where id_report = 1 ORDER BY nvt_duree.id_mvt_duree desc limit 1) as mvt
+    where ticket.id_report = 1;
 
 CREATE TABLE mvt_duree(
    id_mvt_duree INT auto_increment,

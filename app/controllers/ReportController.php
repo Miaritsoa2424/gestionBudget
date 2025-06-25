@@ -5,6 +5,8 @@ namespace app\controllers;
 
 use app\models\Client;
 use app\models\Report;
+use app\models\Valeur;
+use app\models\Crm;
 use Flight;
 
 class ReportController {
@@ -82,6 +84,7 @@ class ReportController {
     }
 
     public function submitRating() {
+        
         $data = json_decode(file_get_contents('php://input'), true);
         $id_client = $_SESSION['id_client'] ?? null;
         $id_agent = $data['id_agent'] ?? null;
@@ -114,6 +117,27 @@ class ReportController {
         }
 
         $id_report = $row['id_report'];
+
+        // $sql = "
+        //         SELECT (mvt.duree*ticket.cout_horaire) from ticket 
+        //         JOIN (select duree from mvt_duree JOIN ticket as t on mvt_duree.id_ticket=t.id_ticket where id_report = :idReport ORDER BY mvt_duree.id_mvt_duree desc limit 1) as mvt
+        //         where ticket.id_report = :idReport2;";
+        // $stmt = Flight::db()->prepare($sql);
+        // $stmt->execute([':idReport' => $id_report, ':idReport2' => $id_report]);
+        // $montant = $stmt->fetchColumn();
+        // $date = date('Y-m-d H:i:s'); // Date actuelle
+        // $nomRubrique = 'Satisfaction client';
+
+        // $date = date('Y-m-d H:i:s'); // Date actuelle
+        // $sommeCRM = Crm::getResteCRMValue(6, $date);
+        // $validation = 0; // Par défaut, on ne valide pas
+        //     if ($sommeCRM > $montant) {
+        //         $validation = 1;
+        //     }
+        
+        // $valeur = new Valeur(0, $nomRubrique, 9, 1, $montant, $date, $validation, 6);
+        // $valeur->insert();
+
 
         // Mettre à jour la note, date_note et commentaire
         $sql2 = "UPDATE report_client SET note = :note, date_note = NOW(), commentaire = :comm WHERE id_report = :id_report";

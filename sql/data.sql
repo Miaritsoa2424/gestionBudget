@@ -26,6 +26,7 @@ INSERT INTO Droit (idDeptPere, idDeptFils) VALUES
 -- (2, 4),  -- Ressources Humaines peut accéder à Marketing
 -- (3, 5);  -- Informatique peut accéder à Logistique
 
+
 -- Insertion de catégories (recettes et dépenses)
 INSERT INTO Categorie (nomCategorie, recetteOuDepense) VALUES 
 ('Salaires', 0),  -- Dépense
@@ -242,6 +243,24 @@ INSERT INTO importance (libelle) VALUES
 ('Moyenne'),
 ('Élevée'),
 ('Critique');
+
+INSERT INTO Dept (nomDept, mdp) VALUES 
+('Commercial', 'mdp123');
+
+INSERT INTO Categorie (nomCategorie, recetteOuDepense) VALUES 
+('Commerciale', 0);  -- Dépense
+
+INSERT INTO Type (idCategorie, nomType) VALUES 
+(8, 'Tickets');
+
+INSERT INTO soldeInitial (idDept, montant, dateInsertion) VALUES
+(6, 1000000.00, '2025-01-01'); -- Solde initial pour le département Finance
+
+
+INSERT INTO Droit (idDeptPere, idDeptFils) VALUES (
+  6,6
+),(1,6)
+;
 
 
 select*from ticket;

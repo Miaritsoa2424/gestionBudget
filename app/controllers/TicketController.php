@@ -10,6 +10,8 @@ use app\models\TypeDemande;
 use app\models\Ticket;
 use app\models\Report;
 use app\models\Agent;
+use app\models\Crm;
+use app\models\Valeur;
 use app\models\CategorieTicket;
 use app\models\MvtDuree;
 use Flight;
@@ -314,6 +316,26 @@ class TicketController {
             Flight::render('templatedev', $dataRender);
             return;
         }
+
+        $sql = "
+                SELECT (mvt.duree*ticket.cout_horaire) from ticket 
+                JOIN (select duree  where id_ticket = :idTicket ORDER BY mvt_duree.id_mvt_duree desc limit 1) as mvt
+                where ticket.id_ticket = :idTicket2;";
+        $stmt = Flight::db()->prepare($sql);
+        $stmt->execute([':idReport' => $data['ticket_id'], ':idReport2' => $data['ticket_id']]);
+        $montant = $stmt->fetchColumn();
+        $date = date('Y-m-d H:i:s'); // Date actuelle
+        $nomRubrique = 'Satisfaction client';
+
+        $date = date('Y-m-d H:i:s'); // Date actuelle
+        $sommeCRM = Crm::getResteCRMValue(6, $date);
+        $validation = 0; // Par défaut, on ne valide pas
+            if ($sommeCRM > $montant) {
+                $validation = 1;
+            }
+        
+        $valeur = new Valeur(0, $nomRubrique, 9, 1, $montant, $date, $validation, 6);
+        $valeur->insert();
 
         // Récupération du ticket
         $ticket = TicketModel::getById($data['ticket_id']);
