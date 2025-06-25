@@ -140,13 +140,20 @@ class ReportController {
 
 
         // Mettre à jour la note, date_note et commentaire
-        $sql2 = "UPDATE report_client SET note = :note, date_note = NOW(), commentaire = :comm, id_statut = 3 WHERE id_report = :id_report";
+        $sql2 = "UPDATE report_client SET note = :note, date_note = NOW(), commentaire = :comm WHERE id_report = :id_report";
         $stmt2 = $db->prepare($sql2);
         $ok = $stmt2->execute([
             ':note' => $note, 
             ':comm' => $commentaire, 
             ':id_report' => $id_report
         ]);
+
+        $sql3 = "UPDATE ticket SET id_statut = 3 WHERE id_report = :id_report";
+        $stmt3 = $db->prepare($sql3);
+        $ok = $stmt3->execute([
+            ':id_report' => $id_report
+        ]);
+
 
         Flight::json(['success' => $ok]);
     }

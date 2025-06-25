@@ -32,6 +32,6 @@
     </div>
 
     <div class="ticket-footer">
-        <a href="<?= Flight::get('flight.base_url') ?>/tickets" class="btn">Retour à la liste</a>
+        <a href="<?= Flight::get('flight.base_url') ?>/list-ticket-agent" class="btn">Retour à la liste</a>
     </div>
 </div>

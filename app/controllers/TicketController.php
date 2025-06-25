@@ -227,7 +227,8 @@ class TicketController {
             'page' => 'affiliation-agent',
             'tickets' => $ticket2d,
             'categories' => CategorieTicket::getAll(),
-            'priorites' => Importance::getAll()
+            'priorites' => Importance::getAll(),
+            'statuts' => Statut::getAll()
         ];
         Flight::render('templatedev', $data);
     }
@@ -264,7 +265,8 @@ class TicketController {
             'page' => 'tickets-agent',
             'tickets' => $ticket2d,
             'categories' => CategorieTicket::getAll(),
-            'priorites' => Importance::getAll()
+            'priorites' => Importance::getAll(),
+            'statuts' => Statut::getAll()
         ];
         Flight::render('template-agent', $data);
     }
@@ -319,22 +321,22 @@ class TicketController {
 
         $sql = "
                 SELECT (mvt.duree*ticket.cout_horaire) from ticket 
-                JOIN (select duree  where id_ticket = :idTicket ORDER BY mvt_duree.id_mvt_duree desc limit 1) as mvt
+                JOIN (select duree from mvt_duree where id_ticket = :idTicket ORDER BY mvt_duree.id_mvt_duree desc limit 1) as mvt
                 where ticket.id_ticket = :idTicket2;";
         $stmt = Flight::db()->prepare($sql);
-        $stmt->execute([':idReport' => $data['ticket_id'], ':idReport2' => $data['ticket_id']]);
-        $montant = $stmt->fetchColumn();
+        $stmt->execute([':idTicket' => $data['ticket_id'], ':idTicket2' => $data['ticket_id']]);
+        $montant = (float) $stmt->fetchColumn();
         $date = date('Y-m-d H:i:s'); // Date actuelle
         $nomRubrique = 'Satisfaction client';
 
-        $date = date('Y-m-d H:i:s'); // Date actuelle
+        $date = date('Y-m-d'); // Date actuelle
         $sommeCRM = Crm::getResteCRMValue(6, $date);
         $validation = 0; // Par défaut, on ne valide pas
             if ($sommeCRM > $montant) {
                 $validation = 1;
             }
         
-        $valeur = new Valeur(0, $nomRubrique, 9, 1, $montant, $date, $validation, 6);
+        $valeur = new Valeur(0, $nomRubrique, 8, 1, $montant, $date, $validation, 6);
         $valeur->insert();
 
         // Récupération du ticket
