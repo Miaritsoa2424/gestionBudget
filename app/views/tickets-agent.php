@@ -389,7 +389,7 @@ function saveDuration() {
 }
 
 function affilierTicket(ticketId) {
-    window.location.href = `affilierTicket/${ticketId}`;
+    window.location.href = `info-ticket/${ticketId}`;
 }
 
 // Initialisation au chargement de la page

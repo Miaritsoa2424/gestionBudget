@@ -123,7 +123,8 @@ class Ticket
             ':id_categorie'=> $id_categorie, 
             ':id_report'=> $id_report
         ]);
-        return  1;
+
+        return $conn->lastInsertId();
     }
 
     

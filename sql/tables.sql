@@ -154,7 +154,6 @@ CREATE TABLE statut_ticket(
    id_ticket INT,
    id_statut INT,
    date_statut DATE,
-   PRIMARY KEY(id_ticket, id_statut),
    FOREIGN KEY(id_ticket) REFERENCES ticket(id_ticket),
    FOREIGN KEY(id_statut) REFERENCES statut(id_statut)
 );

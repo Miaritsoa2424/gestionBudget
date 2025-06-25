@@ -198,7 +198,7 @@ class TicketController {
         $ticket2d = [];
         foreach ($tickets as $ticket) {
             $statutObj = Statut::getById($ticket->getIdStatut());
-            $statut = $statutObj ? $statutObj->getNom() : "";
+            $statut = $statutObj ? $statutObj->getNom() : "Non affilié";
 
             $dureeObj = MvtDuree::getLastDureeByIdTicket($ticket->getId());
             $duree = $dureeObj ? $dureeObj->getDuree() : "";

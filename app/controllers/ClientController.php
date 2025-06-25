@@ -98,6 +98,7 @@ class ClientController {
 
 
     public function clientReportDetail($id_report) {
+        
         $report = Report::getReportById($id_report);
         $agents = Agent::getAll();
 

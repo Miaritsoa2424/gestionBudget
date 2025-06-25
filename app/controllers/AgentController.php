@@ -185,7 +185,6 @@ class AgentController {
         $data = [
             'title' => 'Fiche de paie',
             'page' => 'fiche-paie',
-            'nom' => 'Miaritsoa',
             'agent' => (object) $agent,
             'tickets' => $tickets,
             'currentMonth' => $month,
