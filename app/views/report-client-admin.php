@@ -58,7 +58,7 @@
                     </thead>
                     <tbody>
                         <?php foreach($client['reports'] as $report): ?>
-                        <tr>
+                        <tr data-idstatut="<?php echo $report['idStatut']; ?>">
                             <td><?php echo $report['date']; ?></td>
                             <td><?php echo $report['message']; ?></td>
                             <td>
@@ -105,15 +105,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         rows.forEach(row => {
             const date = row.children[0].textContent.trim();
-            const status = row.children[2].textContent.trim();
+            const idStatut = row.getAttribute('data-idstatut');
             let show = true;
 
             // Filtre date début
             if (dDeb && date < dDeb) show = false;
             // Filtre date fin
             if (dFin && date > dFin) show = false;
-            // Filtre statut
-            if (stat && status !== stat) show = false;
+            // Filtre statut (par ID)
+            if (stat && idStatut !== stat) show = false;
 
             row.style.display = show ? '' : 'none';
         });
