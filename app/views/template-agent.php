@@ -32,7 +32,7 @@
                     <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="sub-menu">
-                    <a href="<?= Flight::get('flight.base_url') ?>/agent"><i class="fas fa-list"></i>Liste Ticket </a>
+                    <a href="<?= Flight::get('flight.base_url') ?>/list-ticket-agent"><i class="fas fa-list"></i>Liste Ticket </a>
                 </div>
             </div>
             
