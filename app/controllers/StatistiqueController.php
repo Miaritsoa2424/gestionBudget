@@ -10,10 +10,17 @@ class StatistiqueController {
     public function dashboard() {
         $stat = new Statistique(Flight::db());
 
-        $topClients = $stat->getTopClientsByTickets();
-        $satisfactionByAgent = $stat->getSatisfactionByAgent();
-        $timeByCategory = $stat->getTimeByCategory();
-        $budget = $stat->getBudgetPrevisionnel();
+       $mois = isset($_GET['mois']) && $_GET['mois'] !== '' ? (int)$_GET['mois'] : date('m');
+       $annee = isset($_GET['annee']) && $_GET['annee'] !== '' ? (int)$_GET['annee'] : date('Y');
+
+
+
+        $topClients = $stat->getTopClientsByTickets($mois, $annee);
+        $satisfactionByAgent = $stat->getSatisfactionByAgent($mois, $annee);
+        $timeByCategory = $stat->getTimeByCategory($mois, $annee);
+        
+        
+        $budget = $stat->getBudgetPrevisionnel($mois, $annee);
 
         Flight::render('templatedev', [
             'title' => 'Statistiques Administrateur',

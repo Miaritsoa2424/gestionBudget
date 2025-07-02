@@ -263,11 +263,7 @@ INSERT INTO Droit (idDeptPere, idDeptFils) VALUES (
 ;
 
 
--- CATEGORIES DE TICKET
-INSERT INTO categorie_ticket (id_categorie, nom) VALUES
-(3, 'SAV');
-
--- select*from ticket;
+select*from ticket;
 
 
 
