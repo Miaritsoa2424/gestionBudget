@@ -66,7 +66,7 @@ class Importance {
         $stmt = $conn->prepare("SELECT i.* FROM importance i
             JOIN ticket_importance ti ON i.id_importance = ti.id_importance
             WHERE ti.id_ticket = :idTicket");
-        $stmt->execute(['idTicket' => $idTicket]);
+        $stmt->execute([':idTicket' => $idTicket]);
         $row = $stmt->fetch();
         return $row ? new Importance($row['libelle'], $row['id_importance']) : null;
     }

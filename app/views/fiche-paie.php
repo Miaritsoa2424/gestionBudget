@@ -1,15 +1,52 @@
+
+<style>
+.filters {
+    background: #f7fafd;
+    border: 1px solid #e0e6ed;
+    border-radius: 8px;
+    padding: 12px 18px;
+    display: inline-block;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.filters label {
+    font-size: 1.1em;
+    color: #13325E;
+    vertical-align: middle;
+}
+.filters select {
+    padding: 6px 14px;
+    margin-right: 8px;
+    border-radius: 6px;
+    border: 1px solid #bfc9d4;
+    background: #fff;
+    font-size: 1em;
+    color: #13325E;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.filters select:focus {
+    border-color: #13325E;
+}
+</style>
 <div class="header-actions">
-    <h1>Fiche de paie - <?= htmlspecialchars($nom) ?></h1>
+    <h1>Fiche de paie de l'agent</h1>
     <div class="filters">
         <form method="get" action="">
-            <select name="month" onchange="this.form.submit()">
+            <label for="month" style="margin-right:8px;">
+                <i class="fa fa-calendar"></i>
+            </label>
+            <select name="month" id="month" onchange="this.form.submit()">
                 <?php for($m = 1; $m <= 12; $m++): ?>
                     <option value="<?= sprintf("%02d", $m) ?>" <?= $currentMonth == $m ? 'selected' : '' ?>>
                         <?= date('F', mktime(0, 0, 0, $m, 1)) ?>
                     </option>
                 <?php endfor; ?>
             </select>
-            <select name="year" onchange="this.form.submit()">
+            <label for="year" style="margin:0 8px 0 16px;">
+                <i class="fa fa-calendar-alt"></i>
+            </label>
+            <select name="year" id="year" onchange="this.form.submit()">
                 <?php for($y = date('Y'); $y >= date('Y')-2; $y--): ?>
                     <option value="<?= $y ?>" <?= $currentYear == $y ? 'selected' : '' ?>>
                         <?= $y ?>
@@ -18,9 +55,7 @@
             </select>
         </form>
     </div>
-    <a href="list-agent" class="btn btn-secondary">Retour</a>
 </div>
-
 <div class="fiche-content">
     <table class="results-table">
         <thead>

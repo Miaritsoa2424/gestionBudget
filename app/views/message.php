@@ -4,6 +4,26 @@
     .content{
       padding: 0;
     }
+        .content{
+      padding: 0;
+    }
+    .message.admin {
+      background:rgb(202, 221, 241);
+      /* color: #13325E; */
+      color: #000;
+      border-radius: 12px 12px 0 12px;
+    }
+    .message.client {
+      background:rgb(161, 158, 158);
+      color: #000;
+      border-radius: 12px 12px 12px 0;
+    }
+    .user.right .message { /* Pour l'admin à droite */
+      align-self: flex-end;
+    }
+    .user.left .message { /* Pour le client à gauche */
+      align-self: flex-start;
+    }
     
 </style>
 
@@ -17,21 +37,19 @@
     </button>
   </div>
 <div class="chat-messages" id="chatMessages">
-  <?php if (!empty($messages)): 
-    ?>
+<?php if (!empty($messages)): ?>
     <?php foreach ($messages as $msg): ?>
       <?php
         $isAgent = ($msg['client_agent'] == 1);
-        // $isAgent = ($msg['id_envoyeur'] == $_SESSION['id_agent']);
         $avatar = $isAgent
           ? 'https://i.pravatar.cc/45?img=2'
           : 'https://i.pravatar.cc/45?u=' . ($client ? $client->getId() : 0);
-        // Afficher le bouton seulement pour les messages du client
         $showForward = !$isAgent;
+        $msgClass = $isAgent ? 'admin' : 'client';
       ?>
       <div class="user <?= $isAgent ? 'right' : 'left' ?>">
         <img src="<?= $avatar ?>" alt="">
-        <div class="message">
+        <div class="message <?= $msgClass ?>">
           <?= htmlspecialchars($msg['contenu'] ?? '') ?>
           <?php if ($showForward): ?>
             <button class="send-button" onclick="forwardMessage('<?= htmlspecialchars(addslashes($msg['contenu'] ?? '')) ?>')">
@@ -40,7 +58,6 @@
           <?php endif; ?>
         </div>
       </div>
-
 
     <form id="sendMessageForm" style="display:none;">
         <input type="hidden" name="id_client" value="<?= $client ? $client->getId() : 0 ?>">

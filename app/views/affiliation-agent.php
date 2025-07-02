@@ -56,6 +56,13 @@
                     <option value="<?= $priorite->getIdImportance() ?>"><?= htmlspecialchars($priorite->getNom()) ?></option>
                 <?php endforeach; ?>
             </select>
+            
+            <select class="filter-select">
+                <option value="">Statut</option>
+                <?php foreach ($statuts as $statut): ?>
+                    <option value="<?= $statut->getId() ?>"><?= htmlspecialchars($statut->getNom()) ?></option>
+                <?php endforeach; ?>
+            </select>
 
             <input type="date" class="filter-date-start" placeholder="Date début">
             <input type="date" class="filter-date-end" placeholder="Date fin">
@@ -96,10 +103,10 @@
                             <td><?= htmlspecialchars($ticket['client']->getNom()) . ' ' . htmlspecialchars($ticket['client']->getPrenom()) ?></td>
                             <td><?= htmlspecialchars($ticket['date']) ?></td>
                             <td><span class="status-badge <?= strtolower($ticket['statut']) ?>"><?= ucfirst($ticket['statut']) ?></span></td>
-                            <td><?= $ticket['duree'] ?? '0' ?> </td>
+                            <td><?= $ticket['duree'] ?? '0' ?>h </td>
                             <td>
                                 <span class="priority <?= strtolower($ticket['priorite']) ?>">
-                                    <?= ucfirst($ticket['priorite']) ?>
+                                    <?= ucfirst($ticket['priorite'])?>
                                 </span>
                             </td>
                             <td>
@@ -143,6 +150,7 @@
 function filterTickets() {
     const categorySelect = document.querySelectorAll('.filter-select')[0];
     const prioritySelect = document.querySelectorAll('.filter-select')[1];
+    const statutSelect = document.querySelectorAll('.filter-select')[2];
     const dateStartInput = document.querySelector('.filter-date-start');
     const dateEndInput = document.querySelector('.filter-date-end');
     const searchInput = document.querySelector('.filter-search');
@@ -150,11 +158,12 @@ function filterTickets() {
     // Récupération des valeurs de filtre
     const category = categorySelect.value.trim();
     const priority = prioritySelect.value.trim();
+    const statut = statutSelect.value.trim();
     const dateStart = dateStartInput.value.trim();
     const dateEnd = dateEndInput.value.trim();
     const searchTerm = searchInput.value.toLowerCase().trim();
     
-    console.log('Filtres appliqués:', { category, priority, dateStart, dateEnd, searchTerm });
+    console.log('Filtres appliqués:', { category, priority, statut, dateStart, dateEnd, searchTerm });
     
     // Parcourir toutes les lignes du tableau
     const rows = document.querySelectorAll('.tickets-table tbody tr');
@@ -191,6 +200,18 @@ function filterTickets() {
             }
         }
         
+if (statut && statut !== '' && shouldShow) {
+    const statutCell = row.children[6]; // Colonne statut
+    if (statutCell) {
+        const rowStatut = statutCell.textContent.trim().toLowerCase();
+        // Obtenir le nom du statut depuis l'option sélectionnée
+        const selectedStatutOption = statutSelect.options[statutSelect.selectedIndex];
+        const statutName = selectedStatutOption ? selectedStatutOption.textContent.toLowerCase() : '';
+        if (statutName && rowStatut !== statutName) {
+            shouldShow = false;
+        }
+    }
+}
         // Nouveau filtre par plage de dates
         if ((dateStart || dateEnd) && shouldShow) {
             const dateCell = row.children[5]; // Colonne date
@@ -450,5 +471,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     console.log('Système de filtrage des tickets initialisé');
+
+    document.getElementById('updateDureeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        fetch('/gestionBudget/updateDureeTicket', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.error) {
+                // Met à jour le DOM si besoin
+                document.getElementById('modifyModal').style.display = 'none';
+                location.reload(); // Ou mets à jour la ligne concernée
+            } else {
+                alert(data.error);
+            }
+        });
+    });
 });
 </script>

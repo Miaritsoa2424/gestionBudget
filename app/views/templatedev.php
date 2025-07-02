@@ -24,7 +24,7 @@
 <body>
     <div class="container">
         <div class="sidebar">
-            <h3><i style="color: #0A6CF6;" class="fas fa-ticket-alt"></i> Tickets(Admin)</h3>
+            <h3><i style="color: #0A6CF6;" class="fas fa-ticket-alt"></i> Ticketing - Admin</h3>
             <div class="nav-item">
                 <a class="active nav-link">
                     <i class="fas fa-plus-circle"></i> Ticket
