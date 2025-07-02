@@ -263,7 +263,5 @@ INSERT INTO Droit (idDeptPere, idDeptFils) VALUES (
 ;
 
 
-select*from ticket;
-
 
 
