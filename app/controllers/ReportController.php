@@ -22,11 +22,11 @@ class ReportController {
         $description = $_POST['description'] ?? null;
 
         if (isset($_SESSION['id_client'])) {
-            $id_client = $_SESSION['id_client'] ?? null; // À adapter selon votre gestion de session
+            $id_client = $_SESSION['id_client']; // À adapter selon votre gestion de session
             // $id_client = $_SESSION['id_client'] ?? 1; // À adapter selon votre gestion de session
         }
-       else {
-            $id_client = null; // Si l'id client n'est pas fourni, on le met à null
+       else if (isset($_POST['id_client']) && !empty($_POST['id_client'])) {
+            $id_client = $_POST['id_client'];
         }
         // $id_client = 1;
         // Gestion de la pièce jointe (on prend le nom du premier fichier s'il y en a)
