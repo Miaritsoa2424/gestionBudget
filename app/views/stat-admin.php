@@ -60,6 +60,28 @@
 <div class="dashboard-container">
     <h2 class="dashboard-title">Dashboard Administrateur</h2>
     
+    <form method="get" style="margin-bottom:20px; display:flex; gap:10px; align-items:center;">
+        <label for="mois">Mois :</label>
+        <select name="mois" id="mois">
+            <option value="">Tous</option>
+            <?php for($m=1;$m<=12;$m++): ?>
+                <option value="<?= $m ?>" <?= (isset($_GET['mois']) && $_GET['mois']==$m) ? 'selected' : '' ?>>
+                    <?= date('F', mktime(0,0,0,$m,1)) ?>
+                </option>
+            <?php endfor; ?>
+        </select>
+        <label for="annee">Année :</label>
+        <select name="annee" id="annee">
+            <option value="">Toutes</option>
+            <?php for($y=date('Y')-5;$y<=date('Y');$y++): ?>
+                <option value="<?= $y ?>" <?= (isset($_GET['annee']) && $_GET['annee']==$y) ? 'selected' : '' ?>>
+                    <?= $y ?>
+                </option>
+            <?php endfor; ?>
+        </select>
+        <button type="submit">Filtrer</button>
+    </form>
+
     <div class="dashboard-grid">
         <!-- Top 5 Clients -->
         <div class="card">

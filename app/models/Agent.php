@@ -112,6 +112,7 @@ class Agent {
         $stmt = $conn->query("
             SELECT a.id_agent, a.nom, a.prenom, a.email
             FROM agent a
+
             LEFT JOIN ticket t ON a.id_agent = t.id_agent
             WHERE (t.id_ticket IS NULL) OR (t.id_statut != 2)
         ");
