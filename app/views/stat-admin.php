@@ -54,33 +54,63 @@
             height: 200px;
             margin: 0 auto;
         }
+
+        .filters {
+            background: #f7fafd;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 12px 18px;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .filters label {
+            font-size: 1.1em;
+            color: #13325E;
+            vertical-align: middle;
+        }
+        .filters select {
+            padding: 6px 14px;
+            margin-right: 8px;
+            border-radius: 6px;
+            border: 1px solid #bfc9d4;
+            background: #fff;
+            font-size: 1em;
+            color: #13325E;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .filters select:focus {
+            border-color: #13325E;
+        }
     </style>
 </head>
 <body>
 <div class="dashboard-container">
     <h2 class="dashboard-title">Dashboard Administrateur</h2>
-    
-    <form method="get" style="margin-bottom:20px; display:flex; gap:10px; align-items:center;">
-        <label for="mois">Mois :</label>
-        <select name="mois" id="mois">
-            <option value="">Tous</option>
-            <?php for($m=1;$m<=12;$m++): ?>
-                <option value="<?= $m ?>" <?= (isset($_GET['mois']) && $_GET['mois']==$m) ? 'selected' : '' ?>>
-                    <?= date('F', mktime(0,0,0,$m,1)) ?>
-                </option>
-            <?php endfor; ?>
-        </select>
-        <label for="annee">Année :</label>
-        <select name="annee" id="annee">
-            <option value="">Toutes</option>
-            <?php for($y=date('Y')-5;$y<=date('Y');$y++): ?>
-                <option value="<?= $y ?>" <?= (isset($_GET['annee']) && $_GET['annee']==$y) ? 'selected' : '' ?>>
-                    <?= $y ?>
-                </option>
-            <?php endfor; ?>
-        </select>
-        <button type="submit">Filtrer</button>
-    </form>
+    <div class="filters">
+
+        <form method="get" style="margin-bottom:20px; display:flex; gap:10px; align-items:center;">
+            <label for="mois">Mois :</label>
+            <select name="mois" id="mois" onchange="this.form.submit()">
+                <option value="">Tous</option>
+                <?php for($m=1;$m<=12;$m++): ?>
+                    <option value="<?= $m ?>" <?= (isset($_GET['mois']) && $_GET['mois']==$m) ? 'selected' : '' ?>>
+                        <?= date('F', mktime(0,0,0,$m,1)) ?>
+                    </option>
+                    <?php endfor; ?>
+            </select>
+            <label for="annee">Année :</label>
+            <select name="annee" id="annee" onchange="this.form.submit()">
+                <option value="">Toutes</option>
+                <?php for($y=date('Y')-5;$y<=date('Y');$y++): ?>
+                    <option value="<?= $y ?>" <?= (isset($_GET['annee']) && $_GET['annee']==$y) ? 'selected' : '' ?>>
+                        <?= $y ?>
+                    </option>
+                <?php endfor; ?>
+            </select>
+        </form>
+    </div>
 
     <div class="dashboard-grid">
         <!-- Top 5 Clients -->
